@@ -6,6 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+Web.config
 pendete.txt
 obj/
 Public/

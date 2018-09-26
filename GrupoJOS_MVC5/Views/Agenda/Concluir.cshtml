@@ -79,7 +79,7 @@
                                     <select data-placeholder="Selecione um texto" class="chosen-select" tabindex="2" id="myList" onchange="myFunction()">
                                         @foreach (var item in ViewBag.TextoPadrao)
                                         {
-                                            <option id='@item.Descricao'>Texto: @item.idtexto</option>
+                                            <option id='@item.Descricao'>Texto: @item.Descricao.Substring(0,10)</option>
                                         }
                                     </select>
                                 </div>

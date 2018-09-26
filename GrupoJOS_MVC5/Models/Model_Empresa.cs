@@ -44,8 +44,14 @@ namespace GrupoJOS_MVC5.Models
     public class ViewModelEmpresaAgenda
     {
         public Model_Empresa empresa { get; set; }
-        public List<ViewModelAgendaCliente> agenda_cliente { get; set; }
+        public List<ViewModelEmpresasAgenda> agenda_cliente { get; set; }
     }
 
 
+    //alterar nome?
+    public class ViewModelEmpresasAgenda
+    {
+        public Model_Agenda agenda { get; set; }
+        public List<Model_Cliente> clientes { get; set; }
+    }
 }

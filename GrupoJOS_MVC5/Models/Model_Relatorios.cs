@@ -17,6 +17,8 @@ namespace GrupoJOS_MVC5.Models
         public ViewModelEmpresaAgenda relatorioAtendimento { get; set; }
         public int ContagemPorEspecialidade { get; set; }
         public int TotalAtendimento { get; set; }
+        public DateTime DataInicio { get; set; }
+        public DateTime DataFim { get; set; }
     }
 
 }

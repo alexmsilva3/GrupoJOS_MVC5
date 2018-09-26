@@ -50,13 +50,13 @@ namespace GrupoJOS_MVC5.Controllers
         #endregion
 
         #region Cadastro
-        public ActionResult Cadastro(long? idcliente)
+        public ActionResult Cadastro(double? Id)
         {
             if (servico_login.CheckCookie())
             {
                 ViewBag.ListadeClientes = servico_cliente.ListaClientes();
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
-                ViewBag.Cliente = idcliente;
+                ViewBag.Cliente = Id;
 
                 return View();
             }

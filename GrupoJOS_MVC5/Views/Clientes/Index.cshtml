@@ -42,26 +42,18 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Nome</th>
-                                    <th>E-mail</th>
                                     <th>Aniversário</th>
                                     <th>Cidade</th>
-                                    <th>Telefones</th>
-                                    <th>Contato</th>
                                     <th>Especialidades</th>
                                     <th>Opções</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Nome</th>
-                                    <th>E-mail</th>
                                     <th>Aniversário</th>
                                     <th>Cidade</th>
-                                    <th>Telefones</th>
-                                    <th>Contato</th>
                                     <th>Especialidades</th>
                                     <th>Opções</th>
                                 </tr>
@@ -70,17 +62,9 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>@item.idcliente</td>
                                         <td>@item.Nome</td>
-                                        <td>@item.Email</td>
                                         <td>@item.Aniversario_m</td>
                                         <td>@item.Cidade</td>
-                                        <td>
-                                            <span class="label label-default">@item.Fone_Celular</span>
-                                            <span class="label label-default">@item.Fone1</span>
-                                            <span class="label label-default">@item.Fone2</span>
-                                        </td>
-                                        <td>@item.Contato</td>
                                         <td>
                                             @if(item.NomeEspecialidade1 != "" || item.NomeEspecialidade1 != null)
                                             {

@@ -47,26 +47,29 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="timeline-item">
+                        foreach (var client in item.clientes)
+                        {
+                            <div class="timeline-item">
                             <div class="row">
                                 <div class="col-xs-2 date">
                                     <i class="fa fa-briefcase"></i>
                                 </div>
                                 <div class="col-xs-7 content no-top-border">
-                                    <p class="m-b-xs"><strong>Profissional de Saúde: @item.cliente.Nome</strong></p>
+                                    <p class="m-b-xs"><strong>Profissional de Saúde: @client.Nome</strong></p>
                                     @*OBSERVAÇÔES <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products.</p>*@
 
                                 </div>
                                 <div class="col-xs-3 content no-top-border">
                                     <b><p>Especialidades: </p></b>
-                                    <p>@item.cliente.NomeEspecialidade1</p>
-                                    <p>@item.cliente.NomeEspecialidade2</p>
-                                    <p>@item.cliente.NomeEspecialidade3</p>
-                                    <p>@item.cliente.NomeEspecialidade4</p>
-                                    <p>@item.cliente.NomeEspecialidade5</p>
+                                    <p>@client.NomeEspecialidade1</p>
+                                    <p>@client.NomeEspecialidade2</p>
+                                    <p>@client.NomeEspecialidade3</p>
+                                    <p>@client.NomeEspecialidade4</p>
+                                    <p>@client.NomeEspecialidade5</p>
                                 </div>
                             </div>
                         </div>
+                        }
                     }
                     
                 </div>
@@ -80,7 +83,7 @@
                 <div class="ibox-content ibox-heading">
                     <h3>
                         Total de visitas
-                        <div class="stat-percent text-navy">@Model.relatorioAtendimento.agenda_cliente.Count </div>
+                        <div class="stat-percent text-navy">@Model.TotalAtendimento </div>
                     </h3>
                     <small><i class="fa fa-stack-exchange"></i> Visitas realizadas no periodo x a y</small>
                 </div>

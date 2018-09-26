@@ -44,20 +44,16 @@ namespace GrupoJOS_MVC5.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-        //[HttpPost]
+        [HttpPost]
         public ActionResult AtendimentosResultado(double idempresa, DateTime DataInicio, DateTime DataFim)
         {
-            //double idempresa = 1;
-            //string DataInicio = "01/09/2018";
-            //string DataFim = "30/09/2018";
-
-
             if (servico_login.CheckCookie())
             {
                 ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
-                relatorio.relatorioAtendimento = new ViewModelEmpresaAgenda();
 
                 relatorio.relatorioAtendimento = servico_relatorio.RelatorioDeAtendimentos(idempresa, DataInicio, DataFim);
+
+                relatorio.TotalAtendimento = relatorio.relatorioAtendimento.agenda_cliente.Count;
 
 
                 return View(relatorio);

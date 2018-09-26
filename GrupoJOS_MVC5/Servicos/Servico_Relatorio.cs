@@ -20,6 +20,8 @@ namespace GrupoJOS_MVC5.Servicos
 
             relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa("idempresa", idempresa.ToString());
 
+            var tmpList = new List<ViewModelAgendaCliente>();
+
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
@@ -35,8 +37,6 @@ namespace GrupoJOS_MVC5.Servicos
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 MySqlDataReader reader = command.ExecuteReader();
-
-                relatorioAtendimento.agenda_cliente = new List<ViewModelAgendaCliente>();
 
                 while (reader.Read())
                 {
@@ -78,11 +78,48 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.cliente.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
                     ag.cliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
 
-                    relatorioAtendimento.agenda_cliente.Add(ag);
+                    tmpList.Add(ag);
                 }
                 reader.Close();
                 connection.Close();
             }
+
+            List<ViewModelEmpresasAgenda> empresasagenda = new List<ViewModelEmpresasAgenda>();
+
+            foreach (var item in tmpList)
+            {
+
+                var exists = false;
+
+                foreach (var item2 in empresasagenda)
+                {
+                    if (item.agenda.DataFinalizada == item2.agenda.DataFinalizada)
+                    {
+                        if (item2.clientes == null)
+                        {
+                            item2.clientes = new List<Model_Cliente>();
+                        }
+
+                        exists = true;
+
+                        item2.clientes.Add(item.cliente);
+                        break;
+                    }
+                    
+                }
+
+                if (!exists)
+                {
+                    var obj = new ViewModelEmpresasAgenda();
+                    obj.agenda = item.agenda;
+                    obj.clientes = new List<Model_Cliente>();
+
+                    obj.clientes.Add(item.cliente);
+                    empresasagenda.Add(obj);
+                }
+            }
+
+            relatorioAtendimento.agenda_cliente = empresasagenda;
 
             return relatorioAtendimento;
         }

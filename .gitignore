@@ -7,7 +7,7 @@
 *.userosscache
 *.sln.docstates
 Web.config
-pendete.txt
+pendente.txt
 obj/
 Public/
 bin/

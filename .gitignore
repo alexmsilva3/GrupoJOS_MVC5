@@ -6,7 +6,11 @@
 *.user
 *.userosscache
 *.sln.docstates
-pendente.txt
+pendete.txt
+obj/
+Public/
+bin/
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -364,7 +364,6 @@
     <Content Include="Content\plugins\summernote\font\summernote.ttf" />
     <Content Include="Content\plugins\summernote\font\summernote.woff" />
     <Content Include="Scripts\api\typehead_collection.json" />
-    <Content Include="pdf\example2 .pdf" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\PublishProfiles\RedeHost.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />

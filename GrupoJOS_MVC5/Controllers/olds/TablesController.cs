@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Inspinia_MVC5.Controllers
+namespace GrupoJOS_MVC5.Controllers
 {
     public class TablesController : Controller
     {

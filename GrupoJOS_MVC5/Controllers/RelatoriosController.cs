@@ -55,6 +55,8 @@ namespace GrupoJOS_MVC5.Controllers
 
                 relatorio.TotalAtendimento = relatorio.relatorioAtendimento.agenda_cliente.Count;
 
+                //relatorio.ContagemPorEspecialidade
+
 
                 return View(relatorio);
             }

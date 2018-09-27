@@ -13,10 +13,18 @@ namespace GrupoJOS_MVC5.Servicos
         Servico_Empresa servico_empresa = new Servico_Empresa();
         Servico_Agenda servico_agenda = new Servico_Agenda();
         Servico_Cliente servico_cliente = new Servico_Cliente();
+        Servico_Especialidade servico_especialidade  = new Servico_Especialidade();
 
+        #region RelatorioDeAtendimentos
         public ViewModelEmpresaAgenda RelatorioDeAtendimentos(double idempresa, DateTime DataInicio, DateTime DataFim)
         {
             ViewModelEmpresaAgenda relatorioAtendimento = new ViewModelEmpresaAgenda();
+
+            ////////////////////////////////////////////////////////////////////////////////
+            List<ViewModelContagemEspecialidade> lista_especialidade = new List<ViewModelContagemEspecialidade>();
+
+
+            ////////////////////////////////////////////////////////////////////////////////
 
             relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa("idempresa", idempresa.ToString());
 
@@ -84,14 +92,13 @@ namespace GrupoJOS_MVC5.Servicos
                 connection.Close();
             }
 
-            List<ViewModelEmpresasAgenda> empresasagenda = new List<ViewModelEmpresasAgenda>();
+            //substitui os "empresasagenda" por relatorioAtendimento.agenda_cliente
+            //List<ViewModelEmpresasAgenda> empresasagenda = new List<ViewModelEmpresasAgenda>();
 
             foreach (var item in tmpList)
             {
-
                 var exists = false;
-
-                foreach (var item2 in empresasagenda)
+                foreach (var item2 in relatorioAtendimento.agenda_cliente)
                 {
                     if (item.agenda.DataFinalizada == item2.agenda.DataFinalizada)
                     {
@@ -99,13 +106,10 @@ namespace GrupoJOS_MVC5.Servicos
                         {
                             item2.clientes = new List<Model_Cliente>();
                         }
-
                         exists = true;
-
                         item2.clientes.Add(item.cliente);
                         break;
                     }
-                    
                 }
 
                 if (!exists)
@@ -113,16 +117,37 @@ namespace GrupoJOS_MVC5.Servicos
                     var obj = new ViewModelEmpresasAgenda();
                     obj.agenda = item.agenda;
                     obj.clientes = new List<Model_Cliente>();
-
                     obj.clientes.Add(item.cliente);
-                    empresasagenda.Add(obj);
+                    relatorioAtendimento.agenda_cliente.Add(obj);
+                }
+
+                foreach (var especialidade in lista_especialidade)
+                {
+                    if (especialidade.especialidade.Nome == item.cliente.NomeEspecialidade1)
+                    {
+                        especialidade.Total += 1;
+                    }
                 }
             }
 
-            relatorioAtendimento.agenda_cliente = empresasagenda;
+            //relatorioAtendimento.agenda_cliente = empresasagenda;
 
             return relatorioAtendimento;
         }
+        #endregion
 
+        public int ContagemPorEspecialidade()
+        {
+            List<Model_Especialidade> lista_especialidade = servico_especialidade.ListaEspecialidade();
+
+
+            foreach (var item in lista_especialidade)
+            {
+                
+                    
+
+            }
+            return 0;
+        }
     }
 }

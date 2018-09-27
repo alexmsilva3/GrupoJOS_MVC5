@@ -95,9 +95,11 @@ namespace GrupoJOS_MVC5.Servicos
             //substitui os "empresasagenda" por relatorioAtendimento.agenda_cliente
             //List<ViewModelEmpresasAgenda> empresasagenda = new List<ViewModelEmpresasAgenda>();
 
+            var exists = false;
+
             foreach (var item in tmpList)
             {
-                var exists = false;
+                //exists = false;
                 foreach (var item2 in relatorioAtendimento.agenda_cliente)
                 {
                     if (item.agenda.DataFinalizada == item2.agenda.DataFinalizada)

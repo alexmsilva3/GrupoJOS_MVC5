@@ -11,22 +11,16 @@ namespace GrupoJOS_MVC5.Servicos
     {
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
         Servico_Empresa servico_empresa = new Servico_Empresa();
-        Servico_Agenda servico_agenda = new Servico_Agenda();
+        Servico_AgendaCliente servico_agenda = new Servico_AgendaCliente();
         Servico_Cliente servico_cliente = new Servico_Cliente();
-        Servico_Especialidade servico_especialidade  = new Servico_Especialidade();
+        Servico_Especialidade servico_especialidade = new Servico_Especialidade();
 
-        #region RelatorioDeAtendimentos
-        public ViewModelEmpresaAgenda RelatorioDeAtendimentos(double idempresa, DateTime DataInicio, DateTime DataFim)
+        public ViewModelRelatorioAtendimentos RelatorioDeAtendimentos(double idempresa, DateTime DataInicio, DateTime DataFim)
         {
-            ViewModelEmpresaAgenda relatorioAtendimento = new ViewModelEmpresaAgenda();
-
-            ////////////////////////////////////////////////////////////////////////////////
-            List<ViewModelContagemEspecialidade> lista_especialidade = new List<ViewModelContagemEspecialidade>();
-
-
-            ////////////////////////////////////////////////////////////////////////////////
-
-            relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa("idempresa", idempresa.ToString());
+            ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
+            relatorio.ContagemPorEspecialidade = servico_especialidade.ListaEspecialidade();
+            relatorio.relatorioAtendimento = new ViewModelEmpresaAgenda();
+            relatorio.relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa("idempresa", idempresa.ToString());
 
             var tmpList = new List<ViewModelAgendaCliente>();
 
@@ -86,23 +80,24 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.cliente.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
                     ag.cliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
 
+
                     tmpList.Add(ag);
                 }
                 reader.Close();
                 connection.Close();
             }
 
-            //substitui os "empresasagenda" por relatorioAtendimento.agenda_cliente
-            //List<ViewModelEmpresasAgenda> empresasagenda = new List<ViewModelEmpresasAgenda>();
 
-            var exists = false;
+            //substitui os "empresasagenda" por relatorioAtendimento.agenda_cliente
+            relatorio.relatorioAtendimento.agenda_cliente = new List<ViewModelEmpresasAgenda>();
 
             foreach (var item in tmpList)
             {
-                //exists = false;
-                foreach (var item2 in relatorioAtendimento.agenda_cliente)
+                var exists = false;
+
+                foreach (var item2 in relatorio.relatorioAtendimento.agenda_cliente)
                 {
-                    if (item.agenda.DataFinalizada == item2.agenda.DataFinalizada)
+                    if (item.agenda.DataFinalizada.Substring(0,10) == item2.agenda.DataFinalizada.Substring(0,10))
                     {
                         if (item2.clientes == null)
                         {
@@ -120,21 +115,33 @@ namespace GrupoJOS_MVC5.Servicos
                     obj.agenda = item.agenda;
                     obj.clientes = new List<Model_Cliente>();
                     obj.clientes.Add(item.cliente);
-                    relatorioAtendimento.agenda_cliente.Add(obj);
+                    relatorio.relatorioAtendimento.agenda_cliente.Add(obj);
                 }
+            }
 
-                foreach (var especialidade in lista_especialidade)
+            foreach (var item in tmpList)
+            {
+                foreach (var especialidade in relatorio.ContagemPorEspecialidade)
                 {
-                    if (especialidade.especialidade.Nome == item.cliente.NomeEspecialidade1)
+                    if (especialidade.Nome == item.cliente.NomeEspecialidade1)
                     {
                         especialidade.Total += 1;
                     }
                 }
             }
 
-            //relatorioAtendimento.agenda_cliente = empresasagenda;
+            for (int i = (relatorio.ContagemPorEspecialidade.Count -1); i >= 0; --i)
+            {
+                if (relatorio.ContagemPorEspecialidade[i].Total == 0)
+                {
+                    relatorio.ContagemPorEspecialidade.RemoveAt(i);
+                }
 
-            return relatorioAtendimento;
+            }
+
+            relatorio.TotalAtendimento = tmpList.Count;
+
+            return relatorio;
         }
         #endregion
 

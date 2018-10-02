@@ -33,6 +33,7 @@ namespace GrupoJOS_MVC5.Servicos
                     AutenticaUsuario.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
                     AutenticaUsuario.Senha = TratarConversaoDeDados.TrataString(reader["Senha"]);
                     AutenticaUsuario.Clientes = TratarConversaoDeDados.TrataString(reader["Clientes"]);
+                    AutenticaUsuario.Perfil = TratarConversaoDeDados.TrataInt(reader["Perfil"]);
                     AutenticaUsuario.UltimoAcesso = TratarConversaoDeDados.TrataDateTime(reader["UltimoAcesso"]);
 
                 }
@@ -83,6 +84,7 @@ namespace GrupoJOS_MVC5.Servicos
                     user.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
                     user.Senha = TratarConversaoDeDados.TrataString(reader["Senha"]);
                     user.Clientes = TratarConversaoDeDados.TrataString(reader["Clientes"]);
+                    user.Perfil = TratarConversaoDeDados.TrataInt(reader["Perfil"]);
                     user.UltimoAcesso = TratarConversaoDeDados.TrataDateTime(reader["UltimoAcesso"]);
 
                     ListaUsuarios.Add(user);
@@ -116,6 +118,7 @@ namespace GrupoJOS_MVC5.Servicos
                     BuscaUsuario.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
                     BuscaUsuario.Senha = TratarConversaoDeDados.TrataString(reader["Senha"]);
                     BuscaUsuario.Clientes = TratarConversaoDeDados.TrataString(reader["Clientes"]);
+                    BuscaUsuario.Perfil = TratarConversaoDeDados.TrataInt(reader["Perfil"]);
                     BuscaUsuario.UltimoAcesso = TratarConversaoDeDados.TrataDateTime(reader["UltimoAcesso"]);
 
                 }
@@ -127,16 +130,16 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Insere Usuario
-        public object InsereUsuario(bool adm, string nome, string senha, string email, string cliente)
+        public object InsereUsuario(bool adm, string nome, string senha, string email, string cliente, int perfil)
         {
             Model_Usuario InsereUsuario = new Model_Usuario();
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
                 SQL = "INSERT INTO usuarios" +
-                    "(Administrador,Nome,Email,Senha,Clientes,UltimoAcesso)" +
+                    "(Administrador,Nome,Email,Senha,Clientes,Perfil,UltimoAcesso)" +
                     "VALUES" +
-                    "(" + adm + ",'" + nome + "','" + email + "','" + senha + "','" + cliente + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "');";
+                    "(" + adm + ",'" + nome + "','" + email + "','" + senha + "','" + cliente + "',"+perfil+",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "');";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -150,7 +153,7 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Atualiza Usuario
-        public Model_Usuario AtualizaUsuario(bool adm, string nome, string email, string senha, string clientes, string id)
+        public Model_Usuario AtualizaUsuario(bool adm, string nome, string email, string senha, string clientes,int perfil, string id)
         {
             Model_Usuario AtualizaUsuario = new Model_Usuario();
 
@@ -162,6 +165,7 @@ namespace GrupoJOS_MVC5.Servicos
                     "Email = '" + email + "'," +
                     "Senha = '" + senha + "'," +
                     "Clientes = '" + clientes + "'," +
+                    "Perfil = '" + perfil + "'," +
                     "Administrador = " + adm + " " +
                     " WHERE idusuario = " +id+" ";
 

@@ -2,6 +2,7 @@
     ViewBag.Title = "Home";
     var date = DateTime.Now;
     var data = date.ToShortDateString();
+    var perfil = Request.Cookies["UsuarioPerfil"].Value;
 }
 
 @model GrupoJOS_MVC5.Models.Model_Home
@@ -11,6 +12,14 @@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
+                    @if (perfil == "0")
+                    {
+                        <a href="AgendaCliente/VisitasDia"><span class="label label-primary pull-right">Visualizar</span></a>
+                    }
+                    @if (perfil == "1")
+                    {
+                        <a href="AgendaComercial/VisitasDia"><span class="label label-primary pull-right">Visualizar</span></a>
+                    }
                     <h5>Visitas Agendadas - Hoje</h5>
                 </div>
                 <div class="ibox-content">
@@ -34,6 +43,14 @@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
+                    @if (perfil == "0")
+                    {
+                        <a href="AgendaCliente/VisitasSemana"><span class="label label-info pull-right">Visualizar</span></a>
+                    }
+                    @if (perfil == "1")
+                    {
+                        <a href="AgendaComercial/VisitasSemana"><span class="label label-info pull-right">Visualizar</span></a>
+                    }
                     <h5>Visitas Agendadas - Semana</h5>
                 </div>
                 <div class="ibox-content">
@@ -57,6 +74,14 @@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
+                    @if (perfil == "0")
+                    {
+                        <a href="AgendaCliente/VisitasMes"><span class="label label-success pull-right">Visualizar</span></a>
+                    }
+                    @if (perfil == "1")
+                    {
+                        <a href="AgendaComercial/VisitasMes"><span class="label label-success pull-right">Visualizar</span></a>
+                    }
                     <h5>Visitas Agendadas - Mês</h5>
                 </div>
                 <div class="ibox-content">
@@ -77,171 +102,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Agenda</h5>
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <a href="/Agenda/Cadastro/"<button type="button" class="btn btn-xs btn-primary">Novo</button></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-
-                        <table class="table table-striped table-bordered table-hover dataTables-example">
-                            <thead>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Hora</th>
-                                    <th>Prof. Saúde</th>
-                                    <th>Indicar</th>
-                                    <th>Especialidade</th>
-                                    <th>Última Visita</th>
-                                    <th>Opções</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Hora</th>
-                                    <th>Prof. Saúde</th>
-                                    <th>Indicar</th>
-                                    <th>Especialidade</th>
-                                    <th>Última Visita</th>
-                                    <th>Opções</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                @foreach (var item in Model.lista_agenda)
-                                {
-                                    <tr>
-                                        <td>@item.agenda.DataVisita.Substring(0,10)</td>
-                                        <td>@item.agenda.HoraVisita.Substring(0,5)</td>
-                                        <td>@item.cliente.Nome</td>
-
-                                        <td>
-                                            @foreach (var item2 in @item.empresa)
-                                            {
-                                                <span class="label label-info">@item2.Nome</span>
-                                            }
-                                        </td>
-
-                                        <td>
-                                            @if (item.cliente.NomeEspecialidade1 != "" || item.cliente.NomeEspecialidade1 != null)
-                                            {
-                                                <span class="label label-info">@item.cliente.NomeEspecialidade1</span>
-                                            }
-                                            @if (item.cliente.NomeEspecialidade2 != "" || item.cliente.NomeEspecialidade1 != null)
-                                            {
-                                                <span class="label label-info">@item.cliente.NomeEspecialidade2</span>
-                                            }
-                                            @if (item.cliente.NomeEspecialidade3 != "" || item.cliente.NomeEspecialidade1 != null)
-                                            {
-                                                <span class="label label-info">@item.cliente.NomeEspecialidade3</span>
-                                            }
-                                            @if (item.cliente.NomeEspecialidade4 != "" || item.cliente.NomeEspecialidade1 != null)
-                                            {
-                                                <span class="label label-info">@item.cliente.NomeEspecialidade4</span>
-                                            }
-                                            @if (item.cliente.NomeEspecialidade5 != "" || item.cliente.NomeEspecialidade1 != null)
-                                            {
-                                                <span class="label label-info">@item.cliente.NomeEspecialidade5</span>
-                                            }
-                                        </td>
-                                        @if (!String.IsNullOrEmpty(item.cliente.UltimaVisita))
-	                                    { <td>@item.cliente.UltimaVisita.Substring(0,10)</td> }
-                                        else{ <td>@item.cliente.UltimaVisita</td> }
-
-                                        <td width="15%">
-                                            <button type="button" title="Alterar Visita" class="btn btn-success dim" data-toggle="modal" data-target="#myModal2" onclick="AssignButtonClicked(this)" data-assigned-id="@item.agenda.idagenda" data-cliente-id="@item.cliente.idcliente"><i class="fa fa-clock-o"></i></button>
-                                            <a href="/Agenda/Visualizar/@item.agenda.idagenda"><button class="btn btn-warning dim" type="button" title="Visualizar Visita"><i class="fa fa-eye"></i></button></a>
-                                            <a href="/Agenda/Concluir/@item.agenda.idagenda"><button class="btn btn-primary dim" type="button" title="Concluir Visita"><i class="fa fa-check"></i></button></a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-
-
-
-                        <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
-                            <form method="post" id="addRegister">
-                                <input type="hidden" id="agendaId" />
-                                <input type="hidden" id="clienteId" name="clienteid" />
-                                <div class="modal-dialog">
-                                    <div class="modal-content animated flipInY">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <h4 class="modal-title">Reagendar Visita</h4>
-                                            <small class="font-bold">É possivel realizar a alteração para Data e Hora dessa visita, caso necessite alterar dados referente ao cliente ou empresa, necessário editar o agendamento.</small>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="ibox float-e-margins">
-                                                        <div class="ibox-content">
-                                                            <h3>Data</h3>
-                                                            <p>
-                                                                Selecione um data para visita:
-                                                            </p>
-
-                                                            <div class="form-group" id="data_1">
-                                                                <div class="input-group date">
-                                                                    <input type="text" class="form-control" name="DataVisita" id="DataVisita" value="@data">
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="ibox">
-                                                        <div class="ibox-content">
-                                                            <h3>Hora</h3>
-                                                            <p>
-                                                                Selecione o horário da visita:
-                                                            </p>
-
-                                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                                <input type="text" class="form-control" name="HoraVisita" id="HoraVisita" value="">
-                                                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="checkbox">
-                                                        <input id="checkbox1" type="checkbox" name="VisitaRealizada">
-                                                        <label for="checkbox1">
-                                                            Foi realizado visita?
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
-                                            <button type="submit" class="btn btn-primary" @*onclick="AssignButtonClicked2()"*@>Salvar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 
@@ -291,31 +151,6 @@
             });
             e.preventDefault(); // avoid to execute the actual submit of the form.
         });
-
-
-        //function AssignButtonClicked3() {
-        //    var id = $('#agendaId').val();
-        //    var DataVisita = $('#DataVisita').val();
-        //    var HoraVisita = $('#HoraVisita').val();
-
-        //    $.ajax({
-        //        type: "POST",
-        //        url: "/Agenda/Reagendar/" + id,
-        //        data: null,
-        //        success: function (data) {
-        //            console.log(data);
-        //            toastr.success("Reagendado com sucesso!");
-        //            window.location = "/Clientes/Index";
-        //        },
-        //        error: function (data) {
-        //            console.log(data);
-        //            toastr.error("Ops, algo deu errado =(");
-        //        }
-        //    });
-
-        //$.post("/Agenda/Reagendar/" + id);
-        //}
-
     </script>
 
     <script type="text/javascript">

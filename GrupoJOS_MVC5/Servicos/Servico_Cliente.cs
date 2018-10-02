@@ -80,7 +80,6 @@ namespace GrupoJOS_MVC5.Servicos
         }
         #endregion
 
-
         #region Lista Clientes
         public List<Model_Cliente> ListaClientes2()
         {
@@ -263,6 +262,12 @@ namespace GrupoJOS_MVC5.Servicos
         {
             Model_Cliente AtualizaCliente = new Model_Cliente();
 
+            if (esp1 == "Sem Especialidade") {esp1 = null;}
+            if (esp2 == "Sem Especialidade") { esp2 = null; }
+            if (esp3 == "Sem Especialidade") { esp3 = null; }
+            if (esp4 == "Sem Especialidade") { esp4 = null; }
+            if (esp5 == "Sem Especialidade") { esp5 = null; }
+
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
@@ -299,16 +304,6 @@ namespace GrupoJOS_MVC5.Servicos
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
-
-                //SQL = "";
-                //foreach (var item in especialidades)
-                //{
-                //    item.Replace(" ","");
-                //    SQL = "INSERT INTO clientes_esp VALUES ("+ id +","+ item +");";
-                //    MySqlCommand command2 = new MySqlCommand(SQL, connection);
-                //    command2.ExecuteNonQuery();
-                //}
-                //connection.Close();
             }
             return AtualizaCliente;
         }

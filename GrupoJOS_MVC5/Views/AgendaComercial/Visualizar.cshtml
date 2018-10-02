@@ -1,10 +1,10 @@
 ﻿@{
-    ViewBag.Title = "Visualização Agendamento";
+    ViewBag.Title = "Visualização Agendamento Comercial";
     var date = DateTime.Now;
     var data = date.ToShortDateString();
 }
 
-@model GrupoJOS_MVC5.Models.ViewModelAgenda
+@model GrupoJOS_MVC5.Models.ViewModelAgendaComercial
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -14,7 +14,7 @@
                 <a href="@Url.Action("Index", "Home")">Home</a>
             </li>
             <li>
-                <a>Agenda</a>
+                <a>Agenda Comercial</a>
             </li>
             <li class="active">
                 <strong>@ViewBag.Title</strong>
@@ -34,7 +34,7 @@
                             <div class="">
                                 <div>
                                     <h2 class="no-margins">
-                                        @Model.cliente.Nome
+                                        @Model.clienteComercial.Nome
                                     </h2>
                                     <h4>Visualizando Agendamento</h4>
                                     <small>
@@ -42,7 +42,7 @@
                                     </small>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="/Agenda/Editar/@Model.agenda.idagenda"><button type="button" class="btn btn-warning btn-sm btn-block"><i class="fa fa-edit"></i> Editar</button></a>
+                                            <a href="/AgendaComercial/Editar/@Model.agenda.idagenda"><button type="button" class="btn btn-warning btn-sm btn-block"><i class="fa fa-edit"></i> Editar</button></a>
                                         </div>
                                         <div class="col-md-6">
                                             <button type="button" class="btn btn-danger btn-sm btn-block" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@Model.agenda.idagenda"><i class="fa fa-times"></i> Remover</button>
@@ -54,57 +54,28 @@
                     </div>
 
                     <div class="col-md-3">
-                        <small>Especialidades</small>
+                        <small>Ramo</small>
                         <table class="table small m-b-xs">
                             <tbody>
-                                
-                                    @if(Model.cliente.NomeEspecialidade1 != "" || Model.cliente.NomeEspecialidade1 != null)
-                                    {<tr>
+                                @if (Model.clienteComercial.Ramo != 0 )
+	                            {
+                                    <tr>
                                         <td>
-                                        <strong>@Model.cliente.NomeEspecialidade1</strong>
+                                            <h2><strong>@Model.clienteComercial.RamoNome </strong ></h2>
                                         </td>
-                                </tr>
-                                    }
-                                    @if(Model.cliente.NomeEspecialidade2 != "" || Model.cliente.NomeEspecialidade2 != null)
-                                    {
-                                     <tr>
-                                         <td>
-                                             <strong>@Model.cliente.NomeEspecialidade2</strong>
-                                         </td>
-                                     </tr>
-                                    }
-                                    @if(Model.cliente.NomeEspecialidade3 != "" || Model.cliente.NomeEspecialidade3 != null)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <strong>@Model.cliente.NomeEspecialidade3</strong>
-                                            </td>
-                                        </tr>
-                                    }
-                                    @if(Model.cliente.NomeEspecialidade4 != "" || Model.cliente.NomeEspecialidade4 != null)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <strong>@Model.cliente.NomeEspecialidade4</strong>
-                                            </td>
-                                        </tr>
-                                    }
-                                    @if(Model.cliente.NomeEspecialidade5 != "" || Model.cliente.NomeEspecialidade5 != null)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <strong>@Model.cliente.NomeEspecialidade5</strong>
-                                            </td>
-                                        </tr>
-                                    }
+                                    </tr>  
+	                            }
 
-                                
+
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-3">
                         <small>Ultima Visita</small>
-                        <h2 class="no-margins">@Model.cliente.UltimaVisita</h2>
+                        @if (!String.IsNullOrEmpty(Model.clienteComercial.UltimaVisita))
+                            {<h2 class="no-margins">@Model.clienteComercial.UltimaVisita.Substring(0, 10)</h2>}
+                        else{<h2>Não Visitado</h2>}
+
                     </div>
                 </div>
             </div>
@@ -114,7 +85,7 @@
 
 
     <div class="row">
-        <div class="col-lg-4 m-b-lg">
+        <div class="col-lg-6 m-b-lg">
             <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
                 <div class="vertical-timeline-block">
                     <div class="vertical-timeline-icon navy-bg">
@@ -126,33 +97,30 @@
                         <div class="full-height-scroll">
                             <ul class="list-group clear-list">
                                 <li class="list-group-item fist-item">
-                                    <span class="pull-right"> @Model.agenda.DataVisita - @Model.agenda.HoraVisita </span>
+                                    <span class="pull-right"> @Model.agenda.DataVisita.Substring(0, 10) - @Model.agenda.HoraVisita </span>
                                     Visita
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right"> @Model.cliente.UltimaVisita </span>
-                                    Ultima Visita:
+                                    <span class="pull-right">  @Model.clienteComercial.Fone1 </span>
+                                    Telefone 1:
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right">  @Model.cliente.Fone_Celular </span>
-                                    Telefone Celular:
+                                    <span class="pull-right">  @Model.clienteComercial.Fone2 </span>
+                                    Telefone 2:
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right"> @Model.cliente.Email </span>
+                                    <span class="pull-right"> @Model.clienteComercial.Email </span>
                                     Email
                                 </li>
                             </ul>
-                            <strong>Observações</strong>
-                            <p>
-                                @Model.cliente.Observacoes
-                            </p>
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4 m-b-lg">
+        <div class="col-lg-6 m-b-lg">
             <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
                 <div class="vertical-timeline-block">
                     <div class="vertical-timeline-icon lazur-bg">
@@ -163,61 +131,40 @@
                         <div class="full-height-scroll">
                             <ul class="list-group clear-list">
                                 <li class="list-group-item fist-item">
-                                    <span class="pull-right">  @Model.cliente.Endereco </span>
+                                    <span class="pull-right">  @Model.clienteComercial.Endereco </span>
                                     Endereço
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right"> @Model.cliente.Bairro </span>
+                                    <span class="pull-right"> @Model.clienteComercial.Bairro </span>
                                     Bairro
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right">  @Model.cliente.Cidade </span>
+                                    <span class="pull-right">  @Model.clienteComercial.Cidade </span>
                                     Cidade
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right"> @Model.cliente.UF </span>
+                                    <span class="pull-right"> @Model.clienteComercial.UF </span>
                                     Estado
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right">  @Model.cliente.Fone1 </span>
+                                    <span class="pull-right">  @Model.clienteComercial.Fone1 </span>
                                     Telefone 1
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right"> @Model.cliente.Fone2 </span>
+                                    <span class="pull-right"> @Model.clienteComercial.Fone2 </span>
                                     Telefone 2
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right">  @Model.cliente.Contato </span>
+                                    <span class="pull-right">  @Model.clienteComercial.Contato </span>
                                     Contato
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="pull-right"> @Model.cliente.Aniversario_m </span>
-                                    Aniversário Cliente:
+                                    <span class="pull-right">  @Model.clienteComercial.DataCadastro </span>
+                                    Data Cadastro
                                 </li>
-                                <li class="list-group-item">
-                                    <span class="pull-right"> @Model.cliente.Aniversario_c </span>
-                                    Aniversário Contato
-                                </li>
+
                             </ul>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 m-b-lg">
-            <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon blue-bg">
-                        <i class="fa fa-file-text"></i>
-                    </div>
-
-                    <div class="vertical-timeline-content">
-                        <h2>Clinicas</h2>
-                        @foreach (var item in Model.empresa)
-                        {
-                            <p><b> Clinica:</b> @item.Nome </p>
-                        }
-
                     </div>
                 </div>
             </div>
@@ -237,8 +184,8 @@
                         if (willDelete) {
                             swal("Removido!", "Registro foi removido com sucesso!", "success")
                                 .then((value) => {
-                                    $.post("/Agenda/Index/" + id + "");
-                                    window.location = "/Home/Index";
+                                    $.post("/AgendaComercial/Index/" + id + "");
+                                    window.location = "/AgendaComercial/Index";
                                 });
                         } else {
                             swal("Cancelado!", "O registro não foi removido", "error");

@@ -16,10 +16,10 @@ namespace GrupoJOS_MVC5.Servicos
         {
 
             //verifica se valores não são nulos
-            if (HttpContext.Current.Request.Cookies["UsuarioEmail"] != null && HttpContext.Current.Request.Cookies["UsuarioADM"] != null && HttpContext.Current.Request.Cookies["UsuarioNome"] != null && HttpContext.Current.Request.Cookies["UsuarioID"] != null)
+            if (HttpContext.Current.Request.Cookies["UsuarioEmail"] != null && HttpContext.Current.Request.Cookies["UsuarioADM"] != null && HttpContext.Current.Request.Cookies["UsuarioNome"] != null && HttpContext.Current.Request.Cookies["UsuarioID"] != null && HttpContext.Current.Request.Cookies["UsuarioPerfil"] != null)
             {
 
-                if (!string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioEmail"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioADM"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioNome"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioID"].Value))
+                if (!string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioEmail"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioADM"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioNome"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioID"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value))
                 {
                     return true;
                 }

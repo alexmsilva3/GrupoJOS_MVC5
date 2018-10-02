@@ -132,15 +132,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
+    <Folder Include="Images\png\" />
+    <Folder Include="Views\Especialidades\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AgendaController.cs" />
+    <Compile Include="Controllers\AgendaComercialController.cs" />
+    <Compile Include="Controllers\AgendaClienteController.cs" />
     <Compile Include="Controllers\ClientesController .cs" />
+    <Compile Include="Controllers\ClientesComercialController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\RamosController.cs" />
     <Compile Include="Controllers\RelatoriosController.cs" />
     <Compile Include="Controllers\TextosController.cs" />
     <Compile Include="Controllers\EspecialidadesController.cs" />
@@ -152,6 +157,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Models\Model_ClienteComercial.cs" />
+    <Compile Include="Models\Model_Ramos.cs" />
     <Compile Include="Models\Model_Home.cs" />
     <Compile Include="Models\Model_Agenda.cs" />
     <Compile Include="Models\Model_Cliente.cs" />
@@ -165,10 +172,12 @@
     <Compile Include="Models\ScaffoldingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicos\Servicos_Gerais.cs" />
-    <Compile Include="Servicos\Servico_Agenda.cs" />
+    <Compile Include="Servicos\Servico_AgendaCliente.cs" />
     <Compile Include="Servicos\Servico_AgendaEmpresa.cs" />
     <Compile Include="Servicos\Servico_Cliente.cs" />
+    <Compile Include="Servicos\Servico_ClienteComercial.cs" />
     <Compile Include="Servicos\Servico_Empresa.cs" />
+    <Compile Include="Servicos\Servico_Ramos.cs" />
     <Compile Include="Servicos\Servico_Relatorio.cs" />
     <Compile Include="Servicos\Servico_Texto.cs" />
     <Compile Include="Servicos\Servico_Especialidade.cs" />
@@ -357,6 +366,7 @@
     <Content Include="Content\plugins\slick\fonts\slick.ttf" />
     <Content Include="Content\plugins\slick\fonts\slick.woff" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Images\profile_small.jpg" />
     <Content Include="locales\en.json" />
     <Content Include="locales\es.json" />
     <Content Include="Content\plugins\summernote\font\summernote.eot" />
@@ -370,7 +380,6 @@
     <Content Include="Content\landing\header_one.jpg" />
     <Content Include="Content\landing\header_two.jpg" />
     <Content Include="Content\landing\word_map.png" />
-    <Content Include="Images\profile_small.jpg" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\app\skin.config.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -615,6 +624,7 @@
     <Content Include="Scripts\plugins\gritter\images\ie-spacer.gif" />
     <Content Include="Scripts\plugins\gritter\jquery.gritter.css" />
     <Content Include="Scripts\plugins\gritter\jquery.gritter.min.js" />
+    <Content Include="Scripts\plugins\html2canvas\html2canvas.min.js" />
     <Content Include="Scripts\plugins\i18next\i18next.min.js" />
     <Content Include="Scripts\plugins\iCheck\icheck.min.js" />
     <Content Include="Scripts\plugins\idle-timer\idle-timer.min.js" />
@@ -758,6 +768,7 @@
     <Content Include="Scripts\plugins\jquery-ui\jquery-ui.min.css" />
     <Content Include="Scripts\plugins\jquery-ui\jquery-ui.min.js" />
     <Content Include="Scripts\plugins\jsKnob\jquery.knob.js" />
+    <Content Include="Scripts\plugins\jsPDF\jspdf.min.js" />
     <Content Include="Scripts\plugins\jsTree\jstree.min.js" />
     <Content Include="Scripts\plugins\justified-gallery\jquery.justifiedgallery.css" />
     <Content Include="Scripts\plugins\justified-gallery\jquery.justifiedgallery.js" />
@@ -817,7 +828,6 @@
     <Content Include="Views\Shared\_Navigation.cshtml" />
     <Content Include="Views\Shared\_TopNavbar.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\plugins\justified-gallery\README.md" />
     <Content Include="Views\Shared\_SkinConfig.cshtml" />
     <Content Include="Views\Shared\_Layout_2.cshtml" />
@@ -829,8 +839,8 @@
     <Content Include="Views\Shared\_NavigationOffCanvas.cshtml" />
     <Content Include="Scripts\plugins\chartist\chartist.min.js.map" />
     <Content Include="Scripts\plugins\topojson\LICENSE" />
-    <Content Include="Views\Agenda\Cadastro.cshtml" />
-    <Content Include="Views\Agenda\Concluir.cshtml" />
+    <Content Include="Views\AgendaCliente\Cadastro.cshtml" />
+    <Content Include="Views\AgendaCliente\Concluir.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Usuarios\Cadastro.cshtml" />
@@ -841,11 +851,11 @@
     <Content Include="Views\Empresas\Cadastro.cshtml" />
     <Content Include="Views\Empresas\Editar.cshtml" />
     <Content Include="Views\Empresas\Index.cshtml" />
-    <Content Include="Views\Especialidades\Cadastro.cshtml" />
-    <Content Include="Views\Especialidades\Editar.cshtml" />
-    <Content Include="Views\Especialidades\Index.cshtml" />
-    <Content Include="Views\Agenda\Editar.cshtml" />
-    <Content Include="Views\Agenda\Visualizar.cshtml" />
+    <Content Include="Views\Ramos\Cadastro.cshtml" />
+    <Content Include="Views\Ramos\Editar.cshtml" />
+    <Content Include="Views\Ramos\Index.cshtml" />
+    <Content Include="Views\AgendaCliente\Editar.cshtml" />
+    <Content Include="Views\AgendaCliente\Visualizar.cshtml" />
     <Content Include="Views\Shared\_Layout-tst.cshtml" />
     <Content Include="Views\Textos\Cadastro.cshtml" />
     <Content Include="Views\Textos\Editar.cshtml" />
@@ -854,9 +864,26 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Relatorios\Index.cshtml" />
-    <Content Include="Views\Agenda\Index.cshtml" />
+    <Content Include="Views\AgendaCliente\Index.cshtml" />
     <Content Include="Views\Relatorios\Atendimentos.cshtml" />
     <Content Include="Views\Relatorios\AtendimentosResultado.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\ClientesComercial\Cadastro.cshtml" />
+    <Content Include="Views\ClientesComercial\Editar.cshtml" />
+    <Content Include="Views\ClientesComercial\Index.cshtml" />
+    <Content Include="Views\AgendaComercial\Cadastro.cshtml" />
+    <Content Include="Views\AgendaComercial\Concluir.cshtml" />
+    <Content Include="Views\AgendaComercial\Editar.cshtml" />
+    <Content Include="Views\AgendaComercial\Index.cshtml" />
+    <Content Include="Views\AgendaComercial\Visualizar.cshtml" />
+    <Content Include="Views\Teste\Index.cshtml" />
+    <Content Include="Views\Teste\Index - Cópia .cshtml" />
+    <Content Include="Views\AgendaCliente\VisitasDia.cshtml" />
+    <Content Include="Views\AgendaCliente\VisitasSemana.cshtml" />
+    <Content Include="Views\AgendaCliente\VisitasMes.cshtml" />
+    <Content Include="Views\AgendaComercial\VisitasSemana.cshtml" />
+    <Content Include="Views\AgendaComercial\VisitasDia.cshtml" />
+    <Content Include="Views\AgendaComercial\VisitasMes.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

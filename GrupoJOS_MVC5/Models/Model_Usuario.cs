@@ -36,6 +36,7 @@ namespace GrupoJOS_MVC5.Models
 
         public string Clientes { get; set; }
         public bool Administrador { get; set; }
+        public int Perfil { get; set; }
         public DateTime UltimoAcesso { get; set; }
     }
 
@@ -54,6 +55,7 @@ namespace GrupoJOS_MVC5.Models
         public string Clientes { get; set; }
         public bool Administrador { get; set; }
         public DateTime UltimoAcesso { get; set; }
+        public int Perfil { get; set; }
         public bool Lembrar { get; set; }
     }
 

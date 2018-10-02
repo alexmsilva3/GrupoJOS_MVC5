@@ -22,7 +22,7 @@ namespace GrupoJOS_MVC5.Models
         public double Comercial { get; set; }
 
         [Required(ErrorMessage = "Observações é obrigatório")]
-        [StringLength(50, MinimumLength = 4, ErrorMessage = "Campo deve conter pelo menos 10 digitos")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Campo deve conter pelo menos 10 dígitos")]
         public string Observacoes { get; set; }
 
         public string Status { get; set; }

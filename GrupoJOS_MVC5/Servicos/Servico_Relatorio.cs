@@ -143,20 +143,5 @@ namespace GrupoJOS_MVC5.Servicos
 
             return relatorio;
         }
-        #endregion
-
-        public int ContagemPorEspecialidade()
-        {
-            List<Model_Especialidade> lista_especialidade = servico_especialidade.ListaEspecialidade();
-
-
-            foreach (var item in lista_especialidade)
-            {
-                
-                    
-
-            }
-            return 0;
-        }
     }
 }

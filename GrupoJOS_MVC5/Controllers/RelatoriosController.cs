@@ -57,6 +57,8 @@ namespace GrupoJOS_MVC5.Controllers
                 relatorio.DataInicio = DataInicio;
                 relatorio.DataFim = DataFim;
 
+                //relatorio.ContagemPorEspecialidade
+
 
                 return View(relatorio);
             }

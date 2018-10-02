@@ -103,7 +103,6 @@ namespace GrupoJOS_MVC5.Servicos
                         {
                             item2.clientes = new List<Model_Cliente>();
                         }
-
                         exists = true;
                         item2.clientes.Add(item.cliente);
                         break;
@@ -115,7 +114,6 @@ namespace GrupoJOS_MVC5.Servicos
                     var obj = new ViewModelEmpresasAgenda();
                     obj.agenda = item.agenda;
                     obj.clientes = new List<Model_Cliente>();
-
                     obj.clientes.Add(item.cliente);
                     relatorio.relatorioAtendimento.agenda_cliente.Add(obj);
                 }
@@ -141,11 +139,24 @@ namespace GrupoJOS_MVC5.Servicos
 
             }
 
-
             relatorio.TotalAtendimento = tmpList.Count;
 
             return relatorio;
         }
+        #endregion
 
+        public int ContagemPorEspecialidade()
+        {
+            List<Model_Especialidade> lista_especialidade = servico_especialidade.ListaEspecialidade();
+
+
+            foreach (var item in lista_especialidade)
+            {
+                
+                    
+
+            }
+            return 0;
+        }
     }
 }

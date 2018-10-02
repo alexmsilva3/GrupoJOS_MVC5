@@ -1,10 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Entrada Agenda";
-    var date = DateTime.Now;
-    var data = date.ToShortDateString();
+    ViewBag.Title = "Edição de Agenda Comercial";
 }
 
-@model GrupoJOS_MVC5.Models.Model_Cliente
+@model GrupoJOS_MVC5.Models.ViewModelAgendaComercial
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -14,7 +12,7 @@
                 <a href="@Url.Action("Index", "Home")">Home</a>
             </li>
             <li>
-                <a>Agenda</a>
+                <a>Agenda Comercial</a>
             </li>
             <li class="active">
                 <strong>@ViewBag.Title</strong>
@@ -47,7 +45,7 @@
 
                                 <div class="form-group" id="data_1">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control" name="DataVisita" value="@data">
+                                        <input type="text" class="form-control" name="DataVisita" value="@ViewBag.Data.Substring(0,10)">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
@@ -64,7 +62,7 @@
                                 </p>
 
                                 <div class="input-group clockpicker" data-autoclose="true">
-                                    <input type="text" class="form-control" name="HoraVisita" value="09:30">
+                                    <input type="text" class="form-control" name="HoraVisita" value="@ViewBag.Hora">
                                     <span class="input-group-addon">
                                         <span class="fa fa-clock-o"></span>
                                     </span>
@@ -79,46 +77,26 @@
                     <div class="col-lg-6">
                         <div class="ibox-content">
                             <p>
-                                Selecione o P. Saúde:
+                                Selecione o Cliente Comercial:
                             </p>
                             <div class="form-group">
-                                <label class="font-noraml">Profissionais:</label>
+                                <label class="font-noraml">Clientes:</label>
                                 <div>
-                                    <select data-placeholder="Selecione um profissional" class="chosen-select" tabindex="2" name="Cliente">
-                                        @foreach (var item in ViewBag.ListadeClientes)
+                                    <select data-placeholder="Selecione um cliente" class="chosen-select" tabindex="2" name="idclientecomercial">
+                                        @foreach (var item in ViewBag.ListaClienteComercial)
                                         {
-                                            if (item.idcliente == ViewBag.Cliente)
+                                            if (item.idclientecomercial == ViewBag.ClienteComercial)
                                             {
-                                                <option value='@item.idcliente' selected> @item.Nome </option>}
+                                                <option value='@item.idclientecomercial' selected> @item.Nome </option>}
                                             else
                                             {
-                                                <option value='@item.idcliente'> @item.Nome </option>}
+                                                <option value='@item.idclientecomercial'> @item.Nome </option>}
                                         }
                                     </select>
                                 </div>
                                 <span class="field-validation-error text-danger" data-valmsg-for="Cliente" data-valmsg-replace="true">@ViewBag.ErroCliente</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="ibox-content">
-                            <p>
-                                Clínicas que podem ser apresentadas nessa visita.
-                            </p>
-                            <div class="form-group">
-                                <label class="font-noraml">Clínicas:</label>
-                                <div>
-                                    <select data-placeholder="Selecione uma ou mais clínicas" class="chosen-select" multiple tabindex="4" name="Empresas">
-                                        @foreach (var item in ViewBag.ListadeEmpresas)
-                                        {
-                                            <option value='@item.idempresa'>@item.Nome</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="field-validation-error text-danger" data-valmsg-for="Empresas" data-valmsg-replace="true">@ViewBag.ErroEmpresa</span>
                     </div>
                 </div>
 

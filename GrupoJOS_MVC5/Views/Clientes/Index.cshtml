@@ -66,33 +66,33 @@
                                         <td>@item.Aniversario_m</td>
                                         <td>@item.Cidade</td>
                                         <td>
-                                            @if(item.NomeEspecialidade1 != "" || item.NomeEspecialidade1 != null)
+                                            @if (item.NomeEspecialidade1 != "" || item.NomeEspecialidade1 != null)
                                             {
                                                 <span class="label label-info">@item.NomeEspecialidade1</span>
                                             }
-                                            @if(item.NomeEspecialidade2 != "" || item.NomeEspecialidade2 != null)
+                                            @if (item.NomeEspecialidade2 != "" || item.NomeEspecialidade2 != null)
                                             {
                                                 <span class="label label-info">@item.NomeEspecialidade2</span>
                                             }
-                                            @if(item.NomeEspecialidade3 != "" || item.NomeEspecialidade3 != null)
+                                            @if (item.NomeEspecialidade3 != "" || item.NomeEspecialidade3 != null)
                                             {
                                                 <span class="label label-info">@item.NomeEspecialidade3</span>
                                             }
-                                            @if(item.NomeEspecialidade4 != "" || item.NomeEspecialidade4 != null)
+                                            @if (item.NomeEspecialidade4 != "" || item.NomeEspecialidade4 != null)
                                             {
                                                 <span class="label label-info">@item.NomeEspecialidade4</span>
                                             }
-                                            @if(item.NomeEspecialidade5 != "" || item.NomeEspecialidade5 != null)
+                                            @if (item.NomeEspecialidade5 != "" || item.NomeEspecialidade5 != null)
                                             {
                                                 <span class="label label-info">@item.NomeEspecialidade5</span>
                                             }
                                         </td>
                                         <td width="15%">
                                             <div class="js-sweetalert">
-                                                <a href="/Agenda/Cadastro/@item.idcliente"><button type="button" title="Agendar Visita" class="btn btn-warning dim"><i class="fa fa-clock-o"></i></button></a>
+                                                <a href="/AgendaCliente/Cadastro/@item.idcliente"><button type="button" title="Agendar Visita" class="btn btn-warning dim"><i class="fa fa-clock-o"></i></button></a>
                                                 <a href="/Clientes/Editar/@item.idcliente"><button class="btn btn-success dim" type="button"><i class="fa fa-edit"></i></button></a>
                                                 @if (adm == "True")
-	                                            {<button class="btn btn-danger dim" type="button" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idcliente"><i class="fa fa-trash"></i></button>}
+                                                {<button class="btn btn-danger dim" type="button" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idcliente"><i class="fa fa-trash"></i></button>}
                                             </div>
                                         </td>
                                     </tr>
@@ -141,37 +141,52 @@
     @Scripts.Render("~/plugins/dataTables")
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
+    @if (adm == "True")
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
 
-            $('.dataTables-example').DataTable({
-                pageLength: 25,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
-                    { extend: 'excel', title: 'ExampleFile' },
-                    { extend: 'pdf', title: 'ExampleFile' },
+                $('.dataTables-example').DataTable({
+                    pageLength: 25,
+                    responsive: true,
+                    dom: '<"html5buttons"B>lTfgitp',
+                    buttons: [
+                        { extend: 'copy' },
+                        { extend: 'csv' },
+                        { extend: 'excel', title: 'ExampleFile' },
+                        { extend: 'pdf', title: 'ExampleFile' },
 
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
+                        {
+                            extend: 'print',
+                            customize: function (win) {
+                                $(win.document.body).addClass('white-bg');
+                                $(win.document.body).css('font-size', '10px');
 
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                            }
                         }
-                    }
-                ]
+                    ]
 
+                });
             });
 
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
 
+                $('.dataTables-example').DataTable({
+                    pageLength: 25,
+                    responsive: true,
+                    dom: '<"html5buttons"B>lTfgitp',
+                    buttons: []
+                });
+            });
 
-        });
-
-    </script>
+        </script>
+    }
 }

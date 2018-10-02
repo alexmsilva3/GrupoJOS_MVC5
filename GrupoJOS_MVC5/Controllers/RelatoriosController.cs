@@ -12,7 +12,7 @@ namespace GrupoJOS_MVC5.Controllers
     public class RelatoriosController : Controller
     {
         Servico_Usuario servico_usuario = new Servico_Usuario();
-        Servico_Agenda servico_agenda = new Servico_Agenda();
+        Servico_AgendaCliente servico_agenda = new Servico_AgendaCliente();
         Servico_Login servico_login = new Servico_Login();
         Servico_Empresa servico_empresa = new Servico_Empresa();
         Servico_Relatorio servico_relatorio = new Servico_Relatorio();
@@ -51,9 +51,11 @@ namespace GrupoJOS_MVC5.Controllers
             {
                 ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
 
-                relatorio.relatorioAtendimento = servico_relatorio.RelatorioDeAtendimentos(idempresa, DataInicio, DataFim);
+                relatorio = servico_relatorio.RelatorioDeAtendimentos(idempresa, DataInicio, DataFim);
 
                 relatorio.TotalAtendimento = relatorio.relatorioAtendimento.agenda_cliente.Count;
+                relatorio.DataInicio = DataInicio;
+                relatorio.DataFim = DataFim;
 
 
                 return View(relatorio);

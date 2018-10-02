@@ -10,9 +10,9 @@ using System.Web.Optimization;
 
 namespace GrupoJOS_MVC5.Controllers
 {
-    public class UsuariosController : Controller
+    public class RamosController : Controller
     {
-        Servico_Usuario servico_usuario = new Servico_Usuario();
+        Servico_Ramos servico_ramo = new Servico_Ramos();
         Servico_Login servico_login = new Servico_Login();
 
         #region Index
@@ -20,12 +20,13 @@ namespace GrupoJOS_MVC5.Controllers
         {
             if (servico_login.CheckCookie())
             {
-                return View(servico_usuario.ListaUsuarios());
+                return View(servico_ramo.ListaRamos());
             }
             else
             {
                 return RedirectToAction("Index", "Login");
             }
+
         }
         #endregion
 
@@ -35,15 +36,13 @@ namespace GrupoJOS_MVC5.Controllers
         {
             if (servico_login.CheckCookie())
             {
-                var id = Id.ToString();
-                servico_usuario.RemoveUsuario(id);
+                servico_ramo.RemoveRamo(Id);
                 return RedirectToAction("Index");
             }
             else
             {
                 return RedirectToAction("Index", "Login");
             }
-
         }
         #endregion
 
@@ -60,16 +59,14 @@ namespace GrupoJOS_MVC5.Controllers
             }
         }
 
-
         [HttpPost]
-        public ActionResult Cadastro(Model_Usuario user)
+        public ActionResult Cadastro(Model_Ramos ramo)
         {
             if (servico_login.CheckCookie())
             {
                 if (ModelState.IsValid)
                 {
-
-                    servico_usuario.InsereUsuario(user.Administrador, user.Nome, user.Senha, user.Email, user.Clientes, user.Perfil);
+                    servico_ramo.InsereRamo(ramo.Nome);
                     return RedirectToAction("Index");
                 }
                 return View();
@@ -81,38 +78,31 @@ namespace GrupoJOS_MVC5.Controllers
         }
         #endregion
 
-        #region Edição
+        #region Editar
         public ActionResult Editar(int Id)
         {
             if (servico_login.CheckCookie())
             {
-                var valor = Id.ToString();
-                var user = servico_usuario.BuscaUsuario("idusuario", valor);
-                return View(user);
+                var esp = servico_ramo.BuscaRamo(Id);
+                return View(esp);
             }
             else
             {
                 return RedirectToAction("Index", "Login");
             }
-
         }
 
         [HttpPost]
-        public ActionResult Editar(Model_Usuario user)
+        public ActionResult Editar (Model_Ramos ramo)
         {
             if (servico_login.CheckCookie())
             {
-
-                //valida o formulario
                 if (ModelState.IsValid)
                 {
-
-                    //executa função de atualizar
-                    servico_usuario.AtualizaUsuario(user.Administrador, user.Nome, user.Email, user.Senha, user.Clientes, user.Perfil, user.idusuario.ToString());
-
+                    servico_ramo.AtualizaRamo(ramo.idramo, ramo.Nome);
                     return RedirectToAction("Index");
                 }
-                return View(user);
+                return View(ramo);
             }
             else
             {

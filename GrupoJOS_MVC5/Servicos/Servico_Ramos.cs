@@ -8,18 +8,18 @@ using GrupoJOS_MVC5.Models;
 
 namespace GrupoJOS_MVC5.Servicos
 {
-    public class Servico_Especialidade
+    public class Servico_Ramos
     {
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
 
-        #region Lista Especialidade
-        public List<Model_Especialidade> ListaEspecialidade()
+        #region Lista Ramos
+        public List<Model_Ramos> ListaRamos()
         {
-            List<Model_Especialidade> ListaEspecialidade = new List<Model_Especialidade>();
+            List<Model_Ramos> ListaRamos = new List<Model_Ramos>();
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM especialidades ORDER BY idespecialidade";
+                SQL = "SELECT * FROM ramos ORDER BY idramo";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -27,29 +27,28 @@ namespace GrupoJOS_MVC5.Servicos
 
                 while(reader.Read())
                 {
-                    Model_Especialidade esp = new Model_Especialidade();
-                    esp.idespecialidade = TratarConversaoDeDados.TrataInt(reader["idespecialidade"]);
-                    esp.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
-                    esp.Observacao = TratarConversaoDeDados.TrataString(reader["Observacao"]);
+                    Model_Ramos ramo = new Model_Ramos();
+                    ramo.idramo = TratarConversaoDeDados.TrataInt(reader["idramo"]);
+                    ramo.Nome = TratarConversaoDeDados.TrataString(reader["ramoNome"]);
 
-                    ListaEspecialidade.Add(esp);
+                    ListaRamos.Add(ramo);
                 }
                 reader.Close();
                 connection.Close();
             }
-            return ListaEspecialidade;
+            return ListaRamos;
         }
         #endregion
 
-        #region Busca Especialidade Completa
-        public Model_Especialidade BuscaEspecialidade(int valor)
+        #region Busca Ramo Completa
+        public Model_Ramos BuscaRamo(int valor)
         {
-            Model_Especialidade BuscaEsp = new Model_Especialidade();
+            Model_Ramos BuscaRamos = new Model_Ramos();
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM especialidades WHERE idespecialidade = " + valor + "";
+                SQL = "SELECT * FROM ramos WHERE idramo = " + valor + "";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -57,28 +56,27 @@ namespace GrupoJOS_MVC5.Servicos
 
                 while (reader.Read())
                 {
-                    BuscaEsp.idespecialidade = TratarConversaoDeDados.TrataInt(reader["idespecialidade"]);
-                    BuscaEsp.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
-                    BuscaEsp.Observacao = TratarConversaoDeDados.TrataString(reader["Observacao"]);
+                    BuscaRamos.idramo = TratarConversaoDeDados.TrataInt(reader["idramo"]);
+                    BuscaRamos.Nome = TratarConversaoDeDados.TrataString(reader["ramoNome"]);
                 }
                 reader.Close();
                 connection.Close();
             }
-            return BuscaEsp;
+            return BuscaRamos;
         }
         #endregion
 
-        #region  Insere Especialidade
-        public void InsereEsp(string nome, string obs)
+        #region  Insere Ramo
+        public void InsereRamo(string nome)
         {
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
 
-                SQL = "INSERT INTO especialidades " +
-                    "(nome,observacao)" +
+                SQL = "INSERT INTO ramos " +
+                    "(ramoNome)" +
                     "VALUES" +
-                    "('"+nome+"','"+obs+"');";
+                    "('"+nome+"');";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -89,13 +87,13 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Atualiza
-        public void AtualizaEsp(int id, string nome, string obs)
+        public void AtualizaRamo(int id, string nome)
         {
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
 
-                SQL = "UPDATE especialidades SET nome = '"+nome+"', observacao = '"+obs+"' WHERE idespecialidade = "+id+";";
+                SQL = "UPDATE ramos SET ramoNome = '" + nome+"' WHERE idramo = "+id+";";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -106,12 +104,12 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         # region Remove
-        public void RemoveEsp(int id)
+        public void RemoveRamo(int id)
         {
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "DELETE FROM especialidades WHERE idespecialidade = " + id + " ";
+                SQL = "DELETE FROM ramos WHERE idramo = " + id + " ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);

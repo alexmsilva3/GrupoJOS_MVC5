@@ -1,0 +1,255 @@
+﻿@{
+    ViewBag.Title = "Visualização Agendamento";
+    var date = DateTime.Now;
+    var data = date.ToShortDateString();
+}
+
+@model GrupoJOS_MVC5.Models.ViewModelAgenda
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a>Agenda</a>
+            </li>
+            <li class="active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="col-md-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row m-b-lg m-t-lg">
+                    <div class="col-md-6">
+                        <div class="profile-info">
+                            <div class="">
+                                <div>
+                                    <h2 class="no-margins">
+                                        @Model.cliente.Nome
+                                    </h2>
+                                    <h4>Visualizando Agendamento</h4>
+                                    <small>
+                                        As informações abaixo são referentes ao seu agendamento para com esse Profissional de Saúde e detalhes sobre clínicas a apresentar e dados do cliente.
+                                    </small>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a href="/AgendaCliente/Editar/@Model.agenda.idagenda"><button type="button" class="btn btn-warning btn-sm btn-block"><i class="fa fa-edit"></i> Editar</button></a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-danger btn-sm btn-block" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@Model.agenda.idagenda"><i class="fa fa-times"></i> Remover</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <small>Especialidades</small>
+                        <table class="table small m-b-xs">
+                            <tbody>
+                                
+                                    @if(Model.cliente.NomeEspecialidade1 != "" || Model.cliente.NomeEspecialidade1 != null)
+                                    {<tr>
+                                        <td>
+                                        <strong>@Model.cliente.NomeEspecialidade1</strong>
+                                        </td>
+                                </tr>
+                                    }
+                                    @if(Model.cliente.NomeEspecialidade2 != "" || Model.cliente.NomeEspecialidade2 != null)
+                                    {
+                                     <tr>
+                                         <td>
+                                             <strong>@Model.cliente.NomeEspecialidade2</strong>
+                                         </td>
+                                     </tr>
+                                    }
+                                    @if(Model.cliente.NomeEspecialidade3 != "" || Model.cliente.NomeEspecialidade3 != null)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <strong>@Model.cliente.NomeEspecialidade3</strong>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @if(Model.cliente.NomeEspecialidade4 != "" || Model.cliente.NomeEspecialidade4 != null)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <strong>@Model.cliente.NomeEspecialidade4</strong>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @if(Model.cliente.NomeEspecialidade5 != "" || Model.cliente.NomeEspecialidade5 != null)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <strong>@Model.cliente.NomeEspecialidade5</strong>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <small>Ultima Visita</small>
+                        @if(!String.IsNullOrEmpty(Model.cliente.UltimaVisita))
+                        {
+                            <h2 class="no-margins">@Model.cliente.UltimaVisita.Substring(0,10)</h2>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-lg-4 m-b-lg">
+            <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon navy-bg">
+                        <i class="fa fa-briefcase"></i>
+                    </div>
+
+                    <div class="vertical-timeline-content">
+                        <h2>Dados do Agendamento</h2>
+                        <div class="full-height-scroll">
+                            <ul class="list-group clear-list">
+                                <li class="list-group-item fist-item">
+                                    <span class="pull-right"> @Model.agenda.DataVisita.Substring(0,10) - @Model.agenda.HoraVisita </span>
+                                    Visita
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right">  @Model.cliente.Fone_Celular </span>
+                                    Telefone Celular:
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right"> @Model.cliente.Email </span>
+                                    Email
+                                </li>
+                            </ul>
+                            <strong>Observações</strong>
+                            <p>
+                                @Model.cliente.Observacoes
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 m-b-lg">
+            <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon lazur-bg">
+                        <i class="fa fa-coffee"></i>
+                    </div>
+                    <div class="vertical-timeline-content">
+                        <h2>Dados do Profissional</h2>
+                        <div class="full-height-scroll">
+                            <ul class="list-group clear-list">
+                                <li class="list-group-item fist-item">
+                                    <span class="pull-right">  @Model.cliente.Endereco </span>
+                                    Endereço
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right"> @Model.cliente.Bairro </span>
+                                    Bairro
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right">  @Model.cliente.Cidade </span>
+                                    Cidade
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right"> @Model.cliente.UF </span>
+                                    Estado
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right">  @Model.cliente.Fone1 </span>
+                                    Telefone 1
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right"> @Model.cliente.Fone2 </span>
+                                    Telefone 2
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right">  @Model.cliente.Contato </span>
+                                    Contato
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right"> @Model.cliente.Aniversario_m </span>
+                                    Aniversário Cliente:
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right"> @Model.cliente.Aniversario_c </span>
+                                    Aniversário Contato
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 m-b-lg">
+            <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon blue-bg">
+                        <i class="fa fa-file-text"></i>
+                    </div>
+
+                    <div class="vertical-timeline-content">
+                        <h2>Clinicas</h2>
+                        @foreach (var item in Model.empresa)
+                        {
+                            <p><b> Clinica:</b> @item.Nome </p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function AssignButtonClicked(elem) {
+                var id = $(elem).data('assigned-id');
+                swal({
+                    title: "Tem certeza?",
+                    text: "Esse registro sera apagado e nao podera ser recuperado!",
+                    icon: "warning",
+                    buttons: { cancel: "Cancelar", ok: "Sim, pode remover!" },
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            swal("Removido!", "Registro foi removido com sucesso!", "success")
+                                .then((value) => {
+                                    $.post("/AgendaCliente/Index/" + id + "");
+                                    window.location = "/AgendaCliente/Index";
+                                });
+                        } else {
+                            swal("Cancelado!", "O registro não foi removido", "error");
+                        }
+                    });
+            }
+        </script>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+}

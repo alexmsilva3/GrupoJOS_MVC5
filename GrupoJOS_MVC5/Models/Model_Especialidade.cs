@@ -14,5 +14,6 @@ namespace GrupoJOS_MVC5.Models
         //[StringLength(50, MinimumLength = 4, ErrorMessage = "Nome deve conter pelo menos 4 digitos")]
         public string Nome { get; set; }
         public string Observacao { get; set; }
+        public int Total { get; set; }
     }
 }

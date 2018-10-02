@@ -443,8 +443,13 @@ namespace GrupoJOS_MVC5
             bundles.Add(new ScriptBundle("~/plugins/pdfjs").Include(
                       "~/Scripts/plugins/pdfjs/pdf.js"));
 
+            // jsPDF
+            bundles.Add(new ScriptBundle("~/plugins/jsPDF").Include(
+                      "~/Scripts/plugins/jsPDF/jspdf.min.js"));
 
-
+            // html2canvas
+            bundles.Add(new ScriptBundle("~/plugins/html2canvas").Include(
+                      "~/Scripts/plugins/html2canvas/html2canvas.min.js"));
 
 
         }

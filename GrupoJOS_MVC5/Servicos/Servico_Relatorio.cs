@@ -11,14 +11,16 @@ namespace GrupoJOS_MVC5.Servicos
     {
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
         Servico_Empresa servico_empresa = new Servico_Empresa();
-        Servico_Agenda servico_agenda = new Servico_Agenda();
+        Servico_AgendaCliente servico_agenda = new Servico_AgendaCliente();
         Servico_Cliente servico_cliente = new Servico_Cliente();
+        Servico_Especialidade servico_especialidade = new Servico_Especialidade();
 
-        public ViewModelEmpresaAgenda RelatorioDeAtendimentos(double idempresa, DateTime DataInicio, DateTime DataFim)
+        public ViewModelRelatorioAtendimentos RelatorioDeAtendimentos(double idempresa, DateTime DataInicio, DateTime DataFim)
         {
-            ViewModelEmpresaAgenda relatorioAtendimento = new ViewModelEmpresaAgenda();
-
-            relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa("idempresa", idempresa.ToString());
+            ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
+            relatorio.ContagemPorEspecialidade = servico_especialidade.ListaEspecialidade();
+            relatorio.relatorioAtendimento = new ViewModelEmpresaAgenda();
+            relatorio.relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa("idempresa", idempresa.ToString());
 
             var tmpList = new List<ViewModelAgendaCliente>();
 
@@ -78,22 +80,24 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.cliente.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
                     ag.cliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
 
+
                     tmpList.Add(ag);
                 }
                 reader.Close();
                 connection.Close();
             }
 
-            List<ViewModelEmpresasAgenda> empresasagenda = new List<ViewModelEmpresasAgenda>();
+
+            //substitui os "empresasagenda" por relatorioAtendimento.agenda_cliente
+            relatorio.relatorioAtendimento.agenda_cliente = new List<ViewModelEmpresasAgenda>();
 
             foreach (var item in tmpList)
             {
-
                 var exists = false;
 
-                foreach (var item2 in empresasagenda)
+                foreach (var item2 in relatorio.relatorioAtendimento.agenda_cliente)
                 {
-                    if (item.agenda.DataFinalizada == item2.agenda.DataFinalizada)
+                    if (item.agenda.DataFinalizada.Substring(0,10) == item2.agenda.DataFinalizada.Substring(0,10))
                     {
                         if (item2.clientes == null)
                         {
@@ -101,11 +105,9 @@ namespace GrupoJOS_MVC5.Servicos
                         }
 
                         exists = true;
-
                         item2.clientes.Add(item.cliente);
                         break;
                     }
-                    
                 }
 
                 if (!exists)
@@ -115,13 +117,34 @@ namespace GrupoJOS_MVC5.Servicos
                     obj.clientes = new List<Model_Cliente>();
 
                     obj.clientes.Add(item.cliente);
-                    empresasagenda.Add(obj);
+                    relatorio.relatorioAtendimento.agenda_cliente.Add(obj);
                 }
             }
 
-            relatorioAtendimento.agenda_cliente = empresasagenda;
+            foreach (var item in tmpList)
+            {
+                foreach (var especialidade in relatorio.ContagemPorEspecialidade)
+                {
+                    if (especialidade.Nome == item.cliente.NomeEspecialidade1)
+                    {
+                        especialidade.Total += 1;
+                    }
+                }
+            }
 
-            return relatorioAtendimento;
+            for (int i = (relatorio.ContagemPorEspecialidade.Count -1); i >= 0; --i)
+            {
+                if (relatorio.ContagemPorEspecialidade[i].Total == 0)
+                {
+                    relatorio.ContagemPorEspecialidade.RemoveAt(i);
+                }
+
+            }
+
+
+            relatorio.TotalAtendimento = tmpList.Count;
+
+            return relatorio;
         }
 
     }

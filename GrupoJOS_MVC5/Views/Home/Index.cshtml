@@ -1,7 +1,5 @@
 ﻿@{
     ViewBag.Title = "Home";
-    var date = DateTime.Now;
-    var data = date.ToShortDateString();
     var perfil = Request.Cookies["UsuarioPerfil"].Value;
 }
 
@@ -106,97 +104,9 @@
 </div>
 
 @section Styles {
-    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
-    @Styles.Render("~/plugins/dataPickerStyles")
-    @Styles.Render("~/plugins/clockpickerStyles")
-    @Styles.Render("~/plugins/toastrStyles")
-    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+
 }
 
 @section Scripts {
-    @Scripts.Render("~/plugins/dataTables")
-    @Scripts.Render("~/plugins/clockpicker")
-    @Scripts.Render("~/plugins/dataPicker")
-    @Scripts.Render("~/plugins/toastr")
 
-    <script>
-        function AssignButtonClicked(elem) {
-            var id = $(elem).data('assigned-id');
-            var id2 = $(elem).data('cliente-id');
-            $('#agendaId').val(id);
-            $('#clienteId').val(id2);
-        }
-
-
-        $("#addRegister").submit(function (e) {
-
-            var id = $('#agendaId').val();
-            var id2 = $('#clienteId').val();
-            var form = $(this);
-            var url = "/Agenda/Reagendar/" + id;
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(), // serializes the form's elements.
-                success: function (data) {
-                    console.log(data);
-                    toastr.success("Reagendado com sucesso!");
-                    window.location = "/Home/Index";
-                },
-                error: function (data) {
-                    console.log(data);
-                    toastr.error("Ops, algo deu errado =(");
-                }
-            });
-            e.preventDefault(); // avoid to execute the actual submit of the form.
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('.clockpicker').clockpicker();
-
-        $('#data_1 .input-group.date').datepicker({
-            todayBtn: "linked",
-            format: 'dd/mm/yyyy',
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: false,
-            todayHighlight: true,
-            startDate: '@data',
-            autoclose: true
-        });
-
-        $(document).ready(function () {
-
-            $('.dataTables-example').DataTable({
-                pageLength: 25,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
-                    { extend: 'excel', title: 'ExampleFile' },
-                    { extend: 'pdf', title: 'ExampleFile' },
-
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-
-            });
-
-
-
-        });
-
-    </script>
 }

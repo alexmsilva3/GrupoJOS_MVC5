@@ -624,6 +624,7 @@
     <Content Include="Scripts\plugins\gritter\images\ie-spacer.gif" />
     <Content Include="Scripts\plugins\gritter\jquery.gritter.css" />
     <Content Include="Scripts\plugins\gritter\jquery.gritter.min.js" />
+    <Content Include="Scripts\plugins\html2canvas\html2canvas.js" />
     <Content Include="Scripts\plugins\html2canvas\html2canvas.min.js" />
     <Content Include="Scripts\plugins\i18next\i18next.min.js" />
     <Content Include="Scripts\plugins\iCheck\icheck.min.js" />
@@ -884,6 +885,7 @@
     <Content Include="Views\AgendaComercial\VisitasSemana.cshtml" />
     <Content Include="Views\AgendaComercial\VisitasDia.cshtml" />
     <Content Include="Views\AgendaComercial\VisitasMes.cshtml" />
+    <Content Include="Views\Teste\AtendimentosResultado.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

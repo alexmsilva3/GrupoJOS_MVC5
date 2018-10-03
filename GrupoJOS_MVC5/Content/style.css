@@ -6,13 +6,20 @@
  *   version 2.6
  *
 */
+@media print {
+    #nao-imprime
+    {
+        display: none;
+    }
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-weight: 100;
+    font-weight: 100;
 }
 h1 {
   font-size: 30px;
@@ -3517,7 +3524,7 @@ video {
   padding: 0 20px;
 }
 .wrapper-content {
-  padding: 20px 10px 40px;
+  padding: 10px 0px 0px;
 }
 #page-wrapper {
   padding: 0 15px;
@@ -3563,7 +3570,7 @@ ol.unstyled {
   bottom: 0;
   left: 0;
   padding: 10px 20px;
-  position: absolute;
+  /*position: absolute;*/
   right: 0;
 }
 .footer.fixed_full {

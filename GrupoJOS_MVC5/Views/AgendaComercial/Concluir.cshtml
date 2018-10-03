@@ -32,6 +32,7 @@
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <input type="hidden" name="id" value="@Model.agenda.idagenda" />
+                <input type="hidden" name="idclientecomercial" value="@Model.agenda.Comercial" />
                 <div class="row">
                     <div class="col-md-12">
                         <label for="observacoes">Observações</label>

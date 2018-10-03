@@ -2,7 +2,10 @@
     ViewBag.Title = "Agenda";
     var date = DateTime.Now;
     var data = date.ToShortDateString();
+    var perfil = Request.Cookies["UsuarioPerfil"].Value;
 }
+
+@model GrupoJOS_MVC5.Models.ViewModelDashboard
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -15,6 +18,104 @@
                 <strong>@ViewBag.Title</strong>
             </li>
         </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @if (perfil == "0")
+                    {
+                        <a href="AgendaCliente/VisitasDia"><span class="label label-primary pull-right">Visualizar</span></a>
+                    }
+                    @if (perfil == "1")
+                    {
+                        <a href="AgendaComercial/VisitasDia"><span class="label label-primary pull-right">Visualizar</span></a>
+                    }
+                    <h5>Visitas Agendadas - Hoje</h5>
+                </div>
+                <div class="ibox-content">
+                    <ul class="stat-list">
+                        <li>
+                            <h2 class="no-margins">@Model.VisitasAgendadasDia</h2>
+                            <small>Agendadas</small>
+                        </li>
+                        <li>
+                            <h2 class="no-margins ">@Model.VisitasRealizadasDia</h2>
+                            <small>Realizadas</small>
+                            <div class="stat-percent">@Model.VisitasRealizadasDiaP% </div>
+                            <div class="progress progress-mini">
+                                <div style="width: @Model.VisitasRealizadasDiaP%;" class="progress-bar"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @if (perfil == "0")
+                    {
+                        <a href="AgendaCliente/VisitasSemana"><span class="label label-info pull-right">Visualizar</span></a>
+                    }
+                    @if (perfil == "1")
+                    {
+                        <a href="AgendaComercial/VisitasSemana"><span class="label label-info pull-right">Visualizar</span></a>
+                    }
+                    <h5>Visitas Agendadas - Semana</h5>
+                </div>
+                <div class="ibox-content">
+                    <ul class="stat-list">
+                        <li>
+                            <h2 class="no-margins">@Model.VisitasAgendadasSemana</h2>
+                            <small>Agendadas</small>
+                        </li>
+                        <li>
+                            <h2 class="no-margins ">@Model.VisitasRealizadasSemana</h2>
+                            <small>Realizadas</small>
+                            <div class="stat-percent">@Model.VisitasRealizadasSemanaP% </div>
+                            <div class="progress progress-mini">
+                                <div style="width: @Model.VisitasRealizadasSemanaP%;" class="progress-bar"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @if (perfil == "0")
+                    {
+                        <a href="AgendaCliente/VisitasMes"><span class="label label-success pull-right">Visualizar</span></a>
+                    }
+                    @if (perfil == "1")
+                    {
+                        <a href="AgendaComercial/VisitasMes"><span class="label label-success pull-right">Visualizar</span></a>
+                    }
+                    <h5>Visitas Agendadas - Mês</h5>
+                </div>
+                <div class="ibox-content">
+                    <ul class="stat-list">
+                        <li>
+                            <h2 class="no-margins">@Model.VisitasAgendadasMes</h2>
+                            <small>Agendadas</small>
+                        </li>
+                        <li>
+                            <h2 class="no-margins ">@Model.VisitasRealizadasMes</h2>
+                            <small>Realizadas</small>
+                            <div class="stat-percent">@Model.VisitasRealizadasMesP% </div>
+                            <div class="progress progress-mini">
+                                <div style="width: @Model.VisitasRealizadasMesP%;" class="progress-bar"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -57,11 +158,11 @@
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach (var item in Model)
+                                @foreach (var item in Model.lista_agenda)
                                 {
                                     <tr>
-                                        <td>@item.agenda.DataVisita.Substring(0,10)</td>
-                                        <td>@item.agenda.HoraVisita.Substring(0,5)</td>
+                                        <td>@item.agenda.DataVisita.Substring(0, 10)</td>
+                                        <td>@item.agenda.HoraVisita.Substring(0, 5)</td>
                                         <td>@item.cliente.Nome</td>
 
                                         <td>
@@ -72,30 +173,33 @@
                                         </td>
 
                                         <td>
-                                            @if(item.cliente.NomeEspecialidade1 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            @if (item.cliente.NomeEspecialidade1 != "" || item.cliente.NomeEspecialidade1 != null)
                                             {
                                                 <span class="label label-info">@item.cliente.NomeEspecialidade1</span>
                                             }
-                                            @if(item.cliente.NomeEspecialidade2 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            @if (item.cliente.NomeEspecialidade2 != "" || item.cliente.NomeEspecialidade1 != null)
                                             {
                                                 <span class="label label-info">@item.cliente.NomeEspecialidade2</span>
                                             }
-                                            @if(item.cliente.NomeEspecialidade3 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            @if (item.cliente.NomeEspecialidade3 != "" || item.cliente.NomeEspecialidade1 != null)
                                             {
                                                 <span class="label label-info">@item.cliente.NomeEspecialidade3</span>
                                             }
-                                            @if(item.cliente.NomeEspecialidade4 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            @if (item.cliente.NomeEspecialidade4 != "" || item.cliente.NomeEspecialidade1 != null)
                                             {
                                                 <span class="label label-info">@item.cliente.NomeEspecialidade4</span>
                                             }
-                                            @if(item.cliente.NomeEspecialidade5 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            @if (item.cliente.NomeEspecialidade5 != "" || item.cliente.NomeEspecialidade1 != null)
                                             {
                                                 <span class="label label-info">@item.cliente.NomeEspecialidade5</span>
                                             }
                                         </td>
                                         @if (!String.IsNullOrEmpty(item.cliente.UltimaVisita))
-	                                    { <td>@item.cliente.UltimaVisita.Substring(0,10)</td> }
-                                        else{ <td>@item.cliente.UltimaVisita</td> }
+                                        {
+                                            <td>@item.cliente.UltimaVisita.Substring(0, 10)</td> }
+                                        else
+                                        {
+                                            <td>@item.cliente.UltimaVisita</td>}
                                         <td width="15%">
                                             <button type="button" title="Alterar Visita" class="btn btn-success dim" data-toggle="modal" data-target="#myModal2" onclick="AssignButtonClicked(this)" data-assigned-id="@item.agenda.idagenda" data-cliente-id="@item.cliente.idcliente"><i class="fa fa-clock-o"></i></button>
                                             <a href="/AgendaCliente/Visualizar/@item.agenda.idagenda"><button class="btn btn-warning dim" type="button" title="Visualizar Visita"><i class="fa fa-eye"></i></button></a>
@@ -111,7 +215,7 @@
                         <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
                             <form method="post" id="addRegister">
                                 <input type="hidden" id="agendaId" />
-                                <input type="hidden" id="clienteId" name="clienteid"/>
+                                <input type="hidden" id="clienteId" name="clienteid" />
                                 <div class="modal-dialog">
                                     <div class="modal-content animated flipInY">
                                         <div class="modal-header">
@@ -174,13 +278,10 @@
                                 </div>
                             </form>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -228,32 +329,9 @@
                     toastr.error("Ops, algo deu errado =(");
                 }
             });
-            e.preventDefault(); // avoid to execute the actual submit of the form.
+            e.preventDefault();
         });
 
-
-        //function AssignButtonClicked3() {
-        //    var id = $('#agendaId').val();
-        //    var DataVisita = $('#DataVisita').val();
-        //    var HoraVisita = $('#HoraVisita').val();
-
-        //    $.ajax({
-        //        type: "POST",
-        //        url: "/Agenda/Reagendar/" + id,
-        //        data: null,
-        //        success: function (data) {
-        //            console.log(data);
-        //            toastr.success("Reagendado com sucesso!");
-        //            window.location = "/Clientes/Index";
-        //        },
-        //        error: function (data) {
-        //            console.log(data);
-        //            toastr.error("Ops, algo deu errado =(");
-        //        }
-        //    });
-
-        //$.post("/Agenda/Reagendar/" + id);
-        //}
 
     </script>
 

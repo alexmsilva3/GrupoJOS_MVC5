@@ -21,14 +21,45 @@ namespace GrupoJOS_MVC5.Controllers
         {
             if (servico_login.CheckCookie())
             {
+                #region TrataData
+                var primeiroDiaMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                var ultimoDiaMes = primeiroDiaMes.AddMonths(1).AddDays(-1);
+                DateTime hoje_i = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                DateTime hoje_f = hoje_i.AddDays(1).AddTicks(-1);
+                //Logica: traz seg e sex da semana em dia de mes
+                int DateOfWeek = (int)DateTime.Now.DayOfWeek;
+                DateTime PrimeiroDiaSemana = DateTime.Now.AddDays(-DateOfWeek + 1);
+                DateTime UltimoDiaSemana = DateTime.Now.AddDays(-DateOfWeek + 5);
+                #endregion
+
                 var user = Request.Cookies["UsuarioID"].Value;
 
-                ViewModelHomeComercial home = new ViewModelHomeComercial();
-                home.lista_agenda = new List<ViewModelAgendaComercial>();
+                ViewModelDashboardComercial agenda = new ViewModelDashboardComercial();
 
-                home.lista_agenda = servico_agenda.ListaAgendaComercialPorX("agenda.usuario", user.ToString(), false);
+                agenda.VisitasAgendadasDia = servico_agenda.ContaVisita(Convert.ToInt32(user), hoje_i, hoje_f, "", "Comercial");
+                agenda.VisitasRealizadasDia = servico_agenda.ContaVisita(Convert.ToInt32(user), hoje_i, hoje_f, "1", "Comercial");
+                if (agenda.VisitasAgendadasDia >= 1)
+                { agenda.VisitasRealizadasDiaP = ((agenda.VisitasRealizadasDia * 100) / agenda.VisitasAgendadasDia); }
+                else
+                { agenda.VisitasRealizadasDiaP = 0; }
 
-                return View(home.lista_agenda);
+                agenda.VisitasAgendadasSemana = servico_agenda.ContaVisita(Convert.ToInt32(user), PrimeiroDiaSemana, UltimoDiaSemana, "", "Comercial");
+                agenda.VisitasRealizadasSemana = servico_agenda.ContaVisita(Convert.ToInt32(user), PrimeiroDiaSemana, UltimoDiaSemana, "1", "Comercial");
+                if (agenda.VisitasAgendadasSemana >= 1)
+                { agenda.VisitasRealizadasSemanaP = ((agenda.VisitasRealizadasSemana * 100) / agenda.VisitasAgendadasSemana); }
+                else
+                { agenda.VisitasRealizadasSemanaP = 0; }
+
+                agenda.VisitasAgendadasMes = servico_agenda.ContaVisita(Convert.ToInt32(user), primeiroDiaMes, ultimoDiaMes, "", "Comercial");
+                agenda.VisitasRealizadasMes = servico_agenda.ContaVisita(Convert.ToInt32(user), primeiroDiaMes, ultimoDiaMes, "1", "Comercial");
+                if (agenda.VisitasAgendadasMes >= 1)
+                { agenda.VisitasRealizadasMesP = ((agenda.VisitasRealizadasMes * 100) / agenda.VisitasAgendadasMes); }
+                else
+                { agenda.VisitasRealizadasMesP = 0; }
+
+                agenda.lista_agenda = new List<ViewModelAgendaComercial>();
+                agenda.lista_agenda = servico_agenda.ListaAgendaComercialPorX("agenda.usuario", user.ToString(), false);
+                return View(agenda);
             }
 
             return RedirectToAction("Index", "Login");
@@ -172,7 +203,7 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Concluir(double Id, string Observacao)
+        public ActionResult Concluir(double Id, double idclientecomercial, string Observacao)
         {
             ViewModelAgendaComercial agenda = new ViewModelAgendaComercial();
             agenda = servico_agenda.AgendaComercialPorX("agenda.idagenda", Id.ToString());
@@ -183,7 +214,7 @@ namespace GrupoJOS_MVC5.Controllers
 
 
             servico_agenda.ConcluiAgendaComercial(Id, Observacao);
-            //servico_agenda.AtualizaUltimaVisita(agenda.cliente.idcliente,DateTime.Now);
+            servico_agenda.AtualizaUltimaVisitaComercial(idclientecomercial,DateTime.Now);
 
             return RedirectToAction("Index", "AgendaComercial");
         }

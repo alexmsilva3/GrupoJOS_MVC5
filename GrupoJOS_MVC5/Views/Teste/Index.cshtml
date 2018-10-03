@@ -1,6 +1,4 @@
 ﻿@{
-    /**/
-
     ViewBag.Title = "Pagina Teste";
     var inicio = DateTime.Now;
     var inicio_1 = inicio.ToShortDateString();
@@ -31,23 +29,21 @@
     </div>
 </div>
 
-
 <div class="wrapper wrapper-content" id="exportdiv">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h4>Empresa @Model.relatorioAtendimento.empresa.Nome</h4>
+                    <h4>Empresa: @Model.relatorioAtendimento.empresa.Nome</h4>
                     <br>
-                    <a href="javascript:genPDF()">Download PDF</a>
+                    <a href="javascript:genPDF2()">Download PDF</a>
                     <br>
-                    <a href="javascript:genPDF2()">Download PDF img</a>
+                    <a href="javascript:getPDF()">Download PDF img</a>
                 </div>
                 <div class="ibox-content inspinia-timeline">
 
                     @foreach (var item in Model.relatorioAtendimento.agenda_cliente)
                     {
-
                         <ul class="sortable-list connectList agile-list" id="todo">
                             <li class="info-element" id="task1">
                                 Visitas realizadas no dia:
@@ -56,29 +52,35 @@
                                 </div>
                             </li>
                         </ul>
-                        foreach (var client in item.clientes)
-                        {
-                            <div class="timeline-item">
-                                <div class="row">
-                                    <div class="col-xs-2 date">
-                                        <i class="fa fa-briefcase"></i>
-                                    </div>
-                                    <div class="col-xs-7 content no-top-border">
-                                        <p class="m-b-xs"><strong>Profissional de Saúde: @client.Nome</strong></p>
-                                        @*OBSERVAÇÔES <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products.</p>*@
-
-                                    </div>
-                                    <div class="col-xs-3 content no-top-border">
-                                        <b><p>Especialidades: </p></b>
-                                        <p>@client.NomeEspecialidade1</p>
-                                        <p>@client.NomeEspecialidade2</p>
-                                        <p>@client.NomeEspecialidade3</p>
-                                        <p>@client.NomeEspecialidade4</p>
-                                        <p>@client.NomeEspecialidade5</p>
-                                    </div>
-                                </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Profissional de Saúde</th>
+                                            <th>Especialidade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var client in item.clientes)
+                                        {
+                                            <tr>
+                                                <td>1</td>
+                                                <td>@client.Nome</td>
+                                                <td>
+                                                    <p>@client.NomeEspecialidade1</p>
+                                                    <p>@client.NomeEspecialidade2</p>
+                                                    <p>@client.NomeEspecialidade3</p>
+                                                    <p>@client.NomeEspecialidade4</p>
+                                                    <p>@client.NomeEspecialidade5</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
-                        }
+                        </div>
                     }
 
                 </div>
@@ -124,26 +126,6 @@
 
     <script type="text/javascript">
         function genPDF2() {
-
-            html2canvas(document.getElementById("exportdiv"), {
-                dpi: 300, // Set to 300 DPI
-                scale: 3, // Adjusts your resolution
-                onrendered: function (canvas) {
-                    var img = canvas.toDataURL("image/png");
-
-                    var doc = new jsPDF('p', 'px','a4');
-                    //var doc = new jsPDF();
-                    //doc.addImage(img, 'JPEG', 10, 10);
-                    doc.addImage(img, 'JPEG', 20, 20,400,400);
-                    doc.save('@NomeRelatorio'+'.pdf');
-                }
-            });
-            
-        }
-    </script>
-
-    <script type="text/javascript">
-        function genPDF() {
             var doc = new jsPDF();
 
             var specialElementHandlers = {

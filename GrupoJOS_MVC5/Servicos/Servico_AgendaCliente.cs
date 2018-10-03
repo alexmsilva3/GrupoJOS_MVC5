@@ -808,10 +808,9 @@ namespace GrupoJOS_MVC5.Servicos
                     string SQL = "";
                     SQL = "UPDATE agenda " +
                         "SET Observacoes = '" + observacoes + "', " +
-                        "Status = '1', " +
-                        "DataFinalizada = '" + DataFinalizada + "' " +
-                        "UltimaVisita = '" + DateTime.Now.ToString("yyyy-MM-dd") + "' " +
-                        "WHERE idagenda = " + idagenda + " ";
+                        " Status = '1', " +
+                        " DataFinalizada = '" + DataFinalizada + "' " +
+                        " WHERE idagenda = " + idagenda + " ";
 
                     connection.Open();
                     MySqlCommand command = new MySqlCommand(SQL, connection);

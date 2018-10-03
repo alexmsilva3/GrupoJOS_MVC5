@@ -52,8 +52,6 @@ namespace GrupoJOS_MVC5.Controllers
                 ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
 
                 relatorio = servico_relatorio.RelatorioDeAtendimentos(idempresa, DataInicio, DataFim);
-
-                relatorio.TotalAtendimento = relatorio.relatorioAtendimento.agenda_cliente.Count;
                 relatorio.DataInicio = DataInicio;
                 relatorio.DataFim = DataFim;
 

@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "Minhas Visitas";
+
+    DateTime defineMes = DateTime.Now;
+    var primeiroDiaMes = new DateTime(defineMes.Year, defineMes.Month, 1);
+    var ultimoDiaMes = primeiroDiaMes.AddMonths(1).AddDays(-1);
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li class="active">
+                <a href="@Url.Action("MinhasVisitas", "Relatorios")"><strong>@ViewBag.Title</strong></a>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Gerando Relatório de Visitas</h5>
+                </div>
+                <div class="ibox-content">
+                    <p>
+                        Preencha os dados.
+                    </p>
+                    @using (Html.BeginForm("MinhasVisitas", "Relatorios", FormMethod.Post, new { id = "form" }))
+                    {
+                        <div id="wizard">
+                            <h1>Data</h1>
+                            <div class="step-content">
+                                <div class="text-center m-t-md">
+                                    <div class="col-lg-6">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-title">
+                                                <h5>Início</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <p>
+                                                    Selecione a data de início.
+                                                </p>
+                                                <div class="form-group" id="data_1">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" name="DataInicio" value="@primeiroDiaMes.ToShortDateString()">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-title">
+                                                <h5>Fim</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <p>
+                                                    Selecione a data de fim.
+                                                </p>
+                                                <div class="form-group" id="data_2">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" name="DataFim" value="@ultimoDiaMes.ToShortDateString()">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/wizardStepsStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/wizardSteps")
+    @Scripts.Render("~/plugins/dataPicker")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#wizard").steps({
+                transitionEffect: "fade",
+                showFinishButtonAlways: false,
+                onFinished: function (event, currentIndex) {
+                    $('#form').submit();
+                },
+                /* Labels */
+                labels: {
+                    cancel: "Cancelar",
+                    current: "current step:",
+                    pagination: "Pagination",
+                    finish: "Finalizar",
+                    next: "Proximo",
+                    previous: "Anterior",
+                    loading: "Carregando ..."
+                }
+
+            });
+        });
+
+        $(document).ready(function () {
+
+            $('#data_1 .input-group.date').datepicker({
+                todayBtn: "linked",
+                format: 'dd/mm/yyyy',
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: false,
+                todayHighlight: true,
+                autoclose: true
+            });
+
+            $('#data_2 .input-group.date').datepicker({
+                todayBtn: "linked",
+                format: 'dd/mm/yyyy',
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: false,
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
+    </script>
+}

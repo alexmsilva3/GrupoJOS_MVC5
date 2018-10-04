@@ -32,7 +32,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region Relatorio de Atendimento
         public ActionResult Atendimentos()
         {
-            if (servico_login.CheckCookie())
+            if (servico_login.CheckCookie() && Request.Cookies["UsuarioADM"].Value == "True")
             {
                 List<Model_Empresa> lista_empresa = new List<Model_Empresa>();
 
@@ -47,28 +47,78 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult AtendimentosResultado(double idempresa, DateTime DataInicio, DateTime DataFim)
         {
-            if (servico_login.CheckCookie())
-            {
                 ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
 
                 relatorio = servico_relatorio.RelatorioDeAtendimentos(idempresa, DataInicio, DataFim);
                 relatorio.DataInicio = DataInicio;
                 relatorio.DataFim = DataFim;
 
-                //relatorio.ContagemPorEspecialidade
-
-
                 return View(relatorio);
-            }
+        }
+        #endregion
 
+        #region MinhasVisitas
+        public ActionResult MinhasVisitas()
+        {
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            {   
+                return View("~/Views/Relatorios/MinhasVisitas/Index.cshtml");
+            }
             return RedirectToAction("Index", "Login");
+        }
+
+        [HttpPost]
+        public ActionResult MinhasVisitas(DateTime DataInicio, DateTime DataFim)
+        {
+            var user = Request.Cookies["UsuarioID"].Value;
+            ViewModelAgendaDashboard minhas_visitas = new ViewModelAgendaDashboard();
+
+            minhas_visitas.visitas_arealizar = new List<ViewModelAgenda>();
+            minhas_visitas.visitas_realizadas = new List<ViewModelAgenda>();
+
+            ViewBag.DataInicio = DataInicio.ToShortDateString();
+            ViewBag.DataFim = DataFim.ToShortDateString();
+
+            minhas_visitas.visitas_arealizar = servico_agenda.ListaAgendData(DataInicio, DataFim, user, "0");
+            minhas_visitas.visitas_realizadas = servico_agenda.ListaAgendData(DataInicio, DataFim, user, "1");
+
+            return View("~/Views/Relatorios/MinhasVisitas/Result.cshtml", minhas_visitas);
+        }
+        #endregion
+
+        #region MinhasVisitasComercial
+        public ActionResult MinhasVisitasComercial()
+        {
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            {
+                return View("~/Views/Relatorios/MinhasVisitasComercial/Index.cshtml");
+            }
+            return RedirectToAction("Index", "Login");
+        }
+
+        [HttpPost]
+        public ActionResult MinhasVisitasComercial(DateTime DataInicio, DateTime DataFim)
+        {
+            var user = Request.Cookies["UsuarioID"].Value;
+            ViewModelAgendaComercialDashboard minhas_visitas = new ViewModelAgendaComercialDashboard();
+
+            minhas_visitas.visitas_arealizar = new List<ViewModelAgendaComercial>();
+            minhas_visitas.visitas_realizadas = new List<ViewModelAgendaComercial>();
+
+            ViewBag.DataInicio = DataInicio.ToShortDateString();
+            ViewBag.DataFim = DataFim.ToShortDateString();
+
+            minhas_visitas.visitas_arealizar = servico_agenda.ListaAgendaComercialData(DataInicio, DataFim, user, "0");
+            minhas_visitas.visitas_realizadas = servico_agenda.ListaAgendaComercialData(DataInicio, DataFim, user, "1");
+
+            return View("~/Views/Relatorios/MinhasVisitasComercial/Result.cshtml", minhas_visitas);
         }
         #endregion
 
         #region Relatorio Gerencial
         public ActionResult Gerencial()
         {
-            if (servico_login.CheckCookie())
+            if (servico_login.CheckCookie() &&  Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View();
             }

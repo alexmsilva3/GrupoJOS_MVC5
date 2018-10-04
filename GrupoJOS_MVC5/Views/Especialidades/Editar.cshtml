@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Edição de Ramos Comerciais";
+    ViewBag.Title = "Edição de Especialidades";
 }
 
-@model GrupoJOS_MVC5.Models.Model_Ramos
+@model GrupoJOS_MVC5.Models.Model_Especialidade
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -12,7 +12,7 @@
                 <a href="@Url.Action("Index", "Home")">Home</a>
             </li>
             <li>
-                <a>Ramos</a>
+                <a>Especialidades</a>
             </li>
             <li class="active">
                 <strong>@ViewBag.Title</strong>
@@ -32,14 +32,22 @@
                                 @Html.AntiForgeryToken()
 
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(model => model.idramo)
+                                @Html.HiddenFor(model => model.idespecialidade)
                                 <form>
-                                    <label for="nome">Ramo</label>
+                                    <label for="nome">Especialidade</label>
                                     <div class="form-group">
                                         <div class="form-line">
                                             @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: Industria" } })
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                                    </div>
+                                    <br>
+                                    <label for="nome">Observação</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            @Html.TextAreaFor(model => model.Observacao, 10, 100, new { htmlAttributes = new { @class = "form-control no-resize", placeholder = "Observações..." } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Observacao, "", new { @class = "text-danger" })
                                     </div>
 
                                     <br>

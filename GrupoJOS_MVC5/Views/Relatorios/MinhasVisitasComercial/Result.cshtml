@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Agenda";
+    ViewBag.Title = "Minhas Visitas";
     var date = DateTime.Now;
     var data = date.ToShortDateString();
 }
@@ -244,7 +244,7 @@
                 success: function (data) {
                     console.log(data);
                     toastr.success("Reagendado com sucesso!");
-                    window.location = "/AgendaComercial/Index";
+                    window.location = "/Relatorios/MinhasVisitasComercial";
                 },
                 error: function (data) {
                     console.log(data);

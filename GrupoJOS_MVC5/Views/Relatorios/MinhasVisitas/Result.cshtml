@@ -1,10 +1,10 @@
 ﻿@{
-    ViewBag.Title = "Agenda";
+    ViewBag.Title = "Minhas Visitas";
     var date = DateTime.Now;
     var data = date.ToShortDateString();
 }
 
-@model GrupoJOS_MVC5.Models.ViewModelAgendaComercialDashboard
+@model GrupoJOS_MVC5.Models.ViewModelAgendaDashboard
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -35,9 +35,10 @@
                                 <tr>
                                     <th>Data</th>
                                     <th>Hora</th>
-                                    <th>Cliente</th>
+                                    <th>Prof. Saúde</th>
+                                    <th>Indicar</th>
+                                    <th>Especialidade</th>
                                     <th>Última Visita</th>
-                                    <th>Ramo Comercial</th>
                                     <th>Opções</th>
                                 </tr>
                             </thead>
@@ -45,9 +46,10 @@
                                 <tr>
                                     <th>Data</th>
                                     <th>Hora</th>
-                                    <th>Cliente</th>
+                                    <th>Prof. Saúde</th>
+                                    <th>Indicar</th>
+                                    <th>Especialidade</th>
                                     <th>Última Visita</th>
-                                    <th>Ramo Comercial</th>
                                     <th>Opções</th>
                                 </tr>
                             </tfoot>
@@ -55,24 +57,53 @@
                                 @foreach (var item in Model.visitas_arealizar)
                                 {
                                     <tr>
-                                        <td>@item.agenda.DataVisita.Substring(0,10)</td>
-                                        <td>@item.agenda.HoraVisita.Substring(0,5)</td>
-                                        <td>@item.clienteComercial.Nome</td>
+                                        <td>@item.agenda.DataVisita.Substring(0, 10)</td>
+                                        <td>@item.agenda.HoraVisita.Substring(0, 5)</td>
+                                        <td>@item.cliente.Nome</td>
 
-                                        @if(!String.IsNullOrEmpty(item.clienteComercial.UltimaVisita)) {<td>  @item.clienteComercial.UltimaVisita.Substring(0,10)</td>}
-                                        else{<td>Não Visitado</td>}
-                                        
-                                        <td>@item.clienteComercial.RamoNome</td>
+                                        <td>
+                                            @foreach (var item2 in @item.empresa)
+                                            {
+                                                <span class="label label-info">@item2.Nome</span>
+                                            }
+                                        </td>
 
+                                        <td>
+                                            @if (item.cliente.NomeEspecialidade1 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade1</span>
+                                            }
+                                            @if (item.cliente.NomeEspecialidade2 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade2</span>
+                                            }
+                                            @if (item.cliente.NomeEspecialidade3 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade3</span>
+                                            }
+                                            @if (item.cliente.NomeEspecialidade4 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade4</span>
+                                            }
+                                            @if (item.cliente.NomeEspecialidade5 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade5</span>
+                                            }
+                                        </td>
+                                        @if (!String.IsNullOrEmpty(item.cliente.UltimaVisita))
+                                        { <td>@item.cliente.UltimaVisita.Substring(0, 10)</td> }
+                                        else {<td>@item.cliente.UltimaVisita</td>}
                                         <td width="15%">
-                                            <button type="button" title="Alterar Visita" class="btn btn-success dim" data-toggle="modal" data-target="#myModal2" onclick="AssignButtonClicked(this)" data-assigned-id="@item.agenda.idagenda" data-cliente-id="@item.agenda.Comercial"><i class="fa fa-clock-o"></i></button>
-                                            <a href="/AgendaComercial/Visualizar/@item.agenda.idagenda"><button class="btn btn-warning dim" type="button" title="Visualizar Visita"><i class="fa fa-eye"></i></button></a>
-                                            <a href="/AgendaComercial/Concluir/@item.agenda.idagenda"><button class="btn btn-primary dim" type="button" title="Concluir Visita"><i class="fa fa-check"></i></button></a>
+                                            <button type="button" title="Alterar Visita" class="btn btn-success dim" data-toggle="modal" data-target="#myModal2" onclick="AssignButtonClicked(this)" data-assigned-id="@item.agenda.idagenda" data-cliente-id="@item.cliente.idcliente"><i class="fa fa-clock-o"></i></button>
+                                            <a href="/AgendaCliente/Visualizar/@item.agenda.idagenda"><button class="btn btn-warning dim" type="button" title="Visualizar Visita"><i class="fa fa-eye"></i></button></a>
+                                            <a href="/AgendaCliente/Concluir/@item.agenda.idagenda"><button class="btn btn-primary dim" type="button" title="Concluir Visita"><i class="fa fa-check"></i></button></a>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
+
+
 
                         <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
                             <form method="post" id="addRegister">
@@ -140,14 +171,15 @@
                                 </div>
                             </form>
                         </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
-
-
 
 <div class="wrapper wrapper-content">
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -164,9 +196,10 @@
                                 <tr>
                                     <th>Data</th>
                                     <th>Hora</th>
-                                    <th>Cliente</th>
+                                    <th>Prof. Saúde</th>
+                                    <th>Indicar</th>
+                                    <th>Especialidade</th>
                                     <th>Última Visita</th>
-                                    <th>Ramo Comercial</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -174,27 +207,58 @@
                                 <tr>
                                     <th>Data</th>
                                     <th>Hora</th>
-                                    <th>Cliente</th>
+                                    <th>Prof. Saúde</th>
+                                    <th>Indicar</th>
+                                    <th>Especialidade</th>
                                     <th>Última Visita</th>
-                                    <th>Ramo Comercial</th>
                                     <th>#</th>
                                 </tr>
                             </tfoot>
                             <tbody>
                                 @foreach (var item in Model.visitas_realizadas)
                                 {
-                                     <tr>
-                                        <td>@item.agenda.DataVisita.Substring(0,10)</td>
-                                        <td>@item.agenda.HoraVisita.Substring(0,5)</td>
-                                        <td>@item.clienteComercial.Nome</td>
-
-                                        @if(!String.IsNullOrEmpty(item.clienteComercial.UltimaVisita)) {<td>  @item.clienteComercial.UltimaVisita.Substring(0,10)</td>}
-                                        else{<td>Não Visitado</td>}
-                                        
-                                        <td>@item.clienteComercial.RamoNome</td>
+                                    <tr>
+                                        <td>@item.agenda.DataVisita.Substring(0, 10)</td>
+                                        <td>@item.agenda.HoraVisita.Substring(0, 5)</td>
+                                        <td>@item.cliente.Nome</td>
 
                                         <td>
-                                            <a href="/AgendaComercial/Visualizar/@item.agenda.idagenda"><button class="btn btn-warning dim" type="button" title="Visualizar Visita"><i class="fa fa-eye"></i></button></a>
+                                            @foreach (var item2 in @item.empresa)
+                                            {
+                                                <span class="label label-info">@item2.Nome</span>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @if (item.cliente.NomeEspecialidade1 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade1</span>
+                                            }
+                                            @if (item.cliente.NomeEspecialidade2 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade2</span>
+                                            }
+                                            @if (item.cliente.NomeEspecialidade3 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade3</span>
+                                            }
+                                            @if (item.cliente.NomeEspecialidade4 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade4</span>
+                                            }
+                                            @if (item.cliente.NomeEspecialidade5 != "" || item.cliente.NomeEspecialidade1 != null)
+                                            {
+                                                <span class="label label-info">@item.cliente.NomeEspecialidade5</span>
+                                            }
+                                        </td>
+                                        @if (!String.IsNullOrEmpty(item.cliente.UltimaVisita))
+                                        {
+                                            <td>@item.cliente.UltimaVisita.Substring(0, 10)</td> }
+                                        else
+                                        {
+                                            <td>@item.cliente.UltimaVisita</td>}
+                                        <td>
+                                            <a href="/AgendaCliente/Visualizar/@item.agenda.idagenda"><button class="btn btn-warning dim" type="button" title="Visualizar Visita"><i class="fa fa-eye"></i></button></a>
                                         </td>
                                     </tr>
                                 }
@@ -235,7 +299,7 @@
             var id = $('#agendaId').val();
             var id2 = $('#clienteId').val();
             var form = $(this);
-            var url = "/AgendaComercial/Reagendar/" + id;
+            var url = "/AgendaCliente/Reagendar/" + id;
 
             $.ajax({
                 type: "POST",
@@ -244,7 +308,7 @@
                 success: function (data) {
                     console.log(data);
                     toastr.success("Reagendado com sucesso!");
-                    window.location = "/AgendaComercial/Index";
+                    window.location = "/Relatorios/MinhasVisitas";
                 },
                 error: function (data) {
                     console.log(data);

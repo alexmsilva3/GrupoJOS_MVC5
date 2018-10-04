@@ -19,14 +19,11 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View(servico_cliente.ListaClientes());
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
@@ -34,31 +31,25 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 var id = Id.ToString();
                 servico_cliente.RemoveCliente(id);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 ViewBag.ListaEspecialidade = servico_especialidade.ListaEspecialidade();
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
@@ -82,7 +73,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region Edição
         public ActionResult Editar(int Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 Model_Cliente cliente = new Model_Cliente();
                 var valor = Id.ToString();
@@ -96,7 +87,6 @@ namespace GrupoJOS_MVC5.Controllers
                 return View(cliente);
             }
             return RedirectToAction("Index", "Login");
-
         }
     
 

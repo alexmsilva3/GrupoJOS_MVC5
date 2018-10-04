@@ -21,7 +21,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 #region TrataData
                 var primeiroDiaMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -87,7 +87,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region Cadastro
         public ActionResult Cadastro(double? Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 ViewBag.ListadeClientes = servico_cliente.ListaClientes();
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
@@ -124,7 +124,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region Reagendar
         public ActionResult Reagendar(double Id, DateTime DataVisita, string HoraVisita, long clienteid, string VisitaRealizada)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 if (DataVisita == null) { return new HttpStatusCodeResult(500); }
                 if (string.IsNullOrEmpty(HoraVisita)) { return new HttpStatusCodeResult(500); }
@@ -148,7 +148,7 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpGet]
         public ActionResult Editar(double Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 ViewModelAgenda agenda = new ViewModelAgenda();
                 var valor = Id.ToString();
@@ -188,7 +188,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region Visualizar
         public ActionResult Visualizar(int id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 var agenda = servico_agenda.AgendaPorX("agenda.idagenda", id.ToString());
                 return View(agenda);
@@ -201,7 +201,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region Concluir
         public ActionResult Concluir(double Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 ViewModelAgenda agenda = new ViewModelAgenda();
                 agenda = servico_agenda.AgendaPorX("agenda.idagenda", Id.ToString());
@@ -239,7 +239,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region VisitasDia
         public ActionResult VisitasDia()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 DateTime hoje_i = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
                 DateTime hoje_f = hoje_i.AddDays(1).AddTicks(-1);
@@ -264,7 +264,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region VisitasSemana
         public ActionResult VisitasSemana()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 int DateOfWeek = (int)DateTime.Now.DayOfWeek;
                 DateTime PrimeiroDiaSemana = DateTime.Now.AddDays(-DateOfWeek + 1);
@@ -292,7 +292,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region VisitasMes
         public ActionResult VisitasMes()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 var primeiroDiaMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 var ultimoDiaMes = primeiroDiaMes.AddMonths(1).AddDays(-1);

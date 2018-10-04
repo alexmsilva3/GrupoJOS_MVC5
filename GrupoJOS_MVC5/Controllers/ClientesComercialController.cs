@@ -19,14 +19,11 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View(servico_clientecomercial.ListaClienteComercial());
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
@@ -34,31 +31,24 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(double Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 servico_clientecomercial.RemoveClienteComercial(Id);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 ViewBag.ListaRamos = servico_ramos.ListaRamos();
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
 
         }
 
@@ -84,39 +74,29 @@ namespace GrupoJOS_MVC5.Controllers
         #region Edição
         public ActionResult Editar(int Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 ViewBag.ListaRamos = servico_ramos.ListaRamos();
                 var cli = servico_clientecomercial.BuscaClienteComercial("idclientecomercial", Id.ToString());
 
                 return View(cli);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
 
         }
 
         [HttpPost]
         public ActionResult Editar(Model_ClienteComercial cli, int ramo_cliente)
         {
-            if (servico_login.CheckCookie())
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
 
-                    ViewBag.ListaRamos = servico_ramos.ListaRamos();
-                    servico_clientecomercial.AtualizaClienteComercial(cli.idclientecomercial.ToString(), cli.Nome, cli.RazaoSocial, cli.CNPJ, cli.InscricaoEstadual, cli.Endereco, cli.Num, cli.Bairro, cli.Cidade, cli.UF, cli.CEP, cli.Contato, cli.Email, cli.Fone1, cli.Fone2, ramo_cliente);
+                ViewBag.ListaRamos = servico_ramos.ListaRamos();
+                servico_clientecomercial.AtualizaClienteComercial(cli.idclientecomercial.ToString(), cli.Nome, cli.RazaoSocial, cli.CNPJ, cli.InscricaoEstadual, cli.Endereco, cli.Num, cli.Bairro, cli.Cidade, cli.UF, cli.CEP, cli.Contato, cli.Email, cli.Fone1, cli.Fone2, ramo_cliente);
 
-                    return RedirectToAction("Index");
-                }
-                return View(cli);
+                return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return View(cli);
         }
 
         #endregion

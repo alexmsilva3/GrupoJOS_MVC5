@@ -133,7 +133,6 @@
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
     <Folder Include="Images\png\" />
-    <Folder Include="Views\Especialidades\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -886,6 +885,13 @@
     <Content Include="Views\AgendaComercial\VisitasDia.cshtml" />
     <Content Include="Views\AgendaComercial\VisitasMes.cshtml" />
     <Content Include="Views\Teste\AtendimentosResultado.cshtml" />
+    <Content Include="Views\Relatorios\MinhasVisitas\Index.cshtml" />
+    <Content Include="Views\Relatorios\MinhasVisitasComercial\Index.cshtml" />
+    <Content Include="Views\Relatorios\MinhasVisitas\Result.cshtml" />
+    <Content Include="Views\Relatorios\MinhasVisitasComercial\Result.cshtml" />
+    <Content Include="Views\Especialidades\Cadastro.cshtml" />
+    <Content Include="Views\Especialidades\Editar.cshtml" />
+    <Content Include="Views\Especialidades\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

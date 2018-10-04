@@ -18,14 +18,12 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View(servico_empresa.ListaEmpresa());
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
+            
         }
         #endregion
 
@@ -33,16 +31,13 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 var id = Id.ToString();
                 servico_empresa.RemoveEmpresa(id);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
 
         }
         #endregion
@@ -50,14 +45,11 @@ namespace GrupoJOS_MVC5.Controllers
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
 
         }
 
@@ -85,101 +77,59 @@ namespace GrupoJOS_MVC5.Controllers
                 return RedirectToAction("Index");
             }
             return View();
-
-            //if (servico_login.CheckCookie())
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        var nome = emp.Nome;
-            //        var razaosocial = emp.RazaoSocial;
-            //        var cnpj = emp.CNPJ;
-            //        var insc_estadual = emp.InscricaoEstadual;
-            //        var endereco = emp.Endereco;
-            //        var num = emp.Num;
-            //        var bairro = emp.Bairro;
-            //        var cidade = emp.Cidade;
-            //        var uf = emp.UF;
-            //        var contato = emp.Contato;
-            //        var email = emp.Email;
-            //        var fone1 = emp.Fone1;
-            //        var fone2 = emp.Fone2;
-
-            //        servico_empresa.InsereEmpresa(nome, razaosocial, cnpj, insc_estadual, endereco, num, bairro, cidade, uf, contato, email, fone1, fone2);
-            //        return RedirectToAction("Index");
-            //    }
-            //    return View();
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Index", "Login");
-            //}
         }
         #endregion
 
         #region Edição
         public ActionResult Editar(int Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 var emp = servico_empresa.BuscaEmpresa("idempresa", Id.ToString());
 
                 return View(emp);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
         public ActionResult Editar(Model_Empresa emp, string AtivaConta)
         {
-            if (servico_login.CheckCookie())
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                var id = emp.idempresa.ToString();
+                var nome = emp.Nome;
+                var razaosocial = emp.RazaoSocial;
+                var cnpj = emp.CNPJ;
+                var insc_estadual = emp.InscricaoEstadual;
+                var endereco = emp.Endereco;
+                var num = emp.Num;
+                var bairro = emp.Bairro;
+                var cidade = emp.Cidade;
+                var uf = emp.UF;
+                var cep = emp.CEP;
+                var contato = emp.Contato;
+                var email = emp.Email;
+                var fone1 = emp.Fone1;
+                var fone2 = emp.Fone2;
+
+                servico_empresa.AtualizaEmpresa(id, nome, razaosocial, cnpj, insc_estadual, endereco, num, bairro, cidade, uf, cep, contato, email, fone1, fone2);
+
+                if (AtivaConta == "on" && emp.Ativo == false)
                 {
-                    var id = emp.idempresa.ToString();
-                    var nome = emp.Nome;
-                    var razaosocial = emp.RazaoSocial;
-                    var cnpj = emp.CNPJ;
-                    var insc_estadual = emp.InscricaoEstadual;
-                    var endereco = emp.Endereco;
-                    var num = emp.Num;
-                    var bairro = emp.Bairro;
-                    var cidade = emp.Cidade;
-                    var uf = emp.UF;
-                    var cep = emp.CEP;
-                    var contato = emp.Contato;
-                    var email = emp.Email;
-                    var fone1 = emp.Fone1;
-                    var fone2 = emp.Fone2;
-
-                    servico_empresa.AtualizaEmpresa(id, nome, razaosocial, cnpj, insc_estadual, endereco, num, bairro, cidade, uf,cep, contato, email, fone1, fone2);
-
-                    if (AtivaConta == "on" && emp.Ativo == false )
-                    {
-                        servico_empresa.AlteraStatusEmpresa(id,"Ativar");
-                    }
-
-                    if (AtivaConta == null && emp.Ativo == true)
-                    {
-                        servico_empresa.AlteraStatusEmpresa(id, "Cancelar");
-                    }
-
-                    return RedirectToAction("Index");
+                    servico_empresa.AlteraStatusEmpresa(id, "Ativar");
                 }
-                return View(emp);
+
+                if (AtivaConta == null && emp.Ativo == true)
+                {
+                    servico_empresa.AlteraStatusEmpresa(id, "Cancelar");
+                }
+
+                return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return View(emp);
         }
 
-        #endregion
-
-        #region AlteraStatus
         #endregion
     }
 }

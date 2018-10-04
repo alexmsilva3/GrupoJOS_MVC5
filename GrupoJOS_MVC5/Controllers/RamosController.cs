@@ -18,14 +18,11 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View(servico_ramo.ListaRamos());
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
 
         }
         #endregion
@@ -34,80 +31,57 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 servico_ramo.RemoveRamo(Id);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
         public ActionResult Cadastro(Model_Ramos ramo)
         {
-            if (servico_login.CheckCookie())
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    servico_ramo.InsereRamo(ramo.Nome);
-                    return RedirectToAction("Index");
-                }
-                return View();
+                servico_ramo.InsereRamo(ramo.Nome);
+                return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return View();
         }
         #endregion
 
         #region Editar
         public ActionResult Editar(int Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 var esp = servico_ramo.BuscaRamo(Id);
                 return View(esp);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
         public ActionResult Editar (Model_Ramos ramo)
         {
-            if (servico_login.CheckCookie())
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    servico_ramo.AtualizaRamo(ramo.idramo, ramo.Nome);
-                    return RedirectToAction("Index");
-                }
-                return View(ramo);
+                servico_ramo.AtualizaRamo(ramo.idramo, ramo.Nome);
+                return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return View(ramo);
 
         }
         #endregion

@@ -1,8 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Lista de Usuarios";
+    ViewBag.Title = "Lista de Especialidades";
+    var adm = Request.Cookies["UsuarioADM"].Value;
 }
 
-@model List<GrupoJOS_MVC5.Models.Model_Usuario>
+@model List<GrupoJOS_MVC5.Models.Model_Especialidade>
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -12,7 +13,7 @@
                 <a href="@Url.Action("Index", "Home")">Home</a>
             </li>
             <li>
-                <a>Usuarios</a>
+                <a>Especialidades</a>
             </li>
             <li class="active">
                 <strong>@ViewBag.Title</strong>
@@ -30,7 +31,7 @@
                         <h5>@ViewBag.Title</h5>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="/Usuarios/Cadastro">
+                                <a href="/Especialidades/Cadastro">
                                     <button type="button" class="btn btn-xs btn-success">Cadastrar</button>
                                 </a>
                             </div>
@@ -41,23 +42,15 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>E-mail (login)</th>
-                                    <th>Ultimo Acesso</th>
-                                    <th>Perfil</th>
-                                    <th>Tipo Usuario</th>
+                                    <th>Especialidade</th>
+                                    <th>Observação</th>
                                     <th>Opções</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>E-mail (login)</th>
-                                    <th>Ultimo Acesso</th>
-                                    <th>Perfil</th>
-                                    <th>Tipo Usuario</th>
+                                    <th>Especialidade</th>
+                                    <th>Observação</th>
                                     <th>Opções</th>
                                 </tr>
                             </tfoot>
@@ -65,27 +58,13 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td width="5%">@item.idusuario</td>
                                         <td>@item.Nome</td>
-                                        <td>@item.Email</td>
-                                        <td>@item.UltimoAcesso</td>
-
-                                        <td width="3%" align="center">
-                                            @if(item.Perfil == 0)
-                                                {<i title="Propagandista" class="fa fa-map-marker"></i> <p>Propagandista</p>}
-                                            @if(item.Perfil == 1)
-                                                {<i title="Comercial" class="fa fa-usd"></i> <p>Comercial</p>}
-                                        </td>
-                                        <td width="3%" align="center">
-                                            @if (item.Administrador == true)
-                                                {<i title="Administrador" class="fa fa-star"></i>}
-                                            else
-                                                {<i title="Comum" class="fa fa-star-o"></i>}
-                                        </td>
-                                        <td width="9%">
+                                        <td>@item.Observacao</td>
+                                        <td width="10%">
                                             <div class="js-sweetalert">
-                                                <a href="/Usuarios/Editar/@item.idusuario"><button class="btn btn-success dim" type="button"><i class="fa fa-edit"></i></button></a>
-                                                <button class="btn btn-danger dim" type="button" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idusuario"><i class="fa fa-trash"></i></button>
+                                                <a href="/Especialidades/Editar/@item.idespecialidade"><button type="button" class="btn btn-success dim"><i class="fa fa-edit"></i></button></a>
+                                                @if (adm == "True")
+                                                {<button type="button" class="btn btn-danger dim" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idespecialidade"><i class="fa fa-trash"></i></button>}
                                             </div>
                                         </td>
                                     </tr>
@@ -99,21 +78,21 @@
                         function AssignButtonClicked(elem) {
                             var id = $(elem).data('assigned-id');
                             swal({
-									title: "Tem certeza?",
-                                    text: "Esse registro sera apagado e nao podera ser recuperado!",
-                                    icon: "warning",
-                                    buttons: {cancel: "Cancelar", ok: "Sim, pode remover!"},
-                                    dangerMode: true,
-                                })
+                                title: "Tem certeza?",
+                                text: "Esse registro sera apagado e nao podera ser recuperado!",
+                                icon: "warning",
+                                buttons: { cancel: "Cancelar", ok: "Sim, pode remover!" },
+                                dangerMode: true,
+                            })
                                 .then((willDelete) => {
                                     if (willDelete) {
-                                    swal("Removido!","Registro foi removido com sucesso!","success")
-                                    .then((value) => {
-                                        $.post("/Usuarios/Index/" + id + "");
-                                        window.location ="/Usuarios/Index";
-                                    });
+                                        swal("Removido!", "Registro foi removido com sucesso!", "success")
+                                            .then((value) => {
+                                                $.post("/Especialidades/Index/" + id + "");
+                                                window.location = "/Especialidades/Index";
+                                            });
                                     } else {
-                                    swal("Cancelado!","O registro não foi removido","error");
+                                        swal("Cancelado!", "O registro não foi removido", "error");
                                     }
                                 });
                         }

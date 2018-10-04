@@ -18,14 +18,11 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View(servico_especialidade.ListaEspecialidade());
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
 
         }
         #endregion
@@ -34,35 +31,29 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 servico_especialidade.RemoveEsp(Id);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
         public ActionResult Cadastro(Model_Especialidade esp)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 if (ModelState.IsValid)
                 {
@@ -71,44 +62,30 @@ namespace GrupoJOS_MVC5.Controllers
                 }
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Editar
         public ActionResult Editar(int Id)
         {
-            if (servico_login.CheckCookie())
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 var esp = servico_especialidade.BuscaEspecialidade(Id);
                 return View(esp);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
         public ActionResult Editar (Model_Especialidade esp)
         {
-            if (servico_login.CheckCookie())
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    servico_especialidade.AtualizaEsp(esp.idespecialidade,esp.Nome,esp.Observacao);
-                    return RedirectToAction("Index");
-                }
-                return View(esp);
+                servico_especialidade.AtualizaEsp(esp.idespecialidade, esp.Nome, esp.Observacao);
+                return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
+            return View(esp);
         }
         #endregion
     }

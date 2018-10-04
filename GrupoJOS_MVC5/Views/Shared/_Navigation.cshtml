@@ -55,12 +55,18 @@
                 <li class="@Html.IsSelected(controller: "AgendaCliente")">
                     <a href="@Url.Action("Index", "AgendaCliente")"><i class="fa fa-calendar"></i> <span class="nav-label" data-i18n="nav.agenda">Agenda</span></a>
                 </li>
+                <li class="@Html.IsSelected(action: "MinhasVisitas")">
+                    <a href="@Url.Action("MinhasVisitas", "Relatorios")"><i class="fa fa-clock-o"></i> <span class="nav-label" data-i18n="nav.visitas">Minhas Visitas</span></a>
+                </li>
             }
 
             @if(perfil == "1" || adm == "True")
             {
                 <li class="@Html.IsSelected(controller: "AgendaComercial")">
                     <a href="@Url.Action("Index", "AgendaComercial")"><i class="fa fa-calendar-o"></i> <span class="nav-label" data-i18n="nav.agenda">Agenda Comercial</span></a>
+                </li>
+                <li class="@Html.IsSelected(action: "MinhasVisitasComercial")">
+                    <a href="@Url.Action("MinhasVisitasComercial", "Relatorios")"><i class="fa fa-clock-o"></i> <span class="nav-label" data-i18n="nav.visitas">Minhas Visitas</span></a>
                 </li>
             }
 
@@ -139,6 +145,7 @@
                     <li class="@Html.IsSelected(controller:"Textos",action: "Cadastro")"><a href="@Url.Action("Cadastro", "Textos")">Cadastro</a></li>
                 </ul>
             </li>
+
 
             @if (adm == "True")
             {

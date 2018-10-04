@@ -91,11 +91,18 @@ namespace GrupoJOS_MVC5.Servicos
         #region Atualiza
         public void AtualizaEsp(int id, string nome, string obs)
         {
+            var especialidade_antiga = BuscaEspecialidade(id);
+
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
 
-                SQL = "UPDATE especialidades SET nome = '"+nome+"', observacao = '"+obs+"' WHERE idespecialidade = "+id+";";
+                SQL = "UPDATE clientes SET Especialidade1 = '"+ nome +"' WHERE Especialidade1 = '"+ especialidade_antiga.Nome +"'; " +
+                    "UPDATE clientes SET Especialidade2 = '" + nome + "' WHERE Especialidade2 = '" + especialidade_antiga.Nome + "'; " +
+                    "UPDATE clientes SET Especialidade3 = '" + nome + "' WHERE Especialidade3 = '" + especialidade_antiga.Nome + "'; " +
+                    "UPDATE clientes SET Especialidade4 = '" + nome + "' WHERE Especialidade4 = '" + especialidade_antiga.Nome + "'; " +
+                    "UPDATE clientes SET Especialidade5 = '" + nome + "' WHERE Especialidade5 = '" + especialidade_antiga.Nome + "'; " +
+                    "UPDATE especialidades SET nome = '" + nome + "', observacao = '" + obs + "' WHERE idespecialidade = " + id + ";";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -108,10 +115,17 @@ namespace GrupoJOS_MVC5.Servicos
         # region Remove
         public void RemoveEsp(int id)
         {
+            var especialidade_antiga = BuscaEspecialidade(id);
+
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "DELETE FROM especialidades WHERE idespecialidade = " + id + " ";
+                SQL = "UPDATE clientes SET Especialidade1 = '' WHERE Especialidade1 = '" + especialidade_antiga.Nome + "'; " +
+                    "UPDATE clientes SET Especialidade2 = '' WHERE Especialidade2 = '" + especialidade_antiga.Nome + "'; " +
+                    "UPDATE clientes SET Especialidade3 = '' WHERE Especialidade3 = '" + especialidade_antiga.Nome + "'; " +
+                    "UPDATE clientes SET Especialidade4 = '' WHERE Especialidade4 = '" + especialidade_antiga.Nome + "'; " +
+                    "UPDATE clientes SET Especialidade5 = '' WHERE Especialidade5 = '" + especialidade_antiga.Nome + "'; " +
+                    "DELETE FROM especialidades WHERE idespecialidade = " + id + " ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);

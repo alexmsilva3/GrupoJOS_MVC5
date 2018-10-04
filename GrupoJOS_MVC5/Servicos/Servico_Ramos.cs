@@ -19,7 +19,7 @@ namespace GrupoJOS_MVC5.Servicos
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM ramos ORDER BY idramo";
+                SQL = "SELECT * FROM ramos  WHERE idramo != 0 ORDER BY idramo";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -109,7 +109,8 @@ namespace GrupoJOS_MVC5.Servicos
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "DELETE FROM ramos WHERE idramo = " + id + " ";
+                SQL = "DELETE FROM ramos WHERE idramo = " + id + ";" +
+                    "UPDATE clientes_comercial SET Ramo = 0 WHERE Ramo = "+ id +" ;";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);

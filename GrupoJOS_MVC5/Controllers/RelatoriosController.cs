@@ -89,7 +89,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region MinhasVisitasComercial
         public ActionResult MinhasVisitasComercial()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
             {
                 return View("~/Views/Relatorios/MinhasVisitasComercial/Index.cshtml");
             }

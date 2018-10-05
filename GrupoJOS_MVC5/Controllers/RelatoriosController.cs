@@ -20,7 +20,7 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            if (servico_login.CheckCookie().UsuarioValidado)
             {
                 return View();
             }
@@ -32,7 +32,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Relatorio de Atendimento
         public ActionResult Atendimentos()
         {
-            if (servico_login.CheckCookie() && Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
             {
                 List<Model_Empresa> lista_empresa = new List<Model_Empresa>();
 
@@ -60,7 +61,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region MinhasVisitas
         public ActionResult MinhasVisitas()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {   
                 return View("~/Views/Relatorios/MinhasVisitas/Index.cshtml");
             }
@@ -89,7 +91,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region MinhasVisitasComercial
         public ActionResult MinhasVisitasComercial()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View("~/Views/Relatorios/MinhasVisitasComercial/Index.cshtml");
             }
@@ -118,7 +121,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Relatorio Gerencial
         public ActionResult Gerencial()
         {
-            if (servico_login.CheckCookie() &&  Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
             {
                 return View();
             }

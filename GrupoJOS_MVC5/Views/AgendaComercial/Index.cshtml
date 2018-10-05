@@ -27,14 +27,7 @@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    @if (perfil == "0")
-                    {
-                        <a href="AgendaCliente/VisitasDia"><span class="label label-primary pull-right">Visualizar</span></a>
-                    }
-                    @if (perfil == "1")
-                    {
-                        <a href="AgendaComercial/VisitasDia"><span class="label label-primary pull-right">Visualizar</span></a>
-                    }
+                    <a href="AgendaComercial/VisitasDia"><span class="label label-primary pull-right">Visualizar</span></a>
                     <h5>Visitas Agendadas - Hoje</h5>
                 </div>
                 <div class="ibox-content">
@@ -58,14 +51,7 @@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    @if (perfil == "0")
-                    {
-                        <a href="AgendaCliente/VisitasSemana"><span class="label label-info pull-right">Visualizar</span></a>
-                    }
-                    @if (perfil == "1")
-                    {
-                        <a href="AgendaComercial/VisitasSemana"><span class="label label-info pull-right">Visualizar</span></a>
-                    }
+                    <a href="AgendaComercial/VisitasSemana"><span class="label label-info pull-right">Visualizar</span></a>
                     <h5>Visitas Agendadas - Semana</h5>
                 </div>
                 <div class="ibox-content">
@@ -89,14 +75,7 @@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    @if (perfil == "0")
-                    {
-                        <a href="AgendaCliente/VisitasMes"><span class="label label-success pull-right">Visualizar</span></a>
-                    }
-                    @if (perfil == "1")
-                    {
-                        <a href="AgendaComercial/VisitasMes"><span class="label label-success pull-right">Visualizar</span></a>
-                    }
+                    <a href="AgendaComercial/VisitasMes"><span class="label label-success pull-right">Visualizar</span></a>
                     <h5>Visitas Agendadas - Mês</h5>
                 </div>
                 <div class="ibox-content">
@@ -143,6 +122,7 @@
                                     <th>Cliente</th>
                                     <th>Última Visita</th>
                                     <th>Ramo Comercial</th>
+                                    <th>Conveniado</th>
                                     <th>Opções</th>
                                 </tr>
                             </thead>
@@ -153,6 +133,7 @@
                                     <th>Cliente</th>
                                     <th>Última Visita</th>
                                     <th>Ramo Comercial</th>
+                                    <th>Conveniado</th>
                                     <th>Opções</th>
                                 </tr>
                             </tfoot>
@@ -172,6 +153,10 @@
                                             <td>Não Visitado</td>}
 
                                         <td>@item.clienteComercial.RamoNome</td>
+                                        <td width="5%" align="center">
+                                            @if(item.clienteComercial.Conveniado == 1){<i class="fa fa-bookmark"></i><p>Conveniado</p>}
+                                            else{<i><p>Sem Convênio</p></i>}
+                                        </td>
 
                                         <td width="15%">
                                             <button type="button" title="Alterar Visita" class="btn btn-success dim" data-toggle="modal" data-target="#myModal2" onclick="AssignButtonClicked(this)" data-assigned-id="@item.agenda.idagenda" data-cliente-id="@item.agenda.Comercial"><i class="fa fa-clock-o"></i></button>

@@ -18,7 +18,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View(servico_empresa.ListaEmpresa());
             }
@@ -31,7 +32,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var id = Id.ToString();
                 servico_empresa.RemoveEmpresa(id);
@@ -45,7 +47,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View();
             }
@@ -83,7 +86,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Edição
         public ActionResult Editar(int Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var emp = servico_empresa.BuscaEmpresa("idempresa", Id.ToString());
 

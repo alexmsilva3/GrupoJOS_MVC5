@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <br>
                                     <div class="row">
                                         <div class="col-md-4">
@@ -240,6 +240,20 @@
                                     </div>
                                     <br>
                                     <br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            @if (Model.Conveniado == 1)
+                                            {
+                                                <label> <input type="checkbox" class="i-checks" name="Convenio" checked> Conveniado? </label>
+                                            }
+                                            else
+                                            {
+                                                <label> <input type="checkbox" class="i-checks" name="Convenio"> Conveniado? </label>
+                                            }
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
 
                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
                                     <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
@@ -255,11 +269,23 @@
 
 @section Styles {
     @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
 }
 
 @section Scripts {
     @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/iCheck")
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
 
 
     <script type="text/javascript">

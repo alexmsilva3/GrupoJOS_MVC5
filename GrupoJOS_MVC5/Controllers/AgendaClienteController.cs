@@ -21,7 +21,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 #region TrataData
                 var primeiroDiaMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -34,27 +35,25 @@ namespace GrupoJOS_MVC5.Controllers
                 DateTime UltimoDiaSemana = DateTime.Now.AddDays(-DateOfWeek + 5);
                 #endregion
 
-                var user = Request.Cookies["UsuarioID"].Value;
-
                 ViewModelDashboard agenda = new ViewModelDashboard();
 
-                agenda.VisitasAgendadasDia = servico_agenda.ContaVisita(Convert.ToInt32(user), hoje_i, hoje_f, "", "Cliente");
-                agenda.VisitasRealizadasDia = servico_agenda.ContaVisita(Convert.ToInt32(user), hoje_i, hoje_f, "1", "Cliente");
+                agenda.VisitasAgendadasDia = servico_agenda.ContaVisita(cookie.UsuarioID, hoje_i, hoje_f, "", "Cliente");
+                agenda.VisitasRealizadasDia = servico_agenda.ContaVisita(cookie.UsuarioID, hoje_i, hoje_f, "1", "Cliente");
                 if (agenda.VisitasAgendadasDia >= 1)
                 { agenda.VisitasRealizadasDiaP = ((agenda.VisitasRealizadasDia * 100) / agenda.VisitasAgendadasDia); }
                 else
                 { agenda.VisitasRealizadasDiaP = 0; }
 
 
-                agenda.VisitasAgendadasSemana = servico_agenda.ContaVisita(Convert.ToInt32(user), PrimeiroDiaSemana, UltimoDiaSemana, "", "Cliente");
-                agenda.VisitasRealizadasSemana = servico_agenda.ContaVisita(Convert.ToInt32(user), PrimeiroDiaSemana, UltimoDiaSemana, "1", "Cliente");
+                agenda.VisitasAgendadasSemana = servico_agenda.ContaVisita(cookie.UsuarioID, PrimeiroDiaSemana, UltimoDiaSemana, "", "Cliente");
+                agenda.VisitasRealizadasSemana = servico_agenda.ContaVisita(cookie.UsuarioID, PrimeiroDiaSemana, UltimoDiaSemana, "1", "Cliente");
                 if (agenda.VisitasAgendadasSemana >= 1)
                 { agenda.VisitasRealizadasSemanaP = ((agenda.VisitasRealizadasSemana * 100) / agenda.VisitasAgendadasSemana); }
                 else
                 { agenda.VisitasRealizadasSemanaP = 0; }
 
-                agenda.VisitasAgendadasMes = servico_agenda.ContaVisita(Convert.ToInt32(user), primeiroDiaMes, ultimoDiaMes, "", "Cliente");
-                agenda.VisitasRealizadasMes = servico_agenda.ContaVisita(Convert.ToInt32(user), primeiroDiaMes, ultimoDiaMes, "1", "Cliente");
+                agenda.VisitasAgendadasMes = servico_agenda.ContaVisita(cookie.UsuarioID, primeiroDiaMes, ultimoDiaMes, "", "Cliente");
+                agenda.VisitasRealizadasMes = servico_agenda.ContaVisita(cookie.UsuarioID, primeiroDiaMes, ultimoDiaMes, "1", "Cliente");
                 if (agenda.VisitasAgendadasMes >= 1)
                 { agenda.VisitasRealizadasMesP = ((agenda.VisitasRealizadasMes * 100) / agenda.VisitasAgendadasMes); }
                 else
@@ -62,7 +61,7 @@ namespace GrupoJOS_MVC5.Controllers
 
 
                 agenda.lista_agenda = new List<ViewModelAgenda>();
-                agenda.lista_agenda = servico_agenda.ListaAgendaPorX("agenda.usuario", user.ToString());
+                agenda.lista_agenda = servico_agenda.ListaAgendaPorX("agenda.usuario", cookie.UsuarioID.ToString());
 
                 return View(agenda);
             }
@@ -74,7 +73,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(double Id)
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 servico_agenda.RemoveAgenda(Id);
                 return RedirectToAction("Index", "AgendaCliente");
@@ -87,7 +87,9 @@ namespace GrupoJOS_MVC5.Controllers
         #region Cadastro
         public ActionResult Cadastro(double? Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewBag.ListadeClientes = servico_cliente.ListaClientes();
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
@@ -124,7 +126,9 @@ namespace GrupoJOS_MVC5.Controllers
         #region Reagendar
         public ActionResult Reagendar(double Id, DateTime DataVisita, string HoraVisita, long clienteid, string VisitaRealizada)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 if (DataVisita == null) { return new HttpStatusCodeResult(500); }
                 if (string.IsNullOrEmpty(HoraVisita)) { return new HttpStatusCodeResult(500); }
@@ -148,7 +152,9 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpGet]
         public ActionResult Editar(double Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewModelAgenda agenda = new ViewModelAgenda();
                 var valor = Id.ToString();
@@ -188,7 +194,9 @@ namespace GrupoJOS_MVC5.Controllers
         #region Visualizar
         public ActionResult Visualizar(int id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var agenda = servico_agenda.AgendaPorX("agenda.idagenda", id.ToString());
                 return View(agenda);
@@ -201,7 +209,9 @@ namespace GrupoJOS_MVC5.Controllers
         #region Concluir
         public ActionResult Concluir(double Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewModelAgenda agenda = new ViewModelAgenda();
                 agenda = servico_agenda.AgendaPorX("agenda.idagenda", Id.ToString());
@@ -239,20 +249,20 @@ namespace GrupoJOS_MVC5.Controllers
         #region VisitasDia
         public ActionResult VisitasDia()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 DateTime hoje_i = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
                 DateTime hoje_f = hoje_i.AddDays(1).AddTicks(-1);
-                
-                var user = Request.Cookies["UsuarioID"].Value;
                 
                 ViewModelAgendaDashboard dashboard = new ViewModelAgendaDashboard();
 
                 dashboard.visitas_arealizar = new List<ViewModelAgenda>();
                 dashboard.visitas_realizadas = new List<ViewModelAgenda>();
 
-                dashboard.visitas_arealizar = servico_agenda.ListaAgendData(hoje_i,hoje_f, user,"0");
-                dashboard.visitas_realizadas = servico_agenda.ListaAgendData(hoje_i, hoje_f,user, "1");
+                dashboard.visitas_arealizar = servico_agenda.ListaAgendData(hoje_i,hoje_f, cookie.UsuarioID, "0");
+                dashboard.visitas_realizadas = servico_agenda.ListaAgendData(hoje_i, hoje_f, cookie.UsuarioID, "1");
 
                 return View(dashboard);
             }
@@ -264,7 +274,9 @@ namespace GrupoJOS_MVC5.Controllers
         #region VisitasSemana
         public ActionResult VisitasSemana()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 int DateOfWeek = (int)DateTime.Now.DayOfWeek;
                 DateTime PrimeiroDiaSemana = DateTime.Now.AddDays(-DateOfWeek + 1);
@@ -272,15 +284,13 @@ namespace GrupoJOS_MVC5.Controllers
                 ViewBag.DataInicio = PrimeiroDiaSemana.ToShortDateString();
                 ViewBag.DataFim = UltimoDiaSemana.ToShortDateString();
 
-                var user = Request.Cookies["UsuarioID"].Value;
-
                 ViewModelAgendaDashboard dashboard = new ViewModelAgendaDashboard();
 
                 dashboard.visitas_arealizar = new List<ViewModelAgenda>();
                 dashboard.visitas_realizadas = new List<ViewModelAgenda>();
 
-                dashboard.visitas_arealizar = servico_agenda.ListaAgendData(PrimeiroDiaSemana, UltimoDiaSemana, user, "0");
-                dashboard.visitas_realizadas = servico_agenda.ListaAgendData(PrimeiroDiaSemana, UltimoDiaSemana, user, "1");
+                dashboard.visitas_arealizar = servico_agenda.ListaAgendData(PrimeiroDiaSemana, UltimoDiaSemana, cookie.UsuarioID, "0");
+                dashboard.visitas_realizadas = servico_agenda.ListaAgendData(PrimeiroDiaSemana, UltimoDiaSemana, cookie.UsuarioID, "1");
 
                 return View(dashboard);
             }
@@ -292,22 +302,22 @@ namespace GrupoJOS_MVC5.Controllers
         #region VisitasMes
         public ActionResult VisitasMes()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var primeiroDiaMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 var ultimoDiaMes = primeiroDiaMes.AddMonths(1).AddDays(-1);
                 ViewBag.DataInicio = primeiroDiaMes.ToShortDateString();
                 ViewBag.DataFim = ultimoDiaMes.ToShortDateString();
-
-                var user = Request.Cookies["UsuarioID"].Value;
-
+                
                 ViewModelAgendaDashboard dashboard = new ViewModelAgendaDashboard();
 
                 dashboard.visitas_arealizar = new List<ViewModelAgenda>();
                 dashboard.visitas_realizadas = new List<ViewModelAgenda>();
 
-                dashboard.visitas_arealizar = servico_agenda.ListaAgendData(primeiroDiaMes, ultimoDiaMes, user, "0");
-                dashboard.visitas_realizadas = servico_agenda.ListaAgendData(primeiroDiaMes, ultimoDiaMes, user, "1");
+                dashboard.visitas_arealizar = servico_agenda.ListaAgendData(primeiroDiaMes, ultimoDiaMes, cookie.UsuarioID, "0");
+                dashboard.visitas_realizadas = servico_agenda.ListaAgendData(primeiroDiaMes, ultimoDiaMes, cookie.UsuarioID, "1");
 
                 return View(dashboard);
             }

@@ -19,7 +19,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
+            var usuario = servico_login.CheckCookie();
+            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 return View(servico_clientecomercial.ListaClienteComercial());
             }
@@ -31,7 +32,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(double Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
+            var usuario = servico_login.CheckCookie();
+            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 servico_clientecomercial.RemoveClienteComercial(Id);
                 return RedirectToAction("Index");
@@ -43,7 +45,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
+            var usuario = servico_login.CheckCookie();
+            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 ViewBag.ListaRamos = servico_ramos.ListaRamos();
                 return View();
@@ -53,13 +56,21 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Cadastro(Model_ClienteComercial cli, int ramo_cliente)
+        public ActionResult Cadastro(Model_ClienteComercial cli, int ramo_cliente, string Convenio)
         {
-            if (servico_login.CheckCookie())
+            var usuario = servico_login.CheckCookie();
+            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 if (ModelState.IsValid)
                 {
-                    servico_clientecomercial.InsereClienteComercial(cli.Nome, cli.RazaoSocial, cli.CNPJ, cli.InscricaoEstadual, cli.Endereco, cli.Num, cli.Bairro, cli.Cidade, cli.UF, cli.CEP, cli.Contato, cli.Email, cli.Fone1, cli.Fone2, ramo_cliente);
+                    int conveniado = 0;
+
+                    if (Convenio == "on")
+                    {
+                        conveniado = 1;
+                    }
+
+                    servico_clientecomercial.InsereClienteComercial(cli.Nome, cli.RazaoSocial, cli.CNPJ, cli.InscricaoEstadual, cli.Endereco, cli.Num, cli.Bairro, cli.Cidade, cli.UF, cli.CEP, cli.Contato, cli.Email, cli.Fone1, cli.Fone2, ramo_cliente, conveniado);
                     return RedirectToAction("Index");
                 }
                 return View();
@@ -74,7 +85,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Edição
         public ActionResult Editar(int Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
+            var usuario = servico_login.CheckCookie();
+            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 ViewBag.ListaRamos = servico_ramos.ListaRamos();
                 var cli = servico_clientecomercial.BuscaClienteComercial("idclientecomercial", Id.ToString());
@@ -86,13 +98,19 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Editar(Model_ClienteComercial cli, int ramo_cliente)
+        public ActionResult Editar(Model_ClienteComercial cli, int ramo_cliente, string Convenio)
         {
             if (ModelState.IsValid)
             {
+                int conveniado = 0;
+
+                if (Convenio == "on")
+                {
+                    conveniado = 1;
+                }
 
                 ViewBag.ListaRamos = servico_ramos.ListaRamos();
-                servico_clientecomercial.AtualizaClienteComercial(cli.idclientecomercial.ToString(), cli.Nome, cli.RazaoSocial, cli.CNPJ, cli.InscricaoEstadual, cli.Endereco, cli.Num, cli.Bairro, cli.Cidade, cli.UF, cli.CEP, cli.Contato, cli.Email, cli.Fone1, cli.Fone2, ramo_cliente);
+                servico_clientecomercial.AtualizaClienteComercial(cli.idclientecomercial.ToString(), cli.Nome, cli.RazaoSocial, cli.CNPJ, cli.InscricaoEstadual, cli.Endereco, cli.Num, cli.Bairro, cli.Cidade, cli.UF, cli.CEP, cli.Contato, cli.Email, cli.Fone1, cli.Fone2, ramo_cliente, conveniado);
 
                 return RedirectToAction("Index");
             }

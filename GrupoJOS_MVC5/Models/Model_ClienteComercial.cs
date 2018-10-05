@@ -35,8 +35,11 @@ namespace GrupoJOS_MVC5.Models
         public string Fone1 { get; set; }
         public string Fone2 { get; set; }
         public int Ramo { get; set; }
+        public int Conveniado { get; set; }
+
         public DateTime DataCadastro { get; set; }
         public string UltimaVisita { get; set; }
+
 
         //inner join da tabela
         public string RamoNome { get; set; }

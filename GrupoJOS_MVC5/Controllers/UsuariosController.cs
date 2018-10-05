@@ -18,7 +18,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie() && Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
             {
                 return View(servico_usuario.ListaUsuarios());
             }
@@ -30,7 +31,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if (servico_login.CheckCookie() && Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
             {
                 var id = Id.ToString();
                 servico_usuario.RemoveUsuario(id);
@@ -43,8 +45,9 @@ namespace GrupoJOS_MVC5.Controllers
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if (servico_login.CheckCookie() && Request.Cookies["UsuarioADM"].Value == "True")
-             {
+            var cookie = servico_login.CheckCookie();
+            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
+            {
                 return View();
             }
            return RedirectToAction("Index", "Login");
@@ -54,7 +57,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Cadastro(Model_Usuario user)
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
             {
                 if (ModelState.IsValid)
                 {
@@ -64,17 +68,15 @@ namespace GrupoJOS_MVC5.Controllers
                 }
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Edição
         public ActionResult Editar(int Id)
         {
-            if (servico_login.CheckCookie() && Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
             {
                 var valor = Id.ToString();
                 var user = servico_usuario.BuscaUsuario("idusuario", valor);

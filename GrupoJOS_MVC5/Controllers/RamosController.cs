@@ -18,7 +18,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View(servico_ramo.ListaRamos());
             }
@@ -31,7 +32,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 servico_ramo.RemoveRamo(Id);
                 return RedirectToAction("Index");
@@ -43,7 +45,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View();
             }
@@ -65,7 +68,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Editar
         public ActionResult Editar(int Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "1") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var esp = servico_ramo.BuscaRamo(Id);
                 return View(esp);

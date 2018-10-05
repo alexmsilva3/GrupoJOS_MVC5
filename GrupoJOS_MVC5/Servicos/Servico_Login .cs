@@ -11,20 +11,46 @@ namespace GrupoJOS_MVC5.Servicos
 {
     public class Servico_Login
     {
-        //string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
-        public bool CheckCookie()
+        //public bool CheckCookie()
+        //{
+        //    //verifica se valores não são nulos
+        //    if (HttpContext.Current.Request.Cookies["UsuarioEmail"] != null && HttpContext.Current.Request.Cookies["UsuarioADM"] != null && HttpContext.Current.Request.Cookies["UsuarioNome"] != null && HttpContext.Current.Request.Cookies["UsuarioID"] != null && HttpContext.Current.Request.Cookies["UsuarioPerfil"] != null)
+        //    {
+        //        if (!string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioEmail"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioADM"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioNome"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioID"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value))
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
+
+        public Model_Cookie CheckCookie()
         {
+            Model_Cookie usuario = new Model_Cookie();
 
             //verifica se valores não são nulos
             if (HttpContext.Current.Request.Cookies["UsuarioEmail"] != null && HttpContext.Current.Request.Cookies["UsuarioADM"] != null && HttpContext.Current.Request.Cookies["UsuarioNome"] != null && HttpContext.Current.Request.Cookies["UsuarioID"] != null && HttpContext.Current.Request.Cookies["UsuarioPerfil"] != null)
             {
-
                 if (!string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioEmail"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioADM"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioNome"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioID"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value))
                 {
-                    return true;
+                    usuario.UsuarioADM = HttpContext.Current.Request.Cookies["UsuarioADM"].Value;
+                    usuario.UsuarioEmail = HttpContext.Current.Request.Cookies["UsuarioEmail"].Value;
+                    usuario.UsuarioID = HttpContext.Current.Request.Cookies["UsuarioID"].Value;
+                    usuario.UsuarioNome = HttpContext.Current.Request.Cookies["UsuarioNome"].Value;
+                    usuario.UsuarioPerfil = HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value;
+                    usuario.UsuarioValidado = true;
+
+                    return usuario;
                 }
             }
-            return false;
+            usuario.UsuarioADM = "";
+            usuario.UsuarioEmail = "";
+            usuario.UsuarioID = "";
+            usuario.UsuarioNome = "";
+            usuario.UsuarioPerfil = "";
+            usuario.UsuarioValidado = false;
+
+            return usuario;
         }
 
         public void ExpireAllCookies()

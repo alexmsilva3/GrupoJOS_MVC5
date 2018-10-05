@@ -503,7 +503,7 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Conta Visita Por Usuario
-        public int ContaVisita(int usuario, DateTime DataInicio, DateTime DataFim, string status, string perfil)
+        public int ContaVisita(string usuario, DateTime DataInicio, DateTime DataFim, string status, string perfil)
         {
             int Total = 0;
 
@@ -523,7 +523,7 @@ namespace GrupoJOS_MVC5.Servicos
             {
                 string SQL = "";
                 SQL = "SELECT COUNT(idagenda) as Total FROM agenda WHERE 1=1 " +
-                    " AND Usuario = "+ usuario +"" +
+                    " AND Usuario = '"+ usuario +"' " +
                     " AND DataVisita >= '"+DataInicio1+"' " +
                     " AND DataVisita <= '" + DataFim1 + "' ";
 
@@ -610,6 +610,7 @@ namespace GrupoJOS_MVC5.Servicos
                     AgendaComercialPorX.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
                     AgendaComercialPorX.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
                     AgendaComercialPorX.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+                    AgendaComercialPorX.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
                     AgendaComercialPorX.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
                     AgendaComercialPorX.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
 
@@ -672,6 +673,7 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
                     ag.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
                     ag.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+                    ag.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
                     ag.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
                     ag.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
 
@@ -739,6 +741,7 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
                     ag.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
                     ag.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+                    ag.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
                     ag.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
                     ag.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
 

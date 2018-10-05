@@ -17,7 +17,7 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            if (servico_login.CheckCookie().UsuarioValidado)
             {
                 return Redirect("/Home/Index");
             }

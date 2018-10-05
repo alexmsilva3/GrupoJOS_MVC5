@@ -19,7 +19,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View(servico_cliente.ListaClientes());
             }
@@ -31,7 +32,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var id = Id.ToString();
                 servico_cliente.RemoveCliente(id);
@@ -44,7 +46,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewBag.ListaEspecialidade = servico_especialidade.ListaEspecialidade();
                 return View();
@@ -57,15 +60,11 @@ namespace GrupoJOS_MVC5.Controllers
         {
             ViewBag.ListaEspecialidade = servico_especialidade.ListaEspecialidade();
 
-            if (servico_login.CheckCookie())
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    servico_cliente.InsereCliente(cli.Nome, cli.CRM, cli.Email, cli.Aniversario_m, cli.Endereco, cli.Num, cli.Cidade, cli.Bairro, cli.UF, cli.CEP, cli.Fone_Celular, cli.Fone1, cli.Fone2, cli.Contato, cli.Aniversario_c, cli.Horario_In, cli.Horario_Out, cli.Observacoes, cli.NomeEspecialidade1, cli.NomeEspecialidade2, cli.NomeEspecialidade3, cli.NomeEspecialidade4, cli.NomeEspecialidade5);
-                    return RedirectToAction("Index");
-                }
+                servico_cliente.InsereCliente(cli.Nome, cli.CRM, cli.Email, cli.Aniversario_m, cli.Endereco, cli.Num, cli.Cidade, cli.Bairro, cli.UF, cli.CEP, cli.Fone_Celular, cli.Fone1, cli.Fone2, cli.Contato, cli.Aniversario_c, cli.Horario_In, cli.Horario_Out, cli.Observacoes, cli.NomeEspecialidade1, cli.NomeEspecialidade2, cli.NomeEspecialidade3, cli.NomeEspecialidade4, cli.NomeEspecialidade5);
+                return RedirectToAction("Index");
             }
-
             return View();
         }
         #endregion
@@ -73,7 +72,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Edição
         public ActionResult Editar(int Id)
         {
-            if ((servico_login.CheckCookie() && Request.Cookies["UsuarioPerfil"].Value == "0") || Request.Cookies["UsuarioADM"].Value == "True")
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 Model_Cliente cliente = new Model_Cliente();
                 var valor = Id.ToString();

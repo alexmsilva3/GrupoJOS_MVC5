@@ -20,6 +20,7 @@
         </ol>
     </div>
 </div>
+
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -27,98 +28,160 @@
                 <div class="ibox-title">
                     <small>Usuarios que utilizam o sistema.</small>
                 </div>
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-sm-12 b-r">
-                            @using (Html.BeginForm())
-                            {
-                                @Html.AntiForgeryToken()
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
 
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(model => model.idusuario)
-                                <form>
-
-                                    <label for="nome">Nome</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="material-icons">perm_identity</i>
-                                        </span>
-                                        <div class="form-group">
-                                            @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o nome do usuario" } })
-                                        </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.idusuario)
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-12 b-r">
+                                <label for="nome">Nome</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">perm_identity</i>
+                                    </span>
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o nome do usuario" } })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
-                                    <br>
-                                    <label for="email_address">E-mail</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="material-icons">mail_outline</i>
-                                        </span>
-                                        <div class="form-line">
-                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o e-mail" } })
-                                        </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                                <br>
+                                <label for="email_address">E-mail</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">mail_outline</i>
+                                    </span>
+                                    <div class="form-line">
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o e-mail" } })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                    <br>
-                                    <label for="password">Senha</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="material-icons">vpn_key</i>
-                                        </span>
-                                        <div class="form-line">
-                                            @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite a senha" } })
-                                        </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                <br>
+                                <label for="password">Senha</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">vpn_key</i>
+                                    </span>
+                                    <div class="form-line">
+                                        @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite a senha" } })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
-                                    <br>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="material-icons">vpn_key</i>
-                                        </span>
-                                        <div class="form-line">
-                                            @Html.EditorFor(model => model.Senha2, new { htmlAttributes = new { @class = "form-control", placeholder = "Confirme a senha" } })
-                                        </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">vpn_key</i>
+                                    </span>
+                                    <div class="form-line">
+                                        @Html.EditorFor(model => model.Senha2, new { htmlAttributes = new { @class = "form-control", placeholder = "Confirme a senha" } })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.Senha2, "", new { @class = "text-danger" })
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-sm-6 b-r">
-                                            <label>Perfil de Usuario</label>
-                                            <div class="input-group">
-                                                <label class="container">
-
-                                                    @if (@Model.Perfil == 0)
-                                                    {
-                                                        <div class="radio i-checks"><label> <input type="radio" checked name="Perfil" value="0"> <i></i> Perfil de Visita </label></div>
-                                                        <div class="radio i-checks"><label> <input type="radio" name="Perfil" value="1"> <i></i> Perfil Comercial </label></div>
-                                                    }
-                                                    @if (@Model.Perfil == 1)
-                                                    {
-                                                        <div class="radio i-checks"><label> <input type="radio" name="Perfil" value="0"> <i></i> Perfil de Visita </label></div>
-                                                        <div class="radio i-checks"><label> <input type="radio" checked name="Perfil" value="1"> <i></i> Perfil Comercial </label></div>
-                                                    }
-
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 b-r">
-                                            <label>Usuário Administrador?</label>
-                                            <div class="input-group">
-                                                <label class="container">
-                                                    @Html.CheckBoxFor(model => model.Administrador, new { htmlAttribites = new { @class = "checkbox i-checks", @type = "checkbox" } })
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-
-                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
-                                    <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
-                                </form>
-                            }
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Senha2, "", new { @class = "text-danger" })
+                            </div>
                         </div>
+                        <br>
                     </div>
-                </div>
+                    <br>
+
+                    <form>
+                        <div class="ibox-title">
+                            <small>Permissões</small>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-sm-4 b-r">
+                                    <div class="form-group">
+                                        <label class="col-sm-6 control-label">Usuário Administrador?</label>
+                                        @if(Model.Administrador == true){<div class="checkbox i-checks"><input type="checkbox" id="Administrador" name="Administrador" checked><i></i></div>}
+                                        else{<div class="checkbox i-checks"><input type="checkbox" id="Administrador" name="Administrador"><i></i></div>}
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p>Usuários Administradores possuem privilegios de remoção de dados, muito cuidado ao selecionar essa opção!</p>
+                                </div>
+                                <div class="col-sm-12 b-r">
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Perfil</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control m-b" id="Perfil" name="Perfil">
+                                                <option>Selecione um perfil</option>
+                                                @if(Model.Perfil == "0")
+                                                {
+                                                    <option selected>Propagandista</option>
+                                                    <option>Comercial</option>
+                                                    <option>Personalizado</option>
+                                                    <option>Empresa</option>
+                                                }
+                                                @if(Model.Perfil == "1")
+                                                {
+                                                    <option>Propagandista</option>
+                                                    <option selected>Comercial</option>
+                                                    <option>Personalizado</option>
+                                                    <option>Empresa</option>
+                                                }
+                                                @if(Model.Perfil == "2")
+                                                {
+                                                    <option>Propagandista</option>
+                                                    <option>Comercial</option>
+                                                    <option selected>Personalizado</option>
+                                                    <option>Empresa</option>
+                                                }
+                                                @if(Model.Perfil == "3")
+                                                {
+                                                    <option>Propagandista</option>
+                                                    <option>Comercial</option>
+                                                    <option>Personalizado</option>
+                                                    <option selected>Empresa</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div id="Empresas" style="display: none;">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Empresa</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control m-b" id="Perfil" name="Empresa">
+                                                    <option value="">Selecione uma Empresa</option>
+                                                    @foreach (var item in ViewBag.ListaEmpresas)
+                                                    {
+                                                        <option value='@item.idempresa'>@item.Nome</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="Permissoes" style="display: none;">
+                                        <div class="col-sm-4">
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoAgenda" name="PermissaoAgenda"> <i></i> Agenda </label></div>
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoCliente" name="PermissaoCliente"> <i></i> Profissional de Saúde </label></div>
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoEmpresas" name="PermissaoEmpresas"> <i></i> Empresas </label></div>
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoEspecialidades" name="PermissaoEspecialidades"> <i></i> Especialidades </label></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoAgendaComercial" name="PermissaoAgendaComercial"> <i></i> Agenda Comercial </label></div>
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoClienteComercial" name="PermissaoClienteComercial"> <i></i> Cliente Comercial </label></div>
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoRamos" name="PermissaoRamos"> <i></i> Ramos </label></div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoUsuarios" name="PermissaoUsuarios"> <i></i> Usuários </label></div>
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoTextos" name="PermissaoTextos"> <i></i> Textos </label></div>
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoRelatorios" name="PermissaoRelatorios"> <i></i> Relatorios </label></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
+                            <button type="button" id="return" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
+                        </div>
+                    </form>
+                }
             </div>
         </div>
     </div>
@@ -132,14 +195,182 @@
 @section Scripts {
     @Scripts.Render("~/plugins/iCheck")
 
-    <script type="text/javascript">
-        $(document).ready(function () {
+<script type="text/javascript">
 
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-
+    $(function(){
+        $("#return").click(function(){
+        window.location.href = "@Url.Action("Index","Usuarios")";
         });
-    </script>
+    });
+
+    function Propagandista() {
+        var x = document.getElementById("Propagandista");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    $(document).ready(function () {
+        $("#Perfil").change(function () {
+            var select = $("#Perfil option:selected").val();
+
+            var emp = document.getElementById("Empresas");
+
+            var pro = document.getElementById("Permissoes");
+            switch (select) {
+                case "Propagandista":
+                    //.removeProp('checked');
+                    //.prop('checked', true);
+
+                    $('#PermissaoAgenda').prop('checked', true);
+                    $('#PermissaoAgenda').iCheck('update');
+
+                    $('#PermissaoCliente').prop('checked', true);
+                    $('#PermissaoCliente').iCheck('update');
+
+                    $('#PermissaoEmpresas').prop('checked', true);
+                    $('#PermissaoEmpresas').iCheck('update');
+
+                    $('#PermissaoEspecialidades').prop('checked', true);
+                    $('#PermissaoEspecialidades').iCheck('update');
+
+                    $('#PermissaoAgendaComercial').removeProp('checked');
+                    $('#PermissaoAgendaComercial').iCheck('uncheck');
+
+                    $('#PermissaoClienteComercial').removeProp('checked');
+                    $('#PermissaoClienteComercial').iCheck('uncheck');
+
+                    $('#PermissaoRamos').removeProp('checked');
+                    $('#PermissaoRamos').iCheck('uncheck');
+
+                    $('#PermissaoUsuarios').removeProp('checked');
+                    $('#PermissaoUsuarios').iCheck('uncheck');
+
+                    $('#PermissaoTextos').prop('checked', true);
+                    $('#PermissaoTextos').iCheck('update');
+
+                    $('#PermissaoRelatorios').removeProp('checked');
+                    $('#PermissaoRelatorios').iCheck('uncheck');
+
+                    pro.style.display = "block"
+                    emp.style.display = "none"
+                    break;
+                case "Comercial":
+                    $('#PermissaoAgenda').removeProp('checked');
+                    $('#PermissaoAgenda').iCheck('uncheck');
+
+                    $('#PermissaoCliente').removeProp('checked');
+                    $('#PermissaoCliente').iCheck('uncheck');
+
+                    $('#PermissaoEmpresas').removeProp('checked');
+                    $('#PermissaoEmpresas').iCheck('uncheck');
+
+                    $('#PermissaoEspecialidades').removeProp('checked');
+                    $('#PermissaoEspecialidades').iCheck('uncheck');
+
+                    $('#PermissaoAgendaComercial').prop('checked', true);
+                    $('#PermissaoAgendaComercial').iCheck('update');
+
+                    $('#PermissaoClienteComercial').prop('checked', true);
+                    $('#PermissaoClienteComercial').iCheck('update');
+
+                    $('#PermissaoRamos').prop('checked', true);
+                    $('#PermissaoRamos').iCheck('update');
+
+                    $('#PermissaoUsuarios').removeProp('checked');
+                    $('#PermissaoUsuarios').iCheck('uncheck');
+
+                    $('#PermissaoTextos').prop('checked', true);
+                    $('#PermissaoTextos').iCheck('update');
+
+                    $('#PermissaoRelatorios').removeProp('checked');
+                    $('#PermissaoRelatorios').iCheck('uncheck');
+
+                    pro.style.display = "block"
+                    emp.style.display = "none"
+                    break;
+                case "Personalizado":
+                    $('#PermissaoAgenda').removeProp('checked');
+                    $('#PermissaoAgenda').iCheck('uncheck');
+
+                    $('#PermissaoCliente').removeProp('checked');
+                    $('#PermissaoCliente').iCheck('uncheck');
+
+                    $('#PermissaoEmpresas').removeProp('checked');
+                    $('#PermissaoEmpresas').iCheck('uncheck');
+
+                    $('#PermissaoEspecialidades').removeProp('checked');
+                    $('#PermissaoEspecialidades').iCheck('uncheck');
+
+                    $('#PermissaoAgendaComercial').removeProp('checked');
+                    $('#PermissaoAgendaComercial').iCheck('uncheck');
+
+                    $('#PermissaoClienteComercial').removeProp('checked');
+                    $('#PermissaoClienteComercial').iCheck('uncheck');
+
+                    $('#PermissaoRamos').removeProp('checked');
+                    $('#PermissaoRamos').iCheck('uncheck');
+
+                    $('#PermissaoUsuarios').removeProp('checked');
+                    $('#PermissaoUsuarios').iCheck('uncheck');
+
+                    $('#PermissaoTextos').removeProp('checked');
+                    $('#PermissaoTextos').iCheck('uncheck');
+
+                    $('#PermissaoRelatorios').removeProp('checked');
+                    $('#PermissaoRelatorios').iCheck('uncheck');
+                    pro.style.display = "block"
+                    emp.style.display = "none"
+                    break;
+                case "Empresa":
+                    $('#PermissaoAgenda').removeProp('checked');
+                    $('#PermissaoAgenda').iCheck('disable');
+
+                    $('#PermissaoCliente').removeProp('checked');
+                    $('#PermissaoCliente').iCheck('disable');
+
+                    $('#PermissaoEmpresas').removeProp('checked');
+                    $('#PermissaoEmpresas').iCheck('disable');
+
+                    $('#PermissaoEspecialidades').removeProp('checked');
+                    $('#PermissaoEspecialidades').iCheck('disable');
+
+                    $('#PermissaoAgendaComercial').removeProp('checked');
+                    $('#PermissaoAgendaComercial').iCheck('disable');
+
+                    $('#PermissaoClienteComercial').removeProp('checked');
+                    $('#PermissaoClienteComercial').iCheck('disable');
+
+                    $('#PermissaoRamos').removeProp('checked');
+                    $('#PermissaoRamos').iCheck('disable');
+
+                    $('#PermissaoUsuarios').removeProp('checked');
+                    $('#PermissaoUsuarios').iCheck('disable');
+
+                    $('#PermissaoTextos').removeProp('checked');
+                    $('#PermissaoTextos').iCheck('disable');
+
+                    $('#PermissaoRelatorios').prop('checked', true);
+                    $('#PermissaoRelatorios').iCheck('update');
+                    pro.style.display = "block"
+                    emp.style.display = "block"
+                    break;
+                default:
+                    emp.style.display = "none"
+                    pro.style.display = "none"
+                    break;
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        })
+    });
+
+</script>
 }

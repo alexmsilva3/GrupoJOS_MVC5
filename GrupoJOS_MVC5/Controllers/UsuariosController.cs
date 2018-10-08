@@ -14,6 +14,7 @@ namespace GrupoJOS_MVC5.Controllers
     {
         Servico_Usuario servico_usuario = new Servico_Usuario();
         Servico_Login servico_login = new Servico_Login();
+        Servico_Empresa servico_empresa = new Servico_Empresa();
 
         #region Index
         public ActionResult Index()
@@ -48,6 +49,7 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
             {
+                ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
                 return View();
             }
            return RedirectToAction("Index", "Login");
@@ -55,17 +57,18 @@ namespace GrupoJOS_MVC5.Controllers
 
 
         [HttpPost]
-        public ActionResult Cadastro(Model_Usuario user)
+        public ActionResult Cadastro(Model_Usuario user, string Administrador, string Empresa)
         {
             var cookie = servico_login.CheckCookie();
             if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
             {
                 if (ModelState.IsValid)
                 {
-
-                    servico_usuario.InsereUsuario(user.Administrador, user.Nome, user.Senha, user.Email, user.Clientes, user.Perfil);
+                    //falta tratar empresa
+                    servico_usuario.InsereUsuario(user.Administrador, user.Nome, user.Senha, user.Email, user.Clientes, user.Perfil, user.PermissaoAgenda, user.PermissaoAgendaComercial, user.PermissaoCliente, user.PermissaoClienteComercial, user.PermissaoEmpresas, user.PermissaoEspecialidades, user.PermissaoRamos, user.PermissaoRelatorios, user.PermissaoTextos, user.PermissaoUsuarios);
                     return RedirectToAction("Index");
                 }
+                ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
                 return View();
             }
             return RedirectToAction("Index", "Login");
@@ -78,8 +81,9 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
             {
-                var valor = Id.ToString();
-                var user = servico_usuario.BuscaUsuario("idusuario", valor);
+                ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
+
+                var user = servico_usuario.BuscaUsuario("idusuario", Id.ToString());
                 return View(user);
             }
             return RedirectToAction("Index", "Login");
@@ -90,12 +94,11 @@ namespace GrupoJOS_MVC5.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                //executa função de atualizar
-                servico_usuario.AtualizaUsuario(user.Administrador, user.Nome, user.Email, user.Senha, user.Clientes, user.Perfil, user.idusuario.ToString());
+                servico_usuario.AtualizaUsuario(user.Administrador, user.Nome, user.Email, user.Senha, user.Clientes, user.Perfil, user.idusuario.ToString(), user.PermissaoAgenda, user.PermissaoAgendaComercial, user.PermissaoCliente, user.PermissaoClienteComercial, user.PermissaoEmpresas, user.PermissaoEspecialidades, user.PermissaoRamos, user.PermissaoRelatorios, user.PermissaoTextos, user.PermissaoUsuarios);
 
                 return RedirectToAction("Index");
             }
+            ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
             return View(user);
 
         }

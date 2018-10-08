@@ -71,10 +71,14 @@
                                         <td>@item.UltimoAcesso</td>
 
                                         <td width="3%" align="center">
-                                            @if(item.Perfil == 0)
+                                            @if(item.Perfil == "0")
                                                 {<i title="Propagandista" class="fa fa-map-marker"></i> <p>Propagandista</p>}
-                                            @if(item.Perfil == 1)
+                                            @if(item.Perfil == "1")
                                                 {<i title="Comercial" class="fa fa-usd"></i> <p>Comercial</p>}
+                                            @if(item.Perfil == "2")
+                                                {<i title="Personalizado" class="fa fa-asterisk"></i> <p>Personalizado</p>}
+                                            @if(item.Perfil == "3")
+                                                {<i title="Empresa" class="fa fa-building"></i> <p>Empresa</p> <p>NOME DA EMPRESA</p>}
                                         </td>
                                         <td width="3%" align="center">
                                             @if (item.Administrador == true)

@@ -845,7 +845,6 @@
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Usuarios\Cadastro.cshtml" />
-    <Content Include="Views\Usuarios\Editar.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
     <Content Include="Views\Clientes\Cadastro.cshtml" />
     <Content Include="Views\Clientes\Editar.cshtml" />
@@ -893,6 +892,8 @@
     <Content Include="Views\Especialidades\Cadastro.cshtml" />
     <Content Include="Views\Especialidades\Editar.cshtml" />
     <Content Include="Views\Especialidades\Index.cshtml" />
+    <Content Include="Views\Usuarios\Cadastro-bkp.cshtml" />
+    <Content Include="Views\Usuarios\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

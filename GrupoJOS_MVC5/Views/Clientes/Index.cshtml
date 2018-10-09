@@ -66,28 +66,28 @@
                                         <td>@item.Aniversario_m</td>
                                         <td>@item.Cidade</td>
                                         <td>
-                                            @if (item.NomeEspecialidade1 != "" || item.NomeEspecialidade1 != null)
+                                            @if (!String.IsNullOrEmpty(item.NomeEspecialidade1))
                                             {
-                                                <span class="label label-info">@item.NomeEspecialidade1</span>
+                                                <p class="label label-info">@item.NomeEspecialidade1</p><br>
                                             }
-                                            @if (item.NomeEspecialidade2 != "" || item.NomeEspecialidade2 != null)
+                                            @if (!String.IsNullOrEmpty(item.NomeEspecialidade2))
                                             {
-                                                <span class="label label-info">@item.NomeEspecialidade2</span>
+                                                <p class="label label-info">@item.NomeEspecialidade2</p><br>
                                             }
-                                            @if (item.NomeEspecialidade3 != "" || item.NomeEspecialidade3 != null)
+                                            @if (!String.IsNullOrEmpty(item.NomeEspecialidade3))
                                             {
-                                                <span class="label label-info">@item.NomeEspecialidade3</span>
+                                                <p class="label label-info">@item.NomeEspecialidade3</p><br>
                                             }
-                                            @if (item.NomeEspecialidade4 != "" || item.NomeEspecialidade4 != null)
+                                            @if (!String.IsNullOrEmpty(item.NomeEspecialidade4))
                                             {
-                                                <span class="label label-info">@item.NomeEspecialidade4</span>
+                                                <p class="label label-info">@item.NomeEspecialidade4</p><br>
                                             }
-                                            @if (item.NomeEspecialidade5 != "" || item.NomeEspecialidade5 != null)
+                                            @if (!String.IsNullOrEmpty(item.NomeEspecialidade5))
                                             {
-                                                <span class="label label-info">@item.NomeEspecialidade5</span>
+                                                <p class="label label-info">@item.NomeEspecialidade5</p>
                                             }
                                         </td>
-                                        <td width="15%">
+                                        <td>
                                             <div class="js-sweetalert">
                                                 <a href="/AgendaCliente/Cadastro/@item.idcliente"><button type="button" title="Agendar Visita" class="btn btn-warning dim"><i class="fa fa-clock-o"></i></button></a>
                                                 <a href="/Clientes/Editar/@item.idcliente"><button class="btn btn-success dim" type="button"><i class="fa fa-edit"></i></button></a>

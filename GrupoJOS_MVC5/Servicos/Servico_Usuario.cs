@@ -151,23 +151,14 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Insere Usuario
-        public object InsereUsuario(bool adm, string nome, string senha, string email, string cliente, string perfil,
+        public object InsereUsuario(string adm, string nome, string senha, string email, string cliente, string perfil,
             string PermissaoAgenda, string PermissaoAgendaComercial, string PermissaoCliente, string PermissaoClienteComercial, string PermissaoEmpresas, string PermissaoEspecialidades,
             string PermissaoRamos, string PermissaoRelatorios, string PermissaoTextos, string PermissaoUsuarios)
         {
-            //Perfil
-            //0: Propagandista
-            //1: Comercial
-            //2: Personalizado
-            //3: Empresa
-            int perfil_final = 0;
+            if (!String.IsNullOrEmpty(adm)) { adm = "1"; }
+            else { adm = "0"; }
 
-            if (perfil == "Propagandista") {perfil_final = 0;}
-            else if (perfil == "Comercial") {perfil_final = 1;}
-            else if (perfil == "Personalizado") {perfil_final = 2;}
-            else if (perfil == "Empresa") {perfil_final = 3;}
-
-            if(!String.IsNullOrEmpty(PermissaoAgenda)){ PermissaoAgenda = "1"; } else { PermissaoAgenda = "0"; }
+            if (!String.IsNullOrEmpty(PermissaoAgenda)){ PermissaoAgenda = "1"; } else { PermissaoAgenda = "0"; }
             if (!String.IsNullOrEmpty(PermissaoAgendaComercial)) { PermissaoAgendaComercial = "1"; } else { PermissaoAgendaComercial = "0"; }
             if (!String.IsNullOrEmpty(PermissaoCliente)) { PermissaoCliente = "1"; } else { PermissaoCliente = "0"; }
             if (!String.IsNullOrEmpty(PermissaoClienteComercial)) { PermissaoClienteComercial = "1"; } else { PermissaoClienteComercial = "0"; }
@@ -186,7 +177,7 @@ namespace GrupoJOS_MVC5.Servicos
                 SQL = "INSERT INTO usuarios" +
                     "(Administrador,Nome,Email,Senha,Clientes,Perfil,UltimoAcesso,PermissaoAgenda,PermissaoAgendaComercial,PermissaoCliente,PermissaoClienteComercial,PermissaoEmpresas,PermissaoEspecialidades,PermissaoRamos,PermissaoRelatorios,PermissaoTextos,PermissaoUsuarios)" +
                     "VALUES" +
-                    "(" + adm + ",'" + nome + "','" + email + "','" + senha + "','" + cliente + "',"+perfil_final+",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', " +
+                    "(" + adm + ",'" + nome + "','" + email + "','" + senha + "','" + cliente + "',"+perfil+",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', " +
                     " "+ PermissaoAgenda + "," + PermissaoAgendaComercial + ", " + PermissaoCliente + ", " + PermissaoClienteComercial + ", " + PermissaoEmpresas + ", " +
                     " " + PermissaoEspecialidades + ", " + PermissaoRamos + ", " + PermissaoRelatorios + ", " + PermissaoTextos + ", " + PermissaoUsuarios + ");";
 
@@ -201,20 +192,12 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Atualiza Usuario
-        public Model_Usuario AtualizaUsuario(bool adm, string nome, string email, string senha, string clientes,string perfil, string id,
+        public Model_Usuario AtualizaUsuario(string adm, string nome, string email, string senha, string clientes,string perfil, string id,
             string PermissaoAgenda, string PermissaoAgendaComercial, string PermissaoCliente, string PermissaoClienteComercial, string PermissaoEmpresas, string PermissaoEspecialidades,
             string PermissaoRamos, string PermissaoRelatorios, string PermissaoTextos, string PermissaoUsuarios)
         {
-            //Perfil
-            //0: Propagandista
-            //1: Comercial
-            //2: Personalizado
-            //3: Empresa
-            int perfil_final = 0;
-            if (perfil == "Propagandista") { perfil_final = 0; }
-            else if (perfil == "Comercial") { perfil_final = 1; }
-            else if (perfil == "Personalizado") { perfil_final = 2; }
-            else if (perfil == "Empresa") { perfil_final = 3; }
+            if (!String.IsNullOrEmpty(adm)) { adm = "1"; }
+            else { adm = "0"; }
 
             if (!String.IsNullOrEmpty(PermissaoAgenda)) { PermissaoAgenda = "1"; } else { PermissaoAgenda = "0"; }
             if (!String.IsNullOrEmpty(PermissaoAgendaComercial)) { PermissaoAgendaComercial = "1"; } else { PermissaoAgendaComercial = "0"; }
@@ -237,7 +220,7 @@ namespace GrupoJOS_MVC5.Servicos
                     "Email = '" + email + "'," +
                     "Senha = '" + senha + "'," +
                     "Clientes = '" + clientes + "'," +
-                    "Perfil = '" + perfil_final + "'," +
+                    "Perfil = '" + perfil + "'," +
                     "Administrador = " + adm + ", " +
                     "PermissaoAgenda = " + PermissaoAgenda + ", " +
                     "PermissaoAgendaComercial = " + PermissaoAgendaComercial + ", " +
@@ -269,8 +252,9 @@ namespace GrupoJOS_MVC5.Servicos
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "DELETE FROM usuarios WHERE idusuario = " + id + " ";
-
+                SQL = "DELETE FROM usuarios WHERE idusuario = " + id + "; " +
+                    "DELETE FROM usuarios_empresas WHERE idusuario = "+id+" ;";
+                
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();

@@ -64,11 +64,7 @@ namespace GrupoJOS_MVC5.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    servico_usuario.InsereUsuario(admin, user.Nome, user.Senha, user.Email, user.Clientes, user.Perfil, user.PermissaoAgenda, user.PermissaoAgendaComercial, user.PermissaoCliente, user.PermissaoClienteComercial, user.PermissaoEmpresas, user.PermissaoEspecialidades, user.PermissaoRamos, user.PermissaoRelatorios, user.PermissaoTextos, user.PermissaoUsuarios);
-                    if (!String.IsNullOrEmpty(Empresa))
-                    {
-                        //servico_insereUusarioEmrpesa
-                    }
+                    servico_usuario.InsereUsuario(admin, user.Nome, user.Senha, user.Email, user.Clientes, user.Perfil, user.PermissaoAgenda, user.PermissaoAgendaComercial, user.PermissaoCliente, user.PermissaoClienteComercial, user.PermissaoEmpresas, user.PermissaoEspecialidades, user.PermissaoRamos, user.PermissaoRelatorios, user.PermissaoTextos, user.PermissaoUsuarios, Empresa);
                     return RedirectToAction("Index");
                 }
                 ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
@@ -86,7 +82,7 @@ namespace GrupoJOS_MVC5.Controllers
             {
                 ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
 
-                var user = servico_usuario.BuscaUsuario("idusuario", Id.ToString());
+                var user = servico_usuario.BuscaUsuario(Id.ToString());
                 return View(user);
             }
             return RedirectToAction("Index", "Login");
@@ -97,12 +93,7 @@ namespace GrupoJOS_MVC5.Controllers
         {
             if (ModelState.IsValid)
             {
-                servico_usuario.AtualizaUsuario(admin, user.Nome, user.Email, user.Senha, user.Clientes, user.Perfil, user.idusuario.ToString(), user.PermissaoAgenda, user.PermissaoAgendaComercial, user.PermissaoCliente, user.PermissaoClienteComercial, user.PermissaoEmpresas, user.PermissaoEspecialidades, user.PermissaoRamos, user.PermissaoRelatorios, user.PermissaoTextos, user.PermissaoUsuarios);
-
-                if (!String.IsNullOrEmpty(Empresa))
-                {
-                    //servico delete e insert usuario empresa
-                }
+                servico_usuario.AtualizaUsuario(admin, user.Nome, user.Email, user.Senha, user.Clientes, user.Perfil, user.idusuario.ToString(), user.PermissaoAgenda, user.PermissaoAgendaComercial, user.PermissaoCliente, user.PermissaoClienteComercial, user.PermissaoEmpresas, user.PermissaoEspecialidades, user.PermissaoRamos, user.PermissaoRelatorios, user.PermissaoTextos, user.PermissaoUsuarios,Empresa);
 
                 return RedirectToAction("Index");
             }

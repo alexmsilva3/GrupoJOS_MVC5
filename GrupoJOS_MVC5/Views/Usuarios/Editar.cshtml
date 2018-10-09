@@ -156,11 +156,17 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Empresa</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control m-b" id="Perfil" name="Empresa">
-                                                    <option value="">Selecione uma Empresa</option>
+                                                <select class="form-control m-b" id="Empresa" name="Empresa">
                                                     @foreach (var item in ViewBag.ListaEmpresas)
                                                     {
-                                                        <option value='@item.idempresa'>@item.Nome</option>
+                                                        if(Model.idempresa == item.idempresa)
+                                                        {
+                                                            <option selected value='@item.idempresa' >@item.Nome</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value='@item.idempresa'>@item.Nome</option>
+                                                        }
                                                     }
                                                 </select>
                                             </div>

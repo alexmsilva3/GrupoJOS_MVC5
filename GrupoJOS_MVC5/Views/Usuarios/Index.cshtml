@@ -78,7 +78,7 @@
                                             @if(item.Perfil == "2")
                                                 {<i title="Personalizado" class="fa fa-asterisk"></i> <p>Personalizado</p>}
                                             @if(item.Perfil == "3")
-                                                {<i title="Empresa" class="fa fa-building"></i> <p>Empresa</p> <p>NOME DA EMPRESA</p>}
+                                                {<i title="Empresa" class="fa fa-building"></i> <p>Empresa</p> <p>@item.NomeEmpresa</p>}
                                         </td>
                                         <td width="3%" align="center">
                                             @if (item.Administrador == true)

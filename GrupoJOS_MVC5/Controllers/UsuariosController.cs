@@ -20,7 +20,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index()
         {
             var cookie = servico_login.CheckCookie();
-            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View(servico_usuario.ListaUsuarios());
             }
@@ -33,7 +33,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index(int Id)
         {
             var cookie = servico_login.CheckCookie();
-            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var id = Id.ToString();
                 servico_usuario.RemoveUsuario(id);
@@ -47,7 +47,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Cadastro()
         {
             var cookie = servico_login.CheckCookie();
-            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
                 return View();
@@ -60,7 +60,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Cadastro(Model_Usuario user, string admin, string Empresa)
         {
             var cookie = servico_login.CheckCookie();
-            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 if (ModelState.IsValid)
                 {
@@ -78,7 +78,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Editar(int Id)
         {
             var cookie = servico_login.CheckCookie();
-            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
 

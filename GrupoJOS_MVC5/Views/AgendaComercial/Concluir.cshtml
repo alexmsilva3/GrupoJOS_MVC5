@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Conclusão Visita Comercial";
+    var data = DateTime.Now.ToString("dd/MM/yyyy hh:mm");
 }
 
 @model GrupoJOS_MVC5.Models.ViewModelAgendaComercial
@@ -20,11 +21,36 @@
         </ol>
     </div>
 </div>
+<br>
+<div class="col-lg-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Dados da Visita</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-xs-4">
+                    <small class="stats-label">Cliente:</small>
+                    <h4>@Model.clienteComercial.Nome</h4>
+                </div>
+
+                <div class="col-xs-4">
+                    <small class="stats-label">Data da Visita</small>
+                    <h4>@Model.agenda.DataVisita.Substring(0, 10) @Model.agenda.HoraVisita</h4>
+                </div>
+                <div class="col-xs-4">
+                    <small class="stats-label">Última Visita</small>
+                    <h4>@Model.clienteComercial.UltimaVisita</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>@ViewBag.Title - @Model.clienteComercial.Nome</h5>
+            <h5>@ViewBag.Title</h5>
         </div>
         <div class="ibox-content">
             @using (Html.BeginForm())
@@ -33,6 +59,7 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <input type="hidden" name="id" value="@Model.agenda.idagenda" />
                 <input type="hidden" name="idclientecomercial" value="@Model.agenda.Comercial" />
+
                 <div class="row">
                     <div class="col-md-12">
                         <label for="observacoes">Observações</label>
@@ -65,28 +92,103 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
-                <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <label class="font-noraml">Você esta finalizando essa visita com a data de hoje (@data). Deseja proseguir?</label>
+                                <div>
+                                    <select class="form-control m-b" id="Confirma" name="Confirma">
+                                        <option value="" seected>Confirme sua visita...</option>
+                                        <option value="1">Sim, finalizarei com essa data</option>
+                                        <option value="0">Não, desejo mudar a data</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6" id="data" style="display: none;">
+                        <div class="ibox-content">
+                            <div class="form-group" id="data_1">
+                                <label class="font-noraml">Selecione uma data:</label>
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" name="DataFinalizada" value="@Model.agenda.DataVisita.Substring(0,10)">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="input-group clockpicker" data-autoclose="true">
+                                <input type="text" class="form-control" name="HoraFinalizada" value="@Model.agenda.HoraVisita">
+                                <span class="input-group-addon">
+                                    <span class="fa fa-clock-o"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="salvar" style="display: none;">
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
+                    <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
+                </div>
             }
         </div>
     </div>
 </div>
 
 @section Styles {
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
     @Styles.Render("~/Content/plugins/chosen/chosenStyles")
 }
 
 @section Scripts {
+    @Scripts.Render("~/plugins/dataPicker")
     @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/clockpicker")
 
     <script type="text/javascript">
         $(document).ready(function () {
             $('.chosen-select').chosen({ width: "100%" });
         });
 
-        function myFunction() {
-            var mylist = document.getElementById("myList");
-            document.getElementById("Observacao").value = mylist.options[mylist.selectedIndex].id;
-        }
+        $(document).ready(function () {
+            $("#Confirma").change(function () {
+                var select = $("#Confirma option:selected").val();
+
+                var save = document.getElementById("salvar");
+                var date = document.getElementById("data");
+
+                switch (select) {
+                    case "0": //não
+                        save.style.display = "block"
+                        date.style.display = "block"
+
+                        break;
+                    case "1": //sim
+                        save.style.display = "block"
+                        date.style.display = "none"
+                        break;
+                    default:
+                        save.style.display = "none"
+                        date.style.display = "none"
+                        break;
+                }
+            });
+
+            $('.clockpicker').clockpicker();
+
+            $('#data_1 .input-group.date').datepicker({
+                todayBtn: "linked",
+                format: 'dd/mm/yyyy',
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: false,
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
     </script>
 }

@@ -22,7 +22,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index()
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 #region TrataData
                 var primeiroDiaMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -74,7 +74,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index(double Id)
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 servico_agenda.RemoveAgenda(Id);
                 return RedirectToAction("Index", "AgendaCliente");
@@ -89,7 +89,7 @@ namespace GrupoJOS_MVC5.Controllers
         {
             var cookie = servico_login.CheckCookie();
 
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewBag.ListadeClientes = servico_cliente.ListaClientes();
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
@@ -119,7 +119,7 @@ namespace GrupoJOS_MVC5.Controllers
 
             servico_agenda.InsereAgenda(Usuario, DataVisita, HoraVisita, Cliente, Empresas);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "AgendaCliente");
         }
         #endregion
 
@@ -128,7 +128,7 @@ namespace GrupoJOS_MVC5.Controllers
         {
             var cookie = servico_login.CheckCookie();
 
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 if (DataVisita == null) { return new HttpStatusCodeResult(500); }
                 if (string.IsNullOrEmpty(HoraVisita)) { return new HttpStatusCodeResult(500); }
@@ -154,7 +154,7 @@ namespace GrupoJOS_MVC5.Controllers
         {
             var cookie = servico_login.CheckCookie();
 
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewModelAgenda agenda = new ViewModelAgenda();
                 var valor = Id.ToString();
@@ -196,7 +196,7 @@ namespace GrupoJOS_MVC5.Controllers
         {
             var cookie = servico_login.CheckCookie();
 
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var agenda = servico_agenda.AgendaPorX("agenda.idagenda", id.ToString());
                 return View(agenda);
@@ -211,7 +211,7 @@ namespace GrupoJOS_MVC5.Controllers
         {
             var cookie = servico_login.CheckCookie();
 
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewModelAgenda agenda = new ViewModelAgenda();
                 agenda = servico_agenda.AgendaPorX("agenda.idagenda", Id.ToString());
@@ -226,7 +226,7 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Concluir(double Id, string Observacao, List<string> Empresas)
+        public ActionResult Concluir(double Id, string Observacao, DateTime DataFinalizada, List<string> Empresas)
         {
             ViewModelAgenda agenda = new ViewModelAgenda();
             agenda = servico_agenda.AgendaPorX("agenda.idagenda", Id.ToString());
@@ -239,7 +239,7 @@ namespace GrupoJOS_MVC5.Controllers
             if (Empresas == null || Empresas.Count == 0) { ViewBag.ErroEmpresa = "Deve ser selecionado ao menos uma Clinica"; return View(agenda); }
 
 
-            servico_agenda.ConcluiAgenda(Id, Observacao, Empresas);
+            servico_agenda.ConcluiAgenda(Id, Observacao, DataFinalizada, Empresas);
             servico_agenda.AtualizaUltimaVisita(agenda.cliente.idcliente,DateTime.Now);
 
             return RedirectToAction("Index", "AgendaCliente");
@@ -251,7 +251,7 @@ namespace GrupoJOS_MVC5.Controllers
         {
             var cookie = servico_login.CheckCookie();
 
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 DateTime hoje_i = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
                 DateTime hoje_f = hoje_i.AddDays(1).AddTicks(-1);
@@ -276,7 +276,7 @@ namespace GrupoJOS_MVC5.Controllers
         {
             var cookie = servico_login.CheckCookie();
 
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 int DateOfWeek = (int)DateTime.Now.DayOfWeek;
                 DateTime PrimeiroDiaSemana = DateTime.Now.AddDays(-DateOfWeek + 1);
@@ -304,7 +304,7 @@ namespace GrupoJOS_MVC5.Controllers
         {
             var cookie = servico_login.CheckCookie();
 
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var primeiroDiaMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 var ultimoDiaMes = primeiroDiaMes.AddMonths(1).AddDays(-1);

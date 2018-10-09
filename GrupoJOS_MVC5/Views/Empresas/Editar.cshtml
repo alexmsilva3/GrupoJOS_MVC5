@@ -234,9 +234,9 @@
                                                 <label> <input type="checkbox" class="i-checks" name="AtivaConta"> Ativa </label>
                                             }
                                         </div>
-                                    
 
-                                    
+
+
                                         <div class="col-md-6">
                                             @if (!Model.Ativo)
                                             {
@@ -261,6 +261,90 @@
         </div>
     </div>
 </div>
+@if (Model.ListaUsuario.Count > 0)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Usuários </h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 b-r">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Usuário</th>
+                                        <th>E-mail</th>
+                                        <th>Último Acesso</th>
+                                        <th>Perfil</th>
+                                        <th>Opções</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var item in Model.ListaUsuario)
+                                    {
+                                        <tr>
+                                            <td>@item.Nome</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.UltimoAcesso</td>
+
+                                            <td width="3%" align="center">
+                                                @if(item.Perfil == "0")
+                                                    {<i title="Propagandista" class="fa fa-map-marker"></i> <p>Propagandista</p>}
+                                                @if(item.Perfil == "1")
+                                                    {<i title="Comercial" class="fa fa-usd"></i> <p>Comercial</p>}
+                                                @if(item.Perfil == "2")
+                                                    {<i title="Personalizado" class="fa fa-asterisk"></i> <p>Personalizado</p>}
+                                                @if(item.Perfil == "3")
+                                                    {<i title="Empresa" class="fa fa-building"></i> <p>Empresa</p> <p>@item.NomeEmpresa</p>}
+                                            </td>
+
+                                            <td>
+                                                <div class="js-sweetalert">
+                                                    <a href="/Usuarios/Editar/@item.idusuario"><button class="btn btn-success dim" type="button"><i class="fa fa-edit"></i></button></a>
+                                                    <button class="btn btn-danger dim" type="button" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idusuario"><i class="fa fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                         <script>
+                            function AssignButtonClicked(elem) {
+                                var id = $(elem).data('assigned-id');
+                                swal({
+									    title: "Tem certeza?",
+                                        text: "Esse registro sera apagado e nao podera ser recuperado!",
+                                        icon: "warning",
+                                        buttons: {cancel: "Cancelar", ok: "Sim, pode remover!"},
+                                        dangerMode: true,
+                                    })
+                                    .then((willDelete) => {
+                                        if (willDelete) {
+                                        swal("Removido!","Registro foi removido com sucesso!","success")
+                                        .then((value) => {
+                                            $.post("/Usuarios/Index/" + id + "");
+                                            window.location ="/Empresas/Index";
+                                        });
+                                        } else {
+                                        swal("Cancelado!","O registro não foi removido","error");
+                                        }
+                                    });
+                            }
+                    </script>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 
 @section Styles {
     @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
@@ -268,6 +352,7 @@
 
 @section Scripts {
     @Scripts.Render("~/plugins/iCheck")
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {

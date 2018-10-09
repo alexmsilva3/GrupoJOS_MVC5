@@ -15,7 +15,9 @@ namespace GrupoJOS_MVC5.Servicos
         #region Lista Empresa
         public List<Model_Empresa> ListaEmpresa()
         {
+            Servico_Usuario servico_usuario = new Servico_Usuario();
             List<Model_Empresa> ListaEmpresa = new List<Model_Empresa>();
+
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
@@ -47,6 +49,8 @@ namespace GrupoJOS_MVC5.Servicos
                     emp.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
                     emp.DataCancelado = TratarConversaoDeDados.TrataDateTime(reader["DataCancelado"]);
 
+                    emp.ListaUsuario = servico_usuario.ListaUsuariosEmpresa(emp.idempresa.ToString());
+
                     ListaEmpresa.Add(emp);
                 }
                 reader.Close();
@@ -57,14 +61,16 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Busca Empresa
-        public Model_Empresa BuscaEmpresa(string campo, string valor)
+        public Model_Empresa BuscaEmpresa(string idempresa)
         {
             Model_Empresa BuscaEmpresa = new Model_Empresa();
+            Servico_Usuario servico_usuario = new Servico_Usuario();
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM empresas WHERE " + campo + " = " + valor + "";
+                SQL = "SELECT * FROM empresas" +
+                    " WHERE empresas.idempresa = " + idempresa + "";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -99,6 +105,55 @@ namespace GrupoJOS_MVC5.Servicos
         }
         #endregion
 
+        #region Busca Empresa
+        public Model_Empresa BuscaEmpresaComUsuario(string idempresa)
+        {
+            Model_Empresa BuscaEmpresa = new Model_Empresa();
+            Servico_Usuario servico_usuario = new Servico_Usuario();
+
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "SELECT * FROM empresas" +
+                    " LEFT JOIN usuarios_empresas" +
+                    " ON empresas.idempresa = usuarios_empresas.idempresa" +
+                    " WHERE empresas.idempresa = " + idempresa + "";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    BuscaEmpresa.idempresa = TratarConversaoDeDados.TrataDouble(reader["idempresa"]);
+                    BuscaEmpresa.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
+                    BuscaEmpresa.RazaoSocial = TratarConversaoDeDados.TrataString(reader["RazaoSocial"]);
+                    BuscaEmpresa.CNPJ = TratarConversaoDeDados.TrataString(reader["CNPJ"]);
+                    BuscaEmpresa.InscricaoEstadual = TratarConversaoDeDados.TrataString(reader["InscricaoEstadual"]);
+                    BuscaEmpresa.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
+                    BuscaEmpresa.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
+                    BuscaEmpresa.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
+                    BuscaEmpresa.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
+                    BuscaEmpresa.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
+                    BuscaEmpresa.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
+                    BuscaEmpresa.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
+                    BuscaEmpresa.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
+                    BuscaEmpresa.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
+                    BuscaEmpresa.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
+                    BuscaEmpresa.Ativo = TratarConversaoDeDados.TrataBit(reader["Ativo"]);
+                    BuscaEmpresa.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
+                    BuscaEmpresa.DataAtivado = TratarConversaoDeDados.TrataDateTime(reader["DataAtivado"]);
+                    BuscaEmpresa.DataCancelado = TratarConversaoDeDados.TrataDateTime(reader["DataCancelado"]);
+
+                    BuscaEmpresa.ListaUsuario = servico_usuario.ListaUsuariosEmpresa(idempresa);
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return BuscaEmpresa;
+        }
+        #endregion
+
         #region Insere Empresa
         public object InsereEmpresa(string nome, string razaosocial, string cnpj, string insc_estadual, string endereco, string num,
             string bairro, string cidade, string uf,string cep, string contato, string email, string fone1, string fone2)
@@ -109,9 +164,9 @@ namespace GrupoJOS_MVC5.Servicos
                 string SQL = "";
 
                 SQL = "INSERT INTO empresas" +
-                    "(Nome,RazaoSocial,CNPJ,InscricaoEstadual,Endereco,Num,Bairro,Cidade,UF,CEP,Contato,Email,Fone1,Fone2,Ativo,DataCadastro)" +
+                    "(Nome,RazaoSocial,CNPJ,InscricaoEstadual,Endereco,Num,Bairro,Cidade,UF,CEP,Contato,Email,Fone1,Fone2,Ativo,DataAtivado,DataCadastro)" +
                     "VALUES" +
-                    "('" + nome + "','" + razaosocial + "','" + cnpj + "','" + insc_estadual + "','" + endereco + "','" + num + "','" + bairro + "','" + cidade + "','" + uf + "','" + cep + "','" + contato + "','" + email + "','" + fone1 + "','" + fone2 + "',1,'" + DateTime.Now.ToString("yyyy-MM-dd") + "');";
+                    "('" + nome + "','" + razaosocial + "','" + cnpj + "','" + insc_estadual + "','" + endereco + "','" + num + "','" + bairro + "','" + cidade + "','" + uf + "','" + cep + "','" + contato + "','" + email + "','" + fone1 + "','" + fone2 + "',1,'" + DateTime.Now.ToString("yyyy-MM-dd hh:mm") + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "');";
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
@@ -190,22 +245,21 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Remove Empresa
-        public Model_Empresa RemoveEmpresa(string id)
+        public void RemoveEmpresa(string id)
         {
-            Model_Empresa RemoveEmpresa = new Model_Empresa();
-
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
                 SQL = "DELETE FROM empresas WHERE idempresa = " + id + ";" +
-                    "UPDATE agenda_esp SET idempresa = 0 WHERE idempresa = "+ id +"; ";
+                    "UPDATE agenda_emp SET idempresa = 0 WHERE idempresa = "+ id +";" +
+                    "DELETE FROM usuarios WHERE idusuario IN (SELECT idusuario FROM usuarios_empresas WHERE idempresa = " + id + ");" +
+                    "DELETE FROM usuarios_empresas WHERE idempresa = " + id + "; ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
                 connection.Close();
             }
-            return RemoveEmpresa;
         }
         #endregion
 

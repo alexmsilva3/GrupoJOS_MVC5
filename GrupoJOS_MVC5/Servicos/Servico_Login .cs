@@ -38,6 +38,18 @@ namespace GrupoJOS_MVC5.Servicos
                     usuario.UsuarioID = HttpContext.Current.Request.Cookies["UsuarioID"].Value;
                     usuario.UsuarioNome = HttpContext.Current.Request.Cookies["UsuarioNome"].Value;
                     usuario.UsuarioPerfil = HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value;
+
+                    usuario.PermissaoAgenda = HttpContext.Current.Request.Cookies["PermissaoAgenda"].Value;
+                    usuario.PermissaoAgendaComercial = HttpContext.Current.Request.Cookies["PermissaoAgendaComercial"].Value;
+                    usuario.PermissaoCliente = HttpContext.Current.Request.Cookies["PermissaoCliente"].Value;
+                    usuario.PermissaoClienteComercial = HttpContext.Current.Request.Cookies["PermissaoClienteComercial"].Value;
+                    usuario.PermissaoEmpresas = HttpContext.Current.Request.Cookies["PermissaoEmpresas"].Value;
+                    usuario.PermissaoEspecialidades = HttpContext.Current.Request.Cookies["PermissaoEspecialidades"].Value;
+                    usuario.PermissaoRamos = HttpContext.Current.Request.Cookies["PermissaoRamos"].Value;
+                    usuario.PermissaoRelatorios = HttpContext.Current.Request.Cookies["PermissaoRelatorios"].Value;
+                    usuario.PermissaoTextos = HttpContext.Current.Request.Cookies["PermissaoTextos"].Value;
+                    usuario.PermissaoUsuarios = HttpContext.Current.Request.Cookies["PermissaoUsuarios"].Value;
+
                     usuario.UsuarioValidado = true;
 
                     return usuario;
@@ -48,6 +60,18 @@ namespace GrupoJOS_MVC5.Servicos
             usuario.UsuarioID = "";
             usuario.UsuarioNome = "";
             usuario.UsuarioPerfil = "";
+
+            usuario.PermissaoAgenda = "";
+            usuario.PermissaoAgendaComercial = "";
+            usuario.PermissaoCliente = "";
+            usuario.PermissaoClienteComercial = "";
+            usuario.PermissaoEmpresas = "";
+            usuario.PermissaoEspecialidades = "";
+            usuario.PermissaoRamos = "";
+            usuario.PermissaoRelatorios = "";
+            usuario.PermissaoTextos = "";
+            usuario.PermissaoUsuarios = "";
+
             usuario.UsuarioValidado = false;
 
             return usuario;

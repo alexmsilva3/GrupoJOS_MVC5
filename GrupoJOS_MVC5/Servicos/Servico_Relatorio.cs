@@ -20,7 +20,7 @@ namespace GrupoJOS_MVC5.Servicos
             ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
             relatorio.ContagemPorEspecialidade = servico_especialidade.ListaEspecialidade();
             relatorio.relatorioAtendimento = new ViewModelEmpresaAgenda();
-            relatorio.relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa("idempresa", idempresa.ToString());
+            relatorio.relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa(idempresa.ToString());
 
             var tmpList = new List<ViewModelAgendaCliente>();
 

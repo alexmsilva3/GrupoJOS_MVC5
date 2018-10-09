@@ -20,7 +20,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie().UsuarioValidado)
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View();
             }
@@ -33,7 +34,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Atendimentos()
         {
             var cookie = servico_login.CheckCookie();
-            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
+            if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 List<Model_Empresa> lista_empresa = new List<Model_Empresa>();
 
@@ -62,7 +63,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult MinhasVisitas()
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {   
                 return View("~/Views/Relatorios/MinhasVisitas/Index.cshtml");
             }
@@ -92,7 +93,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult MinhasVisitasComercial()
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgendaComercial == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View("~/Views/Relatorios/MinhasVisitasComercial/Index.cshtml");
             }
@@ -122,7 +123,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Gerencial()
         {
             var cookie = servico_login.CheckCookie();
-            if (cookie.UsuarioValidado && cookie.UsuarioADM == "True")
+            if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View();
             }

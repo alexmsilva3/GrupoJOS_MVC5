@@ -19,7 +19,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index()
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoRamos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View(servico_ramo.ListaRamos());
             }
@@ -33,7 +33,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index(int Id)
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoRamos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 servico_ramo.RemoveRamo(Id);
                 return RedirectToAction("Index");
@@ -46,7 +46,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Cadastro()
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoRamos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View();
             }
@@ -69,7 +69,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Editar(int Id)
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoRamos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var esp = servico_ramo.BuscaRamo(Id);
                 return View(esp);

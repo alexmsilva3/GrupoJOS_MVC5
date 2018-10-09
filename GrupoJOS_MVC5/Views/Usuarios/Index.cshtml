@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Lista de Usuarios";
+    var adm = Request.Cookies["UsuarioADM"].Value;
 }
 
 @model List<GrupoJOS_MVC5.Models.Model_Usuario>
@@ -89,7 +90,7 @@
                                         <td>
                                             <div class="js-sweetalert">
                                                 <a href="/Usuarios/Editar/@item.idusuario"><button class="btn btn-success dim" type="button"><i class="fa fa-edit"></i></button></a>
-                                                <button class="btn btn-danger dim" type="button" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idusuario"><i class="fa fa-trash"></i></button>
+                                                @if (adm == "True"){<button class="btn btn-danger dim" type="button" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idusuario"><i class="fa fa-trash"></i></button>}
                                             </div>
                                         </td>
                                     </tr>

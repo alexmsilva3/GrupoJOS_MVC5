@@ -453,11 +453,11 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region ConcluirAgenda
-        public bool ConcluiAgenda(double idagenda, string observacoes, List<string> empresas)
+        public bool ConcluiAgenda(double idagenda, string observacoes, DateTime DataFinalizada, List<string> empresas)
         {
             try
             {
-                string DataFinalizada = DateTime.Now.ToString("yyy-MM-dd HH:mm");
+                string DataFinalizadaReal = DateTime.Now.ToString("yyy-MM-dd HH:mm");
 
                 using (MySqlConnection connection = new MySqlConnection(MySQLServer))
                 {
@@ -465,7 +465,8 @@ namespace GrupoJOS_MVC5.Servicos
                     SQL = "UPDATE agenda " +
                         "SET Observacoes = '" + observacoes + "', " +
                         "Status = '1', " +
-                        "DataFinalizada = '"+ DataFinalizada +"' " +
+                        "DataFinalizada = '"+ DataFinalizada.ToString("yyy - MM - dd HH: mm")+"' " +
+                        "DataFinalizadaReal = '"+ DataFinalizadaReal +"' " +
                         "WHERE idagenda = " + idagenda + " ";
 
                     connection.Open();
@@ -800,11 +801,11 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region ConcluirAgendaComercial
-        public bool ConcluiAgendaComercial(double idagenda, string observacoes)
+        public bool ConcluiAgendaComercial(double idagenda, string observacoes, DateTime DataFinalizada)
         {
             try
             {
-                string DataFinalizada = DateTime.Now.ToString("yyy-MM-dd HH:mm");
+                string DataFinalizadaReal = DateTime.Now.ToString("yyy-MM-dd HH:mm");
 
                 using (MySqlConnection connection = new MySqlConnection(MySQLServer))
                 {
@@ -812,7 +813,8 @@ namespace GrupoJOS_MVC5.Servicos
                     SQL = "UPDATE agenda " +
                         "SET Observacoes = '" + observacoes + "', " +
                         " Status = '1', " +
-                        " DataFinalizada = '" + DataFinalizada + "' " +
+                        " DataFinalizada = '" + DataFinalizadaReal + "' " +
+                        " DataFinalizada = '" + DataFinalizada.ToString("yyy-MM-dd HH:mm") + "' " +
                         " WHERE idagenda = " + idagenda + " ";
 
                     connection.Open();

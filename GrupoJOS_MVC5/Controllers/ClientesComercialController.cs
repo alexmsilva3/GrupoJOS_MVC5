@@ -20,7 +20,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index()
         {
             var usuario = servico_login.CheckCookie();
-            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
+            if ((usuario.UsuarioValidado && usuario.PermissaoClienteComercial == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 return View(servico_clientecomercial.ListaClienteComercial());
             }
@@ -33,7 +33,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index(double Id)
         {
             var usuario = servico_login.CheckCookie();
-            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
+            if ((usuario.UsuarioValidado && usuario.PermissaoClienteComercial == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 servico_clientecomercial.RemoveClienteComercial(Id);
                 return RedirectToAction("Index");
@@ -46,7 +46,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Cadastro()
         {
             var usuario = servico_login.CheckCookie();
-            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
+            if ((usuario.UsuarioValidado && usuario.PermissaoClienteComercial == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 ViewBag.ListaRamos = servico_ramos.ListaRamos();
                 return View();
@@ -59,7 +59,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Cadastro(Model_ClienteComercial cli, int ramo_cliente, string Convenio)
         {
             var usuario = servico_login.CheckCookie();
-            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
+            if ((usuario.UsuarioValidado && usuario.PermissaoClienteComercial == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 if (ModelState.IsValid)
                 {
@@ -86,7 +86,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Editar(int Id)
         {
             var usuario = servico_login.CheckCookie();
-            if ((usuario.UsuarioValidado && usuario.UsuarioPerfil == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
+            if ((usuario.UsuarioValidado && usuario.PermissaoClienteComercial == "1") || (usuario.UsuarioValidado && usuario.UsuarioADM == "True"))
             {
                 ViewBag.ListaRamos = servico_ramos.ListaRamos();
                 var cli = servico_clientecomercial.BuscaClienteComercial("idclientecomercial", Id.ToString());

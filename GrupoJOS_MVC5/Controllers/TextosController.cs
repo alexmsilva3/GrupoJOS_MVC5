@@ -18,7 +18,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie().UsuarioValidado)
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View(servico_texto.ListaTexto());
             }
@@ -34,7 +35,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if (servico_login.CheckCookie().UsuarioValidado)
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 servico_texto.RemoveTxt(Id);
                 return RedirectToAction("Index");
@@ -46,7 +48,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if (servico_login.CheckCookie().UsuarioValidado)
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View();
             }
@@ -56,7 +59,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Cadastro(Model_Texto txt)
         {
-            if (servico_login.CheckCookie().UsuarioValidado)
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 if (ModelState.IsValid)
                 {
@@ -72,7 +76,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Editar
         public ActionResult Editar(int Id)
         {
-            if (servico_login.CheckCookie().UsuarioValidado)
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var txt = servico_texto.BuscaTxt(Id);
                 return View(txt);
@@ -83,7 +88,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Editar (Model_Texto txt)
         {
-            if (servico_login.CheckCookie().UsuarioValidado)
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 if (ModelState.IsValid)
                 {

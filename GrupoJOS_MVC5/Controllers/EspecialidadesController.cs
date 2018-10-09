@@ -19,7 +19,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index()
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoEspecialidades == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View(servico_especialidade.ListaEspecialidade());
             }
@@ -33,7 +33,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index(int Id)
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoEspecialidades == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 servico_especialidade.RemoveEsp(Id);
                 return RedirectToAction("Index");
@@ -46,7 +46,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Cadastro()
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoEspecialidades == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View();
             }
@@ -57,7 +57,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Cadastro(Model_Especialidade esp)
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoEspecialidades == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 if (ModelState.IsValid)
                 {
@@ -74,7 +74,7 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Editar(int Id)
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.UsuarioPerfil == "0") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoEspecialidades == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var esp = servico_especialidade.BuscaEspecialidade(Id);
                 return View(esp);

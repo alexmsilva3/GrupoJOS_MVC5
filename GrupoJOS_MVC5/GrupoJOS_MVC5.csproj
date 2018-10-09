@@ -186,6 +186,7 @@
     <Compile Include="Servicos\TratarConversaoDeDados.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AlterDB\alteracoes.txt" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

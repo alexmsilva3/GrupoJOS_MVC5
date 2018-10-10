@@ -39,6 +39,8 @@ namespace GrupoJOS_MVC5.Models
         public DateTime DataAtivado { get; set; }
         public DateTime DataCancelado { get; set; }
 
+        public List<Model_Usuario> ListaUsuario { get; set; }
+
     }
 
     public class ViewModelEmpresaAgenda

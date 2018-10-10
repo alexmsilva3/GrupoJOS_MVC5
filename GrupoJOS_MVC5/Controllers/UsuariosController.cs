@@ -14,18 +14,17 @@ namespace GrupoJOS_MVC5.Controllers
     {
         Servico_Usuario servico_usuario = new Servico_Usuario();
         Servico_Login servico_login = new Servico_Login();
+        Servico_Empresa servico_empresa = new Servico_Empresa();
 
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View(servico_usuario.ListaUsuarios());
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
@@ -33,91 +32,74 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var id = Id.ToString();
                 servico_usuario.RemoveUsuario(id);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
+                ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+           return RedirectToAction("Index", "Login");
         }
 
 
         [HttpPost]
-        public ActionResult Cadastro(Model_Usuario user)
+        public ActionResult Cadastro(Model_Usuario user, string admin, string Empresa)
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 if (ModelState.IsValid)
                 {
-
-                    servico_usuario.InsereUsuario(user.Administrador, user.Nome, user.Senha, user.Email, user.Clientes, user.Perfil);
+                    servico_usuario.InsereUsuario(admin, user.Nome, user.Senha, user.Email, user.Clientes, user.Perfil, user.PermissaoAgenda, user.PermissaoAgendaComercial, user.PermissaoCliente, user.PermissaoClienteComercial, user.PermissaoEmpresas, user.PermissaoEspecialidades, user.PermissaoRamos, user.PermissaoRelatorios, user.PermissaoTextos, user.PermissaoUsuarios, Empresa);
                     return RedirectToAction("Index");
                 }
+                ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Edição
         public ActionResult Editar(int Id)
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                var valor = Id.ToString();
-                var user = servico_usuario.BuscaUsuario("idusuario", valor);
+                ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
+
+                var user = servico_usuario.BuscaUsuario(Id.ToString());
                 return View(user);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
-        public ActionResult Editar(Model_Usuario user)
+        public ActionResult Editar(Model_Usuario user, string admin, string Empresa)
         {
-            if (servico_login.CheckCookie())
+            if (ModelState.IsValid)
             {
+                servico_usuario.AtualizaUsuario(admin, user.Nome, user.Email, user.Senha, user.Clientes, user.Perfil, user.idusuario.ToString(), user.PermissaoAgenda, user.PermissaoAgendaComercial, user.PermissaoCliente, user.PermissaoClienteComercial, user.PermissaoEmpresas, user.PermissaoEspecialidades, user.PermissaoRamos, user.PermissaoRelatorios, user.PermissaoTextos, user.PermissaoUsuarios,Empresa);
 
-                //valida o formulario
-                if (ModelState.IsValid)
-                {
-
-                    //executa função de atualizar
-                    servico_usuario.AtualizaUsuario(user.Administrador, user.Nome, user.Email, user.Senha, user.Clientes, user.Perfil, user.idusuario.ToString());
-
-                    return RedirectToAction("Index");
-                }
-                return View(user);
+                return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            ViewBag.ListaEmpresas = servico_empresa.ListaEmpresa();
+
+            return View(user);
 
         }
         #endregion

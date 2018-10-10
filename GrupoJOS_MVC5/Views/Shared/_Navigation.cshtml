@@ -4,6 +4,20 @@
     var adm = Request.Cookies["UsuarioADM"].Value;
     var email = Request.Cookies["UsuarioEmail"].Value;
     var perfil = Request.Cookies["UsuarioPerfil"].Value;
+
+    var PermissaoAgenda = Request.Cookies["PermissaoAgenda"].Value;
+    var PermissaoAgendaComercial = Request.Cookies["PermissaoAgendaComercial"].Value;
+    var PermissaoCliente = Request.Cookies["PermissaoCliente"].Value;
+    var PermissaoClienteComercial = Request.Cookies["PermissaoClienteComercial"].Value;
+    var PermissaoEmpresas = Request.Cookies["PermissaoEmpresas"].Value;
+    var PermissaoEspecialidades = Request.Cookies["PermissaoEspecialidades"].Value;
+    var PermissaoRamos = Request.Cookies["PermissaoRamos"].Value;
+    var PermissaoRelatorios = Request.Cookies["PermissaoRelatorios"].Value;
+    var PermissaoTextos = Request.Cookies["PermissaoTextos"].Value;
+    var PermissaoUsuarios = Request.Cookies["PermissaoUsuarios"].Value;
+
+    var IdEmpresa = Request.Cookies["IdEmpresa"].Value;
+    var NomeEmpresa = Request.Cookies["NomeEmpresa"].Value;
 }
 
 <nav class="navbar-default navbar-static-side" role="navigation">
@@ -22,8 +36,8 @@
                             @if (adm == "True")
                             {
                                 <span class="text-muted text-xs block">Administrador</span>
-
                             }
+                            <span class="text-muted text-xs block">Empresa: @NomeEmpresa</span>
 
                         </span>
                     </a>
@@ -39,32 +53,43 @@
                     JOS
                 </div>
             </li>
-            <li class="@Html.IsSelected(controller: "Home")">
-                <a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i> <span class="nav-label" data-i18n="nav.home">Home</span></a>
-                @*<ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Dashboards", cssClass: "in")">
-                <li class="@Html.IsSelected(action: "Dashboard_1")"><a href="@Url.Action("Dashboard_1", "Dashboards")">Dashboard v.1</a></li>
-                <li class="@Html.IsSelected(action: "Dashboard_2")"><a href="@Url.Action("Dashboard_2", "Dashboards")">Dashboard v.2</a></li>
-                <li class="@Html.IsSelected(action: "Dashboard_3")"><a href="@Url.Action("Dashboard_3", "Dashboards")">Dashboard v.3</a></li>
-                <li class="@Html.IsSelected(action: "Dashboard_4_1")"><a href="@Url.Action("Dashboard_4_1", "Dashboards")">Dashboard v.4</a></li>
-                <li class="@Html.IsSelected(action: "Dashboard_5")"><a href="@Url.Action("Dashboard_5", "Dashboards")">Dashboard v.5</a></li>
-            </ul>*@
-            </li>
 
-            @if(perfil == "0" || adm == "True")
+            @if (perfil != "3")
+            {
+                <li class="@Html.IsSelected(controller: "Home")">
+                    <a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i> <span class="nav-label" data-i18n="nav.home">Home</span></a>
+                    @*<ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Dashboards", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Dashboard_1")"><a href="@Url.Action("Dashboard_1", "Dashboards")">Dashboard v.1</a></li>
+                    <li class="@Html.IsSelected(action: "Dashboard_2")"><a href="@Url.Action("Dashboard_2", "Dashboards")">Dashboard v.2</a></li>
+                    <li class="@Html.IsSelected(action: "Dashboard_3")"><a href="@Url.Action("Dashboard_3", "Dashboards")">Dashboard v.3</a></li>
+                    <li class="@Html.IsSelected(action: "Dashboard_4_1")"><a href="@Url.Action("Dashboard_4_1", "Dashboards")">Dashboard v.4</a></li>
+                    <li class="@Html.IsSelected(action: "Dashboard_5")"><a href="@Url.Action("Dashboard_5", "Dashboards")">Dashboard v.5</a></li>
+                    </ul>*@
+                </li>
+            }
+            
+
+            @if(PermissaoAgenda == "1" || adm == "True")
             {
                 <li class="@Html.IsSelected(controller: "AgendaCliente")">
                     <a href="@Url.Action("Index", "AgendaCliente")"><i class="fa fa-calendar"></i> <span class="nav-label" data-i18n="nav.agenda">Agenda</span></a>
                 </li>
+                <li class="@Html.IsSelected(action: "MinhasVisitas")">
+                    <a href="@Url.Action("MinhasVisitas", "Relatorios")"><i class="fa fa-clock-o"></i> <span class="nav-label" data-i18n="nav.visitas">Minhas Visitas</span></a>
+                </li>
             }
 
-            @if(perfil == "1" || adm == "True")
+            @if(PermissaoAgendaComercial == "1" || adm == "True")
             {
                 <li class="@Html.IsSelected(controller: "AgendaComercial")">
                     <a href="@Url.Action("Index", "AgendaComercial")"><i class="fa fa-calendar-o"></i> <span class="nav-label" data-i18n="nav.agenda">Agenda Comercial</span></a>
                 </li>
+                <li class="@Html.IsSelected(action: "MinhasVisitasComercial")">
+                    <a href="@Url.Action("MinhasVisitasComercial", "Relatorios")"><i class="fa fa-clock-o"></i> <span class="nav-label" data-i18n="nav.visitas">Minhas Visitas</span></a>
+                </li>
             }
 
-            @if (adm == "True")
+            @if (PermissaoUsuarios == "1" || adm == "True")
             {
                 <li class="@Html.IsSelected(controller: "Usuarios")">
                     <a href="#"><i class="fa fa-user"></i> <span class="nav-label" data-i18n="nav.usuarios">Usuarios</span><span class="fa arrow"></span></a>
@@ -75,7 +100,7 @@
                 </li>
             }
 
-            @if(perfil == "0" || adm == "True")
+            @if(PermissaoCliente == "1" || adm == "True")
             {
                 <li class="@Html.IsSelected(controller: "Clientes")">
                     <a href="#"><i class="fa fa-user-md"></i> <span class="nav-label" data-i18n="nav.clientes">Profissional de Saúde</span><span class="fa arrow"></span></a>
@@ -86,7 +111,7 @@
                 </li>
             }
 
-            @if(perfil == "1" || adm == "True")
+            @if(PermissaoClienteComercial == "1" || adm == "True")
             {
                 <li class="@Html.IsSelected(controller: "ClientesComercial")">
                     <a href="#"><i class="fa fa-money"></i> <span class="nav-label" data-i18n="nav.empresas">Cliente Comercial</span><span class="fa arrow"></span></a>
@@ -97,21 +122,20 @@
                 </li>
             }
 
-            @if(perfil == "0" || adm == "True")
+            @if(PermissaoEmpresas == "1" || adm == "True")
             {
                 <li class="@Html.IsSelected(controller: "Empresas")">
                     <a href="#"><i class="fa fa-building-o"></i> <span class="nav-label" data-i18n="nav.empresas">Empresas</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Empresas", cssClass: "in")">
                         <li class="@Html.IsSelected(controller:"Empresas",action: "Index")"><a href="@Url.Action("Index", "Empresas")">Geral</a></li>
-                        @if (adm == "True")
-                        {
-                            <li class="@Html.IsSelected(controller:"Empresas",action: "Cadastro")"><a href="@Url.Action("Cadastro", "Empresas")">Cadastro</a></li>
-                         }
+                        <li class="@Html.IsSelected(controller:"Empresas",action: "Cadastro")"><a href="@Url.Action("Cadastro", "Empresas")">Cadastro</a></li>
 
                     </ul>
                 </li>
-            
+            }
 
+            @if(PermissaoEspecialidades == "1" || adm == "True")
+            {
                 <li class="@Html.IsSelected(controller: "Especialidades")">
                     <a href="#"><i class="fa fa-mortar-board"></i> <span class="nav-label" data-i18n="nav.especialidades">Especialidades</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Especialidades", cssClass: "in")">
@@ -121,7 +145,7 @@
                 </li>
             }
 
-            @if(perfil == "1" || adm == "True")
+            @if(PermissaoRamos == "1" || adm == "True")
             {
                 <li class="@Html.IsSelected(controller: "Ramos")">
                     <a href="#"><i class="fa fa-usd"></i> <span class="nav-label" data-i18n="nav.ramos">Ramos</span><span class="fa arrow"></span></a>
@@ -132,21 +156,28 @@
                 </li>
             }
 
-            <li class="@Html.IsSelected(controller: "Textos")">
-                <a href="#"><i class="fa fa-font"></i> <span class="nav-label" data-i18n="nav.textos">Textos</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Textos", cssClass: "in")">
-                    <li class="@Html.IsSelected(controller:"Textos",action: "Index")"><a href="@Url.Action("Index", "Textos")">Geral</a></li>
-                    <li class="@Html.IsSelected(controller:"Textos",action: "Cadastro")"><a href="@Url.Action("Cadastro", "Textos")">Cadastro</a></li>
-                </ul>
-            </li>
+            @if(PermissaoTextos == "1" || adm == "True")
+            {
+                <li class="@Html.IsSelected(controller: "Textos")">
+                    <a href="#"><i class="fa fa-font"></i> <span class="nav-label" data-i18n="nav.textos">Textos</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Textos", cssClass: "in")">
+                        <li class="@Html.IsSelected(controller:"Textos",action: "Index")"><a href="@Url.Action("Index", "Textos")">Geral</a></li>
+                        <li class="@Html.IsSelected(controller:"Textos",action: "Cadastro")"><a href="@Url.Action("Cadastro", "Textos")">Cadastro</a></li>
+                    </ul>
+                </li>
+            }
 
-            @if (adm == "True")
+
+            @if (PermissaoRelatorios == "1" || adm == "True")
             {
                 <li class="@Html.IsSelected(controller: "Relatorios")">
                     <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label" data-i18n="nav.relatorios">Relatorios</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Relatorios", cssClass: "in")">
                         <li class="@Html.IsSelected(controller:"Relatorios",action: "Atendimentos")"><a href="@Url.Action("Atendimentos", "Relatorios")">Atendimento</a></li>
-                        <li class="@Html.IsSelected(controller:"Relatorios",action: "Gerencial")"><a href="@Url.Action("Gerencial", "Relatorios")">Gerencial</a></li>
+                        @if (adm == "True")
+                        {
+                            <li class="@Html.IsSelected(controller: "Relatorios", action: "Gerencial")"><a href="@Url.Action("Gerencial", "Relatorios")">Gerencial</a></li>
+                        }
                     </ul>
                 </li>
             }

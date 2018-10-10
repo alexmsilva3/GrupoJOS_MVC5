@@ -20,7 +20,7 @@ namespace GrupoJOS_MVC5.Servicos
             ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
             relatorio.ContagemPorEspecialidade = servico_especialidade.ListaEspecialidade();
             relatorio.relatorioAtendimento = new ViewModelEmpresaAgenda();
-            relatorio.relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa("idempresa", idempresa.ToString());
+            relatorio.relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa(idempresa.ToString());
 
             var tmpList = new List<ViewModelAgendaCliente>();
 
@@ -34,7 +34,8 @@ namespace GrupoJOS_MVC5.Servicos
                     " WHERE agenda_emp.idempresa = " + idempresa + " " +
                     " AND agenda.DataFinalizada >= '" + DataInicio.ToString("yyyy-MM-dd") + "' " +
                     " AND agenda.DataFinalizada <= '" + DataFim.ToString("yyyy-MM-dd") + "' " +
-                    " AND agenda.Status = '1' ";
+                    " AND agenda.Status = '1' " +
+                    " ORDER BY agenda.DataFinalizada";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);

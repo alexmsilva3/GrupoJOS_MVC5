@@ -18,7 +18,8 @@ namespace GrupoJOS_MVC5.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View(servico_texto.ListaTexto());
             }
@@ -34,35 +35,32 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Index(int Id)
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 servico_texto.RemoveTxt(Id);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Cadastro
         public ActionResult Cadastro()
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
         public ActionResult Cadastro(Model_Texto txt)
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 if (ModelState.IsValid)
                 {
@@ -71,31 +69,27 @@ namespace GrupoJOS_MVC5.Controllers
                 }
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
         #endregion
 
         #region Editar
         public ActionResult Editar(int Id)
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 var txt = servico_texto.BuscaTxt(Id);
                 return View(txt);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
         public ActionResult Editar (Model_Texto txt)
         {
-            if (servico_login.CheckCookie())
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoTextos == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 if (ModelState.IsValid)
                 {
@@ -104,11 +98,7 @@ namespace GrupoJOS_MVC5.Controllers
                 }
                 return View(txt);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
+            return RedirectToAction("Index", "Login");
         }
         #endregion
     }

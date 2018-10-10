@@ -10,7 +10,7 @@
 
 @model GrupoJOS_MVC5.Models.ViewModelRelatorioAtendimentos
 
-<div class="row wrapper border-bottom white-bg page-heading">
+<div class="row wrapper border-bottom white-bg page-heading" id="nao-imprime">
     <div class="col-lg-10">
         <h2>@ViewBag.Title</h2>
         <ol class="breadcrumb">
@@ -33,45 +33,51 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h4>Empresa: @Model.relatorioAtendimento.empresa.Nome</h4>
+                    <div class="ibox-tools"id="nao-imprime">
+                        <button type="button" class="btn btn-default btn-sm" onclick="printPage()" >Imprimir</button>
+                    </div>
                 </div>
                 <div class="ibox-content inspinia-timeline">
 
                     @foreach (var item in Model.relatorioAtendimento.agenda_cliente)
                     {
-
                         <ul class="sortable-list connectList agile-list" id="todo">
                             <li class="info-element" id="task1">
                                 Visitas realizadas no dia:
                                 <div class="agile-detail">
-                                    <i class="fa fa-clock-o"></i> @item.agenda.DataFinalizada.Substring(0,10)
+                                    <i class="fa fa-clock-o"></i> @item.agenda.DataFinalizada.Substring(0, 10)
                                 </div>
                             </li>
                         </ul>
-                        foreach (var client in item.clientes)
-                        {
-                            <div class="timeline-item">
-                            <div class="row">
-                                <div class="col-xs-2 date">
-                                    <i class="fa fa-briefcase"></i>
-                                </div>
-                                <div class="col-xs-7 content no-top-border">
-                                    <p class="m-b-xs"><strong>Profissional de Saúde: @client.Nome</strong></p>
-                                    @*OBSERVAÇÔES <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products.</p>*@
-
-                                </div>
-                                <div class="col-xs-3 content no-top-border">
-                                    <b><p>Especialidades: </p></b>
-                                    <p>@client.NomeEspecialidade1</p>
-                                    <p>@client.NomeEspecialidade2</p>
-                                    <p>@client.NomeEspecialidade3</p>
-                                    <p>@client.NomeEspecialidade4</p>
-                                    <p>@client.NomeEspecialidade5</p>
-                                </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Profissional de Saúde</th>
+                                            <th>Especialidade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var client in item.clientes)
+                                        {
+                                            <tr>
+                                                <td>@client.Nome</td>
+                                                <td>
+                                                    <p>@client.NomeEspecialidade1</p>
+                                                    <p>@client.NomeEspecialidade2</p>
+                                                    <p>@client.NomeEspecialidade3</p>
+                                                    <p>@client.NomeEspecialidade4</p>
+                                                    <p>@client.NomeEspecialidade5</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        }
                     }
-                    
+
                 </div>
 
             </div>
@@ -85,7 +91,7 @@
                         Total de visitas
                         <div class="stat-percent text-navy">@Model.TotalAtendimento </div>
                     </h3>
-                    <small><i class="fa fa-stack-exchange"></i> Visitas realizadas no periodo @Model.DataInicio a @Model.DataFim</small>
+                    <small><i class="fa fa-stack-exchange"></i> Visitas realizadas no periodo @Model.DataInicio.ToShortDateString() a @Model.DataFim.ToShortDateString()</small>
                 </div>
                 <div class="ibox-content">
                     <div class="ibox-title">
@@ -93,7 +99,7 @@
                     </div>
                     <div class="ibox-content no-padding">
                         <ul class="list-group">
-                            @foreach( var item in Model.ContagemPorEspecialidade)
+                            @foreach (var item in Model.ContagemPorEspecialidade)
                             {
                                 <li class="list-group-item">
                                     <span class="badge badge-primary">@item.Total</span>
@@ -107,3 +113,9 @@
         </div>
     </div>
 </div>
+
+    <script>
+        function printPage() {
+            window.print();
+        }
+    </script>

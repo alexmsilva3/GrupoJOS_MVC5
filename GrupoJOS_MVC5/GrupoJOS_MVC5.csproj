@@ -133,7 +133,6 @@
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
     <Folder Include="Images\png\" />
-    <Folder Include="Views\Especialidades\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -167,6 +166,7 @@
     <Compile Include="Models\Model_Relatorios.cs" />
     <Compile Include="Models\Model_teste.cs" />
     <Compile Include="Models\Model_Texto.cs" />
+    <Compile Include="Models\Model_Cookie.cs" />
     <Compile Include="Models\Model_Usuario.cs" />
     <Compile Include="Models\ScaffoldingContext.cs" />
     <Compile Include="Models\ScaffoldingController.cs" />
@@ -186,6 +186,7 @@
     <Compile Include="Servicos\TratarConversaoDeDados.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AlterDB\alteracoes.txt" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -624,6 +625,7 @@
     <Content Include="Scripts\plugins\gritter\images\ie-spacer.gif" />
     <Content Include="Scripts\plugins\gritter\jquery.gritter.css" />
     <Content Include="Scripts\plugins\gritter\jquery.gritter.min.js" />
+    <Content Include="Scripts\plugins\html2canvas\html2canvas.js" />
     <Content Include="Scripts\plugins\html2canvas\html2canvas.min.js" />
     <Content Include="Scripts\plugins\i18next\i18next.min.js" />
     <Content Include="Scripts\plugins\iCheck\icheck.min.js" />
@@ -844,7 +846,6 @@
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Usuarios\Cadastro.cshtml" />
-    <Content Include="Views\Usuarios\Editar.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
     <Content Include="Views\Clientes\Cadastro.cshtml" />
     <Content Include="Views\Clientes\Editar.cshtml" />
@@ -884,6 +885,16 @@
     <Content Include="Views\AgendaComercial\VisitasSemana.cshtml" />
     <Content Include="Views\AgendaComercial\VisitasDia.cshtml" />
     <Content Include="Views\AgendaComercial\VisitasMes.cshtml" />
+    <Content Include="Views\Teste\AtendimentosResultado.cshtml" />
+    <Content Include="Views\Relatorios\MinhasVisitas\Index.cshtml" />
+    <Content Include="Views\Relatorios\MinhasVisitasComercial\Index.cshtml" />
+    <Content Include="Views\Relatorios\MinhasVisitas\Result.cshtml" />
+    <Content Include="Views\Relatorios\MinhasVisitasComercial\Result.cshtml" />
+    <Content Include="Views\Especialidades\Cadastro.cshtml" />
+    <Content Include="Views\Especialidades\Editar.cshtml" />
+    <Content Include="Views\Especialidades\Index.cshtml" />
+    <Content Include="Views\Usuarios\Cadastro-bkp.cshtml" />
+    <Content Include="Views\Usuarios\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

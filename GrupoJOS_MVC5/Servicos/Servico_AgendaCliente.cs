@@ -453,11 +453,11 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region ConcluirAgenda
-        public bool ConcluiAgenda(double idagenda, string observacoes, List<string> empresas)
+        public bool ConcluiAgenda(double idagenda, string observacoes, DateTime DataFinalizada, List<string> empresas)
         {
             try
             {
-                string DataFinalizada = DateTime.Now.ToString("yyy-MM-dd HH:mm");
+                string DataFinalizadaReal = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
                 using (MySqlConnection connection = new MySqlConnection(MySQLServer))
                 {
@@ -465,7 +465,8 @@ namespace GrupoJOS_MVC5.Servicos
                     SQL = "UPDATE agenda " +
                         "SET Observacoes = '" + observacoes + "', " +
                         "Status = '1', " +
-                        "DataFinalizada = '"+ DataFinalizada +"' " +
+                        "DataFinalizada = '"+ DataFinalizada.ToString("yyyy-MM-dd HH:mm")+"', " +
+                        "DataFinalizadaReal = '"+ DataFinalizadaReal +"' " +
                         "WHERE idagenda = " + idagenda + " ";
 
                     connection.Open();
@@ -503,7 +504,7 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Conta Visita Por Usuario
-        public int ContaVisita(int usuario, DateTime DataInicio, DateTime DataFim, string status, string perfil)
+        public int ContaVisita(string usuario, DateTime DataInicio, DateTime DataFim, string status, string perfil)
         {
             int Total = 0;
 
@@ -523,7 +524,7 @@ namespace GrupoJOS_MVC5.Servicos
             {
                 string SQL = "";
                 SQL = "SELECT COUNT(idagenda) as Total FROM agenda WHERE 1=1 " +
-                    " AND Usuario = "+ usuario +"" +
+                    " AND Usuario = '"+ usuario +"' " +
                     " AND DataVisita >= '"+DataInicio1+"' " +
                     " AND DataVisita <= '" + DataFim1 + "' ";
 
@@ -610,6 +611,7 @@ namespace GrupoJOS_MVC5.Servicos
                     AgendaComercialPorX.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
                     AgendaComercialPorX.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
                     AgendaComercialPorX.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+                    AgendaComercialPorX.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
                     AgendaComercialPorX.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
                     AgendaComercialPorX.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
 
@@ -672,6 +674,7 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
                     ag.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
                     ag.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+                    ag.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
                     ag.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
                     ag.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
 
@@ -739,6 +742,7 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
                     ag.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
                     ag.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+                    ag.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
                     ag.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
                     ag.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
 
@@ -797,21 +801,21 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region ConcluirAgendaComercial
-        public bool ConcluiAgendaComercial(double idagenda, string observacoes)
+        public bool ConcluiAgendaComercial(double idagenda, string observacoes, DateTime DataFinalizada)
         {
             try
             {
-                string DataFinalizada = DateTime.Now.ToString("yyy-MM-dd HH:mm");
+                string DataFinalizadaReal = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
                 using (MySqlConnection connection = new MySqlConnection(MySQLServer))
                 {
                     string SQL = "";
                     SQL = "UPDATE agenda " +
                         "SET Observacoes = '" + observacoes + "', " +
-                        "Status = '1', " +
-                        "DataFinalizada = '" + DataFinalizada + "' " +
-                        "UltimaVisita = '" + DateTime.Now.ToString("yyyy-MM-dd") + "' " +
-                        "WHERE idagenda = " + idagenda + " ";
+                        " Status = '1', " +
+                        " DataFinalizada = '" + DataFinalizadaReal + "', " +
+                        " DataFinalizada = '" + DataFinalizada.ToString("yyyy-MM-dd HH:mm") + "' " +
+                        " WHERE idagenda = " + idagenda + " ";
 
                     connection.Open();
                     MySqlCommand command = new MySqlCommand(SQL, connection);

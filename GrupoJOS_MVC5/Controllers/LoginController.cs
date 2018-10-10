@@ -17,8 +17,13 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie())
+            var usuario = servico_login.CheckCookie();
+            if (usuario.UsuarioValidado)
             {
+                if (usuario.UsuarioPerfil == "3")
+                {
+                    return Redirect("/Relatorios/Atendimentos");
+                }
                 return Redirect("/Home/Index");
             }
             return View();
@@ -44,6 +49,20 @@ namespace GrupoJOS_MVC5.Controllers
                         Request.Cookies["UsuarioNome"].Expires = DateTime.Now.AddHours(-20);
                         Request.Cookies["UsuarioID"].Expires = DateTime.Now.AddHours(-20);
                         Request.Cookies["UsuarioPerfil"].Expires = DateTime.Now.AddHours(-20);
+
+                        Request.Cookies["PermissaoAgenda"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["PermissaoAgendaComercial"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["PermissaoCliente"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["PermissaoClienteComercial"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["PermissaoEmpresas"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["PermissaoEspecialidades"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["PermissaoRamos"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["PermissaoRelatorios"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["PermissaoTextos"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["PermissaoUsuarios"].Expires = DateTime.Now.AddHours(-20);
+
+                        Request.Cookies["IdEmpresa"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["NomeEmpresa"].Expires = DateTime.Now.AddHours(-20);
                     }
 
                     // create a cookie
@@ -53,6 +72,27 @@ namespace GrupoJOS_MVC5.Controllers
                     HttpCookie PerfilCookie = new HttpCookie("UsuarioPerfil", user.Perfil.ToString());
                     HttpCookie IdCookie = new HttpCookie("UsuarioID", user.idusuario.ToString());
 
+                    HttpCookie PermissaoAgenda = new HttpCookie("PermissaoAgenda", user.PermissaoAgenda.ToString());
+                    HttpCookie PermissaoAgendaComercial = new HttpCookie("PermissaoAgendaComercial", user.PermissaoAgendaComercial.ToString());
+                    HttpCookie PermissaoCliente = new HttpCookie("PermissaoCliente", user.PermissaoCliente.ToString());
+                    HttpCookie PermissaoClienteComercial = new HttpCookie("PermissaoClienteComercial", user.PermissaoClienteComercial.ToString());
+                    HttpCookie PermissaoEmpresas = new HttpCookie("PermissaoEmpresas", user.PermissaoEmpresas.ToString());
+                    HttpCookie PermissaoEspecialidades = new HttpCookie("PermissaoEspecialidades", user.PermissaoEspecialidades.ToString());
+                    HttpCookie PermissaoRamos = new HttpCookie("PermissaoRamos", user.PermissaoRamos.ToString());
+                    HttpCookie PermissaoRelatorios = new HttpCookie("PermissaoRelatorios", user.PermissaoRelatorios.ToString());
+                    HttpCookie PermissaoTextos = new HttpCookie("PermissaoTextos", user.PermissaoTextos.ToString());
+                    HttpCookie PermissaoUsuarios = new HttpCookie("PermissaoUsuarios", user.PermissaoUsuarios.ToString());
+
+                    HttpCookie IdEmpresa = new HttpCookie("IdEmpresa", "0");
+                    HttpCookie NomeEmpresa = new HttpCookie("NomeEmpresa", "GrupoJOS");
+
+                    if (user.idempresa != 0)
+                    {
+                        IdEmpresa = new HttpCookie("IdEmpresa", user.idempresa.ToString());
+                        NomeEmpresa = new HttpCookie("NomeEmpresa", user.NomeEmpresa.ToString());
+                    }
+
+
                     if (usuario.Lembrar)
                     {
                         EmailCookie.Expires = DateTime.Now.AddHours(12);
@@ -60,6 +100,23 @@ namespace GrupoJOS_MVC5.Controllers
                         NomeCookie.Expires = DateTime.Now.AddHours(12);
                         PerfilCookie.Expires = DateTime.Now.AddHours(12);
                         IdCookie.Expires = DateTime.Now.AddHours(12);
+
+                        PermissaoAgenda.Expires = DateTime.Now.AddHours(12);
+                        PermissaoAgendaComercial.Expires = DateTime.Now.AddHours(12);
+                        PermissaoCliente.Expires = DateTime.Now.AddHours(12);
+                        PermissaoClienteComercial.Expires = DateTime.Now.AddHours(12);
+                        PermissaoEmpresas.Expires = DateTime.Now.AddHours(12);
+                        PermissaoEspecialidades.Expires = DateTime.Now.AddHours(12);
+                        PermissaoRamos.Expires = DateTime.Now.AddHours(12);
+                        PermissaoRelatorios.Expires = DateTime.Now.AddHours(12);
+                        PermissaoTextos.Expires = DateTime.Now.AddHours(12);
+                        PermissaoUsuarios.Expires = DateTime.Now.AddHours(12);
+
+                        if (user.idempresa != 0)
+                        {
+                            IdEmpresa.Expires = DateTime.Now.AddHours(12);
+                            NomeEmpresa.Expires = DateTime.Now.AddHours(12);
+                        }
                     }
                     else
                     {
@@ -68,6 +125,20 @@ namespace GrupoJOS_MVC5.Controllers
                         NomeCookie.Expires = DateTime.Now.AddHours(1);
                         PerfilCookie.Expires = DateTime.Now.AddHours(1);
                         IdCookie.Expires = DateTime.Now.AddHours(1);
+
+                        PermissaoAgenda.Expires = DateTime.Now.AddHours(1);
+                        PermissaoAgendaComercial.Expires = DateTime.Now.AddHours(1);
+                        PermissaoCliente.Expires = DateTime.Now.AddHours(1);
+                        PermissaoClienteComercial.Expires = DateTime.Now.AddHours(1);
+                        PermissaoEmpresas.Expires = DateTime.Now.AddHours(1);
+                        PermissaoEspecialidades.Expires = DateTime.Now.AddHours(1);
+                        PermissaoRamos.Expires = DateTime.Now.AddHours(1);
+                        PermissaoRelatorios.Expires = DateTime.Now.AddHours(1);
+                        PermissaoTextos.Expires = DateTime.Now.AddHours(1);
+                        PermissaoUsuarios.Expires = DateTime.Now.AddHours(1);
+
+                        IdEmpresa.Expires = DateTime.Now.AddHours(1);
+                        NomeEmpresa.Expires = DateTime.Now.AddHours(1);
                     }
                     Response.Cookies.Add(EmailCookie);
                     Response.Cookies.Add(AdmCookie);
@@ -75,8 +146,26 @@ namespace GrupoJOS_MVC5.Controllers
                     Response.Cookies.Add(PerfilCookie);
                     Response.Cookies.Add(IdCookie);
 
+                    Response.Cookies.Add(PermissaoAgenda);
+                    Response.Cookies.Add(PermissaoAgendaComercial);
+                    Response.Cookies.Add(PermissaoCliente);
+                    Response.Cookies.Add(PermissaoClienteComercial);
+                    Response.Cookies.Add(PermissaoEmpresas);
+                    Response.Cookies.Add(PermissaoEspecialidades);
+                    Response.Cookies.Add(PermissaoRamos);
+                    Response.Cookies.Add(PermissaoRelatorios);
+                    Response.Cookies.Add(PermissaoTextos);
+                    Response.Cookies.Add(PermissaoUsuarios);
+
+                    Response.Cookies.Add(IdEmpresa);
+                    Response.Cookies.Add(NomeEmpresa);
+
                     servico_usuario.UltimoAcesso(user.idusuario);
 
+                    if (Request.Cookies["UsuarioPerfil"].Value == "3")
+                    {
+                        return Redirect("/Relatorios/Atendimentos");
+                    }
                     return Redirect("/Home/Index");
 
                 }

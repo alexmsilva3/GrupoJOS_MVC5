@@ -6,6 +6,7 @@ using System.Web.Mvc;
 namespace GrupoJOS_MVC5.Models
 {
     public class Model_Cliente
+
     {
         public double idcliente { get; set; }
 

@@ -8,6 +8,7 @@ namespace GrupoJOS_MVC5.Models
 {
     public class Model_Home
     {
+        //remover
         public int VisitasAgendadasDia { get; set; }
         public int VisitasRealizadasDia { get; set; }
         public int VisitasRealizadasDiaP { get; set; }

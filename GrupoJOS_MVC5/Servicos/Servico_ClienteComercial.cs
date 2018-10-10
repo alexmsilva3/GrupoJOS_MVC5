@@ -46,6 +46,7 @@ namespace GrupoJOS_MVC5.Servicos
                     com.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
                     com.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
                     com.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+                    com.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
                     com.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
                     com.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
 
@@ -94,6 +95,7 @@ namespace GrupoJOS_MVC5.Servicos
                     BuscaClienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
                     BuscaClienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
                     BuscaClienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+                    BuscaClienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
                     BuscaClienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
                     BuscaClienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
 
@@ -108,7 +110,7 @@ namespace GrupoJOS_MVC5.Servicos
 
         #region Insere ClienteComercial
         public object InsereClienteComercial(string nome, string razaosocial, string cnpj, string insc_estadual, string endereco, string num,
-            string bairro, string cidade, string uf,string cep, string contato, string email, string fone1, string fone2, int ramo)
+            string bairro, string cidade, string uf,string cep, string contato, string email, string fone1, string fone2, int ramo, int conveniado)
         {
             Model_ClienteComercial InsereEmpresa = new Model_ClienteComercial();
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
@@ -116,9 +118,9 @@ namespace GrupoJOS_MVC5.Servicos
                 string SQL = "";
 
                 SQL = "INSERT INTO clientes_comercial" +
-                    "(Nome,RazaoSocial,CNPJ,InscricaoEstadual,Endereco,Num,Bairro,Cidade,UF,CEP,Contato,Email,Fone1,Fone2,DataCadastro,Ramo)" +
+                    "(Nome,RazaoSocial,CNPJ,InscricaoEstadual,Endereco,Num,Bairro,Cidade,UF,CEP,Contato,Email,Fone1,Fone2,DataCadastro,Ramo, Conveniado)" +
                     "VALUES" +
-                    "('" + nome + "','" + razaosocial + "','" + cnpj + "','" + insc_estadual + "','" + endereco + "','" + num + "','" + bairro + "','" + cidade + "','" + uf + "','" + cep + "','" + contato + "','" + email + "','" + fone1 + "','" + fone2 + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "', " + ramo + " );";
+                    "('" + nome + "','" + razaosocial + "','" + cnpj + "','" + insc_estadual + "','" + endereco + "','" + num + "','" + bairro + "','" + cidade + "','" + uf + "','" + cep + "','" + contato + "','" + email + "','" + fone1 + "','" + fone2 + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "', " + ramo + "," + conveniado + " );";
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
@@ -130,7 +132,7 @@ namespace GrupoJOS_MVC5.Servicos
 
         #region Atualiza ClienteComercial
         public object AtualizaClienteComercial(string id, string nome, string razaosocial, string cnpj, string insc_estadual, string endereco, string num,
-            string bairro, string cidade, string uf,string cep, string contato, string email, string fone1, string fone2, int ramo)
+            string bairro, string cidade, string uf,string cep, string contato, string email, string fone1, string fone2, int ramo, int conveniado)
         {
             Model_ClienteComercial AtualizaClienteComercial = new Model_ClienteComercial();
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
@@ -152,7 +154,8 @@ namespace GrupoJOS_MVC5.Servicos
                     " Email =  '"+email+"'," +
                     " Fone1 =  '"+fone1+"'," +
                     " Fone2 =  '"+fone2+"', " +
-                    " Ramo =  '" + ramo + "' " +
+                    " Ramo =  '" + ramo + "', " +
+                    " Conveniado =  '" + conveniado + "' " +
                     " WHERE idclientecomercial =  " +id+";";
 
                 connection.Open();

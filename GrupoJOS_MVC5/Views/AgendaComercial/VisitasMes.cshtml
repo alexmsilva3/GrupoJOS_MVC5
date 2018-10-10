@@ -38,6 +38,7 @@
                                     <th>Cliente</th>
                                     <th>Última Visita</th>
                                     <th>Ramo Comercial</th>
+                                    <th>Conveniado</th>
                                     <th>Opções</th>
                                 </tr>
                             </thead>
@@ -48,6 +49,7 @@
                                     <th>Cliente</th>
                                     <th>Última Visita</th>
                                     <th>Ramo Comercial</th>
+                                    <th>Conveniado</th>
                                     <th>Opções</th>
                                 </tr>
                             </tfoot>
@@ -63,6 +65,10 @@
                                         else{<td>Não Visitado</td>}
                                         
                                         <td>@item.clienteComercial.RamoNome</td>
+                                        <td width="5%" align="center">
+                                            @if(item.clienteComercial.Conveniado == 1){<i class="fa fa-bookmark"></i><p>Conveniado</p>}
+                                            else{<i><p>Sem Convênio</p></i>}
+                                        </td>
 
                                         <td width="15%">
                                             <button type="button" title="Alterar Visita" class="btn btn-success dim" data-toggle="modal" data-target="#myModal2" onclick="AssignButtonClicked(this)" data-assigned-id="@item.agenda.idagenda" data-cliente-id="@item.agenda.Comercial"><i class="fa fa-clock-o"></i></button>
@@ -168,6 +174,7 @@
                                     <th>Cliente</th>
                                     <th>Última Visita</th>
                                     <th>Ramo Comercial</th>
+                                    <th>Conveniado</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
@@ -178,6 +185,7 @@
                                     <th>Cliente</th>
                                     <th>Última Visita</th>
                                     <th>Ramo Comercial</th>
+                                    <th>Conveniado</th>
                                     <th>#</th>
                                 </tr>
                             </tfoot>
@@ -193,8 +201,12 @@
                                         else{<td>Não Visitado</td>}
                                         
                                         <td>@item.clienteComercial.RamoNome</td>
+                                        <td width="5%" align="center">
+                                            @if(item.clienteComercial.Conveniado == 1){<i class="fa fa-bookmark"></i><p>Conveniado</p>}
+                                            else{<i><p>Sem Convênio</p></i>}
+                                        </td>
 
-                                        <td width="15%">
+                                        <td>
                                             <a href="/AgendaComercial/Visualizar/@item.agenda.idagenda"><button class="btn btn-warning dim" type="button" title="Visualizar Visita"><i class="fa fa-eye"></i></button></a>
                                         </td>
                                     </tr>

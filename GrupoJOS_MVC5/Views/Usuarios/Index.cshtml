@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Lista de Usuarios";
+    var adm = Request.Cookies["UsuarioADM"].Value;
 }
 
 @model List<GrupoJOS_MVC5.Models.Model_Usuario>
@@ -71,10 +72,14 @@
                                         <td>@item.UltimoAcesso</td>
 
                                         <td width="3%" align="center">
-                                            @if(item.Perfil == 0)
-                                                {<i title="Visita" class="fa fa-map-marker"></i> <p>Visita Médica</p>}
-                                            @if(item.Perfil == 1)
+                                            @if(item.Perfil == "0")
+                                                {<i title="Propagandista" class="fa fa-map-marker"></i> <p>Propagandista</p>}
+                                            @if(item.Perfil == "1")
                                                 {<i title="Comercial" class="fa fa-usd"></i> <p>Comercial</p>}
+                                            @if(item.Perfil == "2")
+                                                {<i title="Personalizado" class="fa fa-asterisk"></i> <p>Personalizado</p>}
+                                            @if(item.Perfil == "3")
+                                                {<i title="Empresa" class="fa fa-building"></i> <p>Empresa</p> <p>@item.NomeEmpresa</p>}
                                         </td>
                                         <td width="3%" align="center">
                                             @if (item.Administrador == true)
@@ -82,10 +87,10 @@
                                             else
                                                 {<i title="Comum" class="fa fa-star-o"></i>}
                                         </td>
-                                        <td width="9%">
+                                        <td>
                                             <div class="js-sweetalert">
                                                 <a href="/Usuarios/Editar/@item.idusuario"><button class="btn btn-success dim" type="button"><i class="fa fa-edit"></i></button></a>
-                                                <button class="btn btn-danger dim" type="button" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idusuario"><i class="fa fa-trash"></i></button>
+                                                @if (adm == "True"){<button class="btn btn-danger dim" type="button" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idusuario"><i class="fa fa-trash"></i></button>}
                                             </div>
                                         </td>
                                     </tr>

@@ -81,17 +81,19 @@
 
 
                                         <td>@item.Contato</td>
-                                        <td width="13%">
+                                        <td>
                                             <div class="js-sweetalert">
-
+                                                @if(item.ListaUsuario.Count > 0)
+                                                    {<button type="button" class="btn btn-default dim" title="Possui usuário"><i class="fa fa-user"></i></button> }
+                                                
                                                 @if (item.Ativo)
-                                                {<button type="button" class="btn btn-primary dim" title="Ativo"><i class="fa fa-check"></i></button> }
+                                                    {<button type="button" class="btn btn-primary dim" title="Ativo"><i class="fa fa-check"></i></button> }
                                                 else
-                                                { <button type="button" class="btn btn-default dim" title="Inativo"><i class="fa fa-times"></i></button>}
+                                                    { <button type="button" class="btn btn-default dim" title="Inativo"><i class="fa fa-times"></i></button>}
 
                                                 <a href="/Empresas/Editar/@item.idempresa"><button type="button" class="btn btn-success dim"><i class="fa fa-edit"></i></button></a>
                                                 @if (adm == "True")
-                                                {<button type="button" class="btn btn-danger dim" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idempresa"><i class="fa fa-trash"></i></button>}
+                                                    {<button type="button" class="btn btn-danger dim" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idempresa"><i class="fa fa-trash"></i></button>}
                                             </div>
                                         </td>
                                     </tr>

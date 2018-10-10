@@ -16,11 +16,17 @@ namespace GrupoJOS_MVC5.Servicos
         public ViewModelUsuario AutenticaUsuario(string usuario, string senha)
         {
             ViewModelUsuario AutenticaUsuario = new ViewModelUsuario();
+            Servico_Empresa servico_empresa = new Servico_Empresa();
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM usuarios WHERE Email = '"+usuario+"' AND Senha = '"+senha+"' ";
+                SQL = "SELECT usuarios.*, usuarios_empresas.*, empresas.Nome AS NomeEmpresa FROM usuarios " +
+                     " LEFT JOIN usuarios_empresas " +
+                     " ON usuarios.idusuario = usuarios_empresas.idusuario " +
+                     " LEFT JOIN empresas" +
+                     " ON empresas.idempresa = usuarios_empresas.idempresa" +
+                     " WHERE usuarios.Email = '" +usuario+"' AND usuarios.Senha = '"+senha+"' ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -47,6 +53,10 @@ namespace GrupoJOS_MVC5.Servicos
                     AutenticaUsuario.PermissaoRelatorios = TratarConversaoDeDados.TrataString(reader["PermissaoRelatorios"]);
                     AutenticaUsuario.PermissaoTextos = TratarConversaoDeDados.TrataString(reader["PermissaoTextos"]);
                     AutenticaUsuario.PermissaoUsuarios = TratarConversaoDeDados.TrataString(reader["PermissaoUsuarios"]);
+
+                    AutenticaUsuario.idempresa = TratarConversaoDeDados.TrataDouble(reader["idempresa"]);
+                    AutenticaUsuario.NomeEmpresa = TratarConversaoDeDados.TrataString(reader["NomeEmpresa"]);
+
                 }
                 reader.Close();
                 connection.Close();
@@ -162,9 +172,11 @@ namespace GrupoJOS_MVC5.Servicos
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM usuarios" +
+                SQL = "SELECT usuarios.*, usuarios_empresas.*, empresas.Nome AS NomeEmpresa FROM usuarios" +
                     " LEFT JOIN usuarios_empresas " +
                     " ON usuarios.idusuario = usuarios_empresas.idusuario " +
+                    " LEFT JOIN empresas " +
+                    " ON empresas.idempresa = usuarios_empresas.idempresa " +
                     " WHERE usuarios.idusuario = "+ idusuario + "";
 
                 connection.Open();
@@ -193,8 +205,8 @@ namespace GrupoJOS_MVC5.Servicos
                     BuscaUsuario.PermissaoTextos = TratarConversaoDeDados.TrataString(reader["PermissaoTextos"]);
                     BuscaUsuario.PermissaoUsuarios = TratarConversaoDeDados.TrataString(reader["PermissaoUsuarios"]);
 
-                    BuscaUsuario.idempresa = TratarConversaoDeDados.TrataInt(reader["idempresa"]);
-                    BuscaUsuario.NomeEmpresa = servico_empresa.BuscaEmpresaComUsuario(BuscaUsuario.idempresa.ToString()).Nome;
+                    BuscaUsuario.idempresa = TratarConversaoDeDados.TrataDouble(reader["idempresa"]);
+                    BuscaUsuario.NomeEmpresa = TratarConversaoDeDados.TrataString(reader["NomeEmpresa"]);
 
                 }
                 reader.Close();

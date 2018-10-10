@@ -50,6 +50,9 @@ namespace GrupoJOS_MVC5.Servicos
                     usuario.PermissaoTextos = HttpContext.Current.Request.Cookies["PermissaoTextos"].Value;
                     usuario.PermissaoUsuarios = HttpContext.Current.Request.Cookies["PermissaoUsuarios"].Value;
 
+                    usuario.idempresa = HttpContext.Current.Request.Cookies["IdEmpresa"].Value;
+                    usuario.NomeEmpresa = HttpContext.Current.Request.Cookies["NomeEmpresa"].Value;
+
                     usuario.UsuarioValidado = true;
 
                     return usuario;
@@ -71,6 +74,9 @@ namespace GrupoJOS_MVC5.Servicos
             usuario.PermissaoRelatorios = "";
             usuario.PermissaoTextos = "";
             usuario.PermissaoUsuarios = "";
+
+            usuario.idempresa = "";
+            usuario.NomeEmpresa = "";
 
             usuario.UsuarioValidado = false;
 

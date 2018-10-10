@@ -17,8 +17,13 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (servico_login.CheckCookie().UsuarioValidado)
+            var usuario = servico_login.CheckCookie();
+            if (usuario.UsuarioValidado)
             {
+                if (usuario.UsuarioPerfil == "3")
+                {
+                    return Redirect("/Relatorios/Atendimentos");
+                }
                 return Redirect("/Home/Index");
             }
             return View();
@@ -55,6 +60,9 @@ namespace GrupoJOS_MVC5.Controllers
                         Request.Cookies["PermissaoRelatorios"].Expires = DateTime.Now.AddHours(-20);
                         Request.Cookies["PermissaoTextos"].Expires = DateTime.Now.AddHours(-20);
                         Request.Cookies["PermissaoUsuarios"].Expires = DateTime.Now.AddHours(-20);
+
+                        Request.Cookies["IdEmpresa"].Expires = DateTime.Now.AddHours(-20);
+                        Request.Cookies["NomeEmpresa"].Expires = DateTime.Now.AddHours(-20);
                     }
 
                     // create a cookie
@@ -75,6 +83,15 @@ namespace GrupoJOS_MVC5.Controllers
                     HttpCookie PermissaoTextos = new HttpCookie("PermissaoTextos", user.PermissaoTextos.ToString());
                     HttpCookie PermissaoUsuarios = new HttpCookie("PermissaoUsuarios", user.PermissaoUsuarios.ToString());
 
+                    HttpCookie IdEmpresa = new HttpCookie("IdEmpresa", "0");
+                    HttpCookie NomeEmpresa = new HttpCookie("NomeEmpresa", "GrupoJOS");
+
+                    if (user.idempresa != 0)
+                    {
+                        IdEmpresa = new HttpCookie("IdEmpresa", user.idempresa.ToString());
+                        NomeEmpresa = new HttpCookie("NomeEmpresa", user.NomeEmpresa.ToString());
+                    }
+
 
                     if (usuario.Lembrar)
                     {
@@ -94,6 +111,12 @@ namespace GrupoJOS_MVC5.Controllers
                         PermissaoRelatorios.Expires = DateTime.Now.AddHours(12);
                         PermissaoTextos.Expires = DateTime.Now.AddHours(12);
                         PermissaoUsuarios.Expires = DateTime.Now.AddHours(12);
+
+                        if (user.idempresa != 0)
+                        {
+                            IdEmpresa.Expires = DateTime.Now.AddHours(12);
+                            NomeEmpresa.Expires = DateTime.Now.AddHours(12);
+                        }
                     }
                     else
                     {
@@ -113,6 +136,9 @@ namespace GrupoJOS_MVC5.Controllers
                         PermissaoRelatorios.Expires = DateTime.Now.AddHours(1);
                         PermissaoTextos.Expires = DateTime.Now.AddHours(1);
                         PermissaoUsuarios.Expires = DateTime.Now.AddHours(1);
+
+                        IdEmpresa.Expires = DateTime.Now.AddHours(1);
+                        NomeEmpresa.Expires = DateTime.Now.AddHours(1);
                     }
                     Response.Cookies.Add(EmailCookie);
                     Response.Cookies.Add(AdmCookie);
@@ -131,8 +157,15 @@ namespace GrupoJOS_MVC5.Controllers
                     Response.Cookies.Add(PermissaoTextos);
                     Response.Cookies.Add(PermissaoUsuarios);
 
+                    Response.Cookies.Add(IdEmpresa);
+                    Response.Cookies.Add(NomeEmpresa);
+
                     servico_usuario.UltimoAcesso(user.idusuario);
 
+                    if (Request.Cookies["UsuarioPerfil"].Value == "3")
+                    {
+                        return Redirect("/Relatorios/Atendimentos");
+                    }
                     return Redirect("/Home/Index");
 
                 }

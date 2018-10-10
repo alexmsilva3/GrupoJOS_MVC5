@@ -38,8 +38,15 @@ namespace GrupoJOS_MVC5.Controllers
             {
                 List<Model_Empresa> lista_empresa = new List<Model_Empresa>();
 
-                lista_empresa = servico_empresa.ListaEmpresa();
+                if (cookie.idempresa != "0")
+                {
+                    var idempresa = Convert.ToDouble(cookie.idempresa);
+                    lista_empresa = servico_empresa.ListaEmpresa().FindAll(x => x.idempresa == idempresa);
 
+                    return View(lista_empresa);
+                }
+
+                lista_empresa = servico_empresa.ListaEmpresa();
                 return View(lista_empresa);
             }
 

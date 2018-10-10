@@ -30,7 +30,7 @@ namespace GrupoJOS_MVC5.Models
         public string PermissaoRelatorios { get; set; }
 
         //INNER JOIN EMPRESAS
-        public int idempresa { get; set; }
+        public string idempresa { get; set; }
         public string NomeEmpresa { get; set; }
     }
 }

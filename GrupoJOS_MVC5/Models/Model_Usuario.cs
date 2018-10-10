@@ -52,7 +52,7 @@ namespace GrupoJOS_MVC5.Models
         public string PermissaoRelatorios { get; set; }
 
         //INNER JOIN EMPRESAS
-        public int idempresa { get; set; }
+        public double idempresa { get; set; }
         public string NomeEmpresa { get; set; }
     }
 
@@ -85,6 +85,10 @@ namespace GrupoJOS_MVC5.Models
         public string PermissaoUsuarios { get; set; }
         public string PermissaoTextos { get; set; }
         public string PermissaoRelatorios { get; set; }
+
+        //INNER JOIN EMPRESAS
+        public double idempresa { get; set; }
+        public string NomeEmpresa { get; set; }
     }
 
     //-----------------------------------------------------------------------------

@@ -34,7 +34,8 @@ namespace GrupoJOS_MVC5.Servicos
                     " WHERE agenda_emp.idempresa = " + idempresa + " " +
                     " AND agenda.DataFinalizada >= '" + DataInicio.ToString("yyyy-MM-dd") + "' " +
                     " AND agenda.DataFinalizada <= '" + DataFim.ToString("yyyy-MM-dd") + "' " +
-                    " AND agenda.Status = '1' ";
+                    " AND agenda.Status = '1' " +
+                    " ORDER BY agenda.DataFinalizada";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);

@@ -11,52 +11,36 @@ namespace GrupoJOS_MVC5.Servicos
 {
     public class Servico_Login
     {
-        //public bool CheckCookie()
-        //{
-        //    //verifica se valores não são nulos
-        //    if (HttpContext.Current.Request.Cookies["UsuarioEmail"] != null && HttpContext.Current.Request.Cookies["UsuarioADM"] != null && HttpContext.Current.Request.Cookies["UsuarioNome"] != null && HttpContext.Current.Request.Cookies["UsuarioID"] != null && HttpContext.Current.Request.Cookies["UsuarioPerfil"] != null)
-        //    {
-        //        if (!string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioEmail"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioADM"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioNome"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioID"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value))
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-
         public Model_Cookie CheckCookie()
         {
             Model_Cookie usuario = new Model_Cookie();
 
             //verifica se valores não são nulos
-            if (HttpContext.Current.Request.Cookies["UsuarioEmail"] != null && HttpContext.Current.Request.Cookies["UsuarioADM"] != null && HttpContext.Current.Request.Cookies["UsuarioNome"] != null && HttpContext.Current.Request.Cookies["UsuarioID"] != null && HttpContext.Current.Request.Cookies["UsuarioPerfil"] != null)
+            if (CheckCookies())
             {
-                if (!string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioEmail"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioADM"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioNome"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioID"].Value) && !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value))
-                {
-                    usuario.UsuarioADM = HttpContext.Current.Request.Cookies["UsuarioADM"].Value;
-                    usuario.UsuarioEmail = HttpContext.Current.Request.Cookies["UsuarioEmail"].Value;
-                    usuario.UsuarioID = HttpContext.Current.Request.Cookies["UsuarioID"].Value;
-                    usuario.UsuarioNome = HttpContext.Current.Request.Cookies["UsuarioNome"].Value;
-                    usuario.UsuarioPerfil = HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value;
+                usuario.UsuarioADM = HttpContext.Current.Request.Cookies["UsuarioADM"].Value;
+                usuario.UsuarioEmail = HttpContext.Current.Request.Cookies["UsuarioEmail"].Value;
+                usuario.UsuarioID = HttpContext.Current.Request.Cookies["UsuarioID"].Value;
+                usuario.UsuarioNome = HttpContext.Current.Request.Cookies["UsuarioNome"].Value;
+                usuario.UsuarioPerfil = HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value;
 
-                    usuario.PermissaoAgenda = HttpContext.Current.Request.Cookies["PermissaoAgenda"].Value;
-                    usuario.PermissaoAgendaComercial = HttpContext.Current.Request.Cookies["PermissaoAgendaComercial"].Value;
-                    usuario.PermissaoCliente = HttpContext.Current.Request.Cookies["PermissaoCliente"].Value;
-                    usuario.PermissaoClienteComercial = HttpContext.Current.Request.Cookies["PermissaoClienteComercial"].Value;
-                    usuario.PermissaoEmpresas = HttpContext.Current.Request.Cookies["PermissaoEmpresas"].Value;
-                    usuario.PermissaoEspecialidades = HttpContext.Current.Request.Cookies["PermissaoEspecialidades"].Value;
-                    usuario.PermissaoRamos = HttpContext.Current.Request.Cookies["PermissaoRamos"].Value;
-                    usuario.PermissaoRelatorios = HttpContext.Current.Request.Cookies["PermissaoRelatorios"].Value;
-                    usuario.PermissaoTextos = HttpContext.Current.Request.Cookies["PermissaoTextos"].Value;
-                    usuario.PermissaoUsuarios = HttpContext.Current.Request.Cookies["PermissaoUsuarios"].Value;
+                usuario.PermissaoAgenda = HttpContext.Current.Request.Cookies["PermissaoAgenda"].Value;
+                usuario.PermissaoAgendaComercial = HttpContext.Current.Request.Cookies["PermissaoAgendaComercial"].Value;
+                usuario.PermissaoCliente = HttpContext.Current.Request.Cookies["PermissaoCliente"].Value;
+                usuario.PermissaoClienteComercial = HttpContext.Current.Request.Cookies["PermissaoClienteComercial"].Value;
+                usuario.PermissaoEmpresas = HttpContext.Current.Request.Cookies["PermissaoEmpresas"].Value;
+                usuario.PermissaoEspecialidades = HttpContext.Current.Request.Cookies["PermissaoEspecialidades"].Value;
+                usuario.PermissaoRamos = HttpContext.Current.Request.Cookies["PermissaoRamos"].Value;
+                usuario.PermissaoRelatorios = HttpContext.Current.Request.Cookies["PermissaoRelatorios"].Value;
+                usuario.PermissaoTextos = HttpContext.Current.Request.Cookies["PermissaoTextos"].Value;
+                usuario.PermissaoUsuarios = HttpContext.Current.Request.Cookies["PermissaoUsuarios"].Value;
 
-                    usuario.idempresa = HttpContext.Current.Request.Cookies["IdEmpresa"].Value;
-                    usuario.NomeEmpresa = HttpContext.Current.Request.Cookies["NomeEmpresa"].Value;
+                usuario.idempresa = HttpContext.Current.Request.Cookies["IdEmpresa"].Value;
+                usuario.NomeEmpresa = HttpContext.Current.Request.Cookies["NomeEmpresa"].Value;
 
-                    usuario.UsuarioValidado = true;
+                usuario.UsuarioValidado = true;
 
-                    return usuario;
-                }
+                return usuario;
             }
             usuario.UsuarioADM = "";
             usuario.UsuarioEmail = "";
@@ -82,6 +66,60 @@ namespace GrupoJOS_MVC5.Servicos
 
             return usuario;
         }
+
+
+        public bool CheckCookies()
+        {
+            //verifica se valores não são nulos
+            if (HttpContext.Current.Request.Cookies["UsuarioEmail"] != null &&
+                HttpContext.Current.Request.Cookies["UsuarioADM"] != null &&
+                HttpContext.Current.Request.Cookies["UsuarioNome"] != null &&
+                HttpContext.Current.Request.Cookies["UsuarioID"] != null &&
+                HttpContext.Current.Request.Cookies["UsuarioPerfil"] != null &&
+
+                HttpContext.Current.Request.Cookies["PermissaoAgenda"] != null &&
+                HttpContext.Current.Request.Cookies["PermissaoAgendaComercial"] != null &&
+                HttpContext.Current.Request.Cookies["PermissaoCliente"] != null &&
+                HttpContext.Current.Request.Cookies["PermissaoClienteComercial"] != null &&
+                HttpContext.Current.Request.Cookies["PermissaoEmpresas"] != null &&
+                HttpContext.Current.Request.Cookies["PermissaoEspecialidades"] != null &&
+                HttpContext.Current.Request.Cookies["PermissaoRamos"] != null &&
+                HttpContext.Current.Request.Cookies["PermissaoRelatorios"] != null &&
+                HttpContext.Current.Request.Cookies["PermissaoTextos"] != null &&
+                HttpContext.Current.Request.Cookies["PermissaoUsuarios"] != null &&
+
+                HttpContext.Current.Request.Cookies["IdEmpresa"] != null &&
+                HttpContext.Current.Request.Cookies["NomeEmpresa"] != null
+
+                )
+            {
+                if (!string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioEmail"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioADM"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioNome"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioID"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["UsuarioPerfil"].Value) &&
+
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoAgenda"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoAgendaComercial"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoCliente"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoClienteComercial"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoEmpresas"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoEspecialidades"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoRamos"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoRelatorios"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoTextos"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["PermissaoUsuarios"].Value) &&
+
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["IdEmpresa"].Value) &&
+                    !string.IsNullOrEmpty(HttpContext.Current.Request.Cookies["NomeEmpresa"].Value))
+
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         public void ExpireAllCookies()
         {

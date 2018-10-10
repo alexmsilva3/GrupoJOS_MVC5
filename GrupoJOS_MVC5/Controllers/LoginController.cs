@@ -43,26 +43,7 @@ namespace GrupoJOS_MVC5.Controllers
                     // check if cookie exists and if yes update
                     if (Request.Cookies["UsuarioEmail"] != null)
                     {
-                        // force to expire it
-                        Request.Cookies["UsuarioEmail"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["UsuarioADM"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["UsuarioNome"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["UsuarioID"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["UsuarioPerfil"].Expires = DateTime.Now.AddHours(-20);
-
-                        Request.Cookies["PermissaoAgenda"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["PermissaoAgendaComercial"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["PermissaoCliente"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["PermissaoClienteComercial"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["PermissaoEmpresas"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["PermissaoEspecialidades"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["PermissaoRamos"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["PermissaoRelatorios"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["PermissaoTextos"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["PermissaoUsuarios"].Expires = DateTime.Now.AddHours(-20);
-
-                        Request.Cookies["IdEmpresa"].Expires = DateTime.Now.AddHours(-20);
-                        Request.Cookies["NomeEmpresa"].Expires = DateTime.Now.AddHours(-20);
+                        servico_login.ExpireAllCookies();
                     }
 
                     // create a cookie
@@ -111,12 +92,9 @@ namespace GrupoJOS_MVC5.Controllers
                         PermissaoRelatorios.Expires = DateTime.Now.AddHours(12);
                         PermissaoTextos.Expires = DateTime.Now.AddHours(12);
                         PermissaoUsuarios.Expires = DateTime.Now.AddHours(12);
+                        IdEmpresa.Expires = DateTime.Now.AddHours(12);
+                        NomeEmpresa.Expires = DateTime.Now.AddHours(12);
 
-                        if (user.idempresa != 0)
-                        {
-                            IdEmpresa.Expires = DateTime.Now.AddHours(12);
-                            NomeEmpresa.Expires = DateTime.Now.AddHours(12);
-                        }
                     }
                     else
                     {

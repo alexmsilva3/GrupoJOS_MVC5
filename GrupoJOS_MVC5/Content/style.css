@@ -12,6 +12,9 @@
         display: none;
     }
 }
+.clickable {
+    cursor: pointer;
+}
 
 h1,
 h2,

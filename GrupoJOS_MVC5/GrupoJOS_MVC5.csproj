@@ -377,10 +377,6 @@
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\PublishProfiles\RedeHost.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
-    <Content Include="Content\landing\avatar_all.png" />
-    <Content Include="Content\landing\header_one.jpg" />
-    <Content Include="Content\landing\header_two.jpg" />
-    <Content Include="Content\landing\word_map.png" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\app\skin.config.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -895,6 +891,8 @@
     <Content Include="Views\Especialidades\Index.cshtml" />
     <Content Include="Views\Usuarios\Cadastro-bkp.cshtml" />
     <Content Include="Views\Usuarios\Editar.cshtml" />
+    <Content Include="Views\AgendaComercial\Concluir - Cópia .cshtml" />
+    <Content Include="Views\AgendaCliente\Concluir - Cópia .cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

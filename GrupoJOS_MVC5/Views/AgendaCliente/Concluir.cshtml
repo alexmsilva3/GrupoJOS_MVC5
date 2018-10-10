@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Conclusão";
+    var data = DateTime.Now.ToString("dd/MM/yyyy hh:mm");
 }
 
 @model GrupoJOS_MVC5.Models.ViewModelAgenda
@@ -75,7 +76,7 @@
                                     <select data-placeholder="Selecione um texto" class="chosen-select" tabindex="2" id="myList" onchange="myFunction()">
                                         @foreach (var item in ViewBag.TextoPadrao)
                                         {
-                                            <option id='@item.Descricao'>Texto: @item.Descricao.Substring(0,10)</option>
+                                            <option id='@item.Descricao'>Texto: @item.Descricao.Substring(0, 10)</option>
                                         }
                                     </select>
                                 </div>
@@ -84,28 +85,142 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
+                //---------------------------------
+                <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content animated flipInY">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">Concluir Visita</h4>
+                                @*<small class="font-bold">É possivel realizar a alteração para Data e Hora dessa visita, caso necessite alterar dados referente ao cliente ou empresa, necessário editar o agendamento.</small>*@
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-content">
+
+                                                <p>Você esta concluindo sua vista com os seguintes dados:</p>
+                                                <p><b>Cliente:</b> @Model.cliente.Nome</p>
+                                                <p><b>Data e Hora da Visita:</b> @Model.agenda.DataVisita.Substring(0, 10) @Model.agenda.HoraVisita</p>
+                                                <p><b>Data e Hora da Conclusão:</b> @data (agora)</p>
+                                                <br>
+                                                <small>Marque a opção abaixo caso deseje alterar a data de conclusão</small>
+                                                <br>
+                                                <div class="checkbox i-checks"><p><input type="checkbox" name="alterar" id="alterar"> Alterar data da conclusão </p></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" id="altera" name="altera" style="display: none;">
+                                    <div class="col-lg-6">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-content">
+                                                <h3>Data</h3>
+                                                <p>
+                                                    Selecione um data para visita:
+                                                </p>
+
+                                                <div class="form-group" id="data_1">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" name="DataFinalizada" id="DataFinalizada" value="@Model.agenda.DataVisita.Substring(0,10)">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="ibox">
+                                            <div class="ibox-content">
+                                                <h3>Hora</h3>
+                                                <p>
+                                                    Selecione o horário da visita:
+                                                </p>
+
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control" name="HoraFinalizada" id="HoraFinalizada" value="@Model.agenda.HoraVisita">
+                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                //---------------------------------
+
+                <button type="button" class="btn btn-primary m-t-15" data-toggle="modal" data-target="#myModal2">SALVAR</button>
                 <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
             }
         </div>
     </div>
 </div>
 
+
 @section Styles {
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
     @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
 }
 
 @section Scripts {
+    @Scripts.Render("~/plugins/dataPicker")
     @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/clockpicker")
+    @Scripts.Render("~/plugins/iCheck")
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.chosen-select').chosen({ width: "100%" });
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.chosen-select').chosen({ width: "100%" });
+
+        $('.clockpicker').clockpicker({
+            placement: 'top',
         });
 
-        function myFunction() {
-            var mylist = document.getElementById("myList");
-            document.getElementById("Observacao").value = mylist.options[mylist.selectedIndex].id;
-        }
-    </script>
+        $('#data_1 .input-group.date').datepicker({
+            todayBtn: "linked",
+            format: 'dd/mm/yyyy',
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            todayHighlight: true,
+            autoclose: true
+        });
+
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            })
+        });
+
+        $('#alterar').on('ifChecked', function () {
+            var alt = document.getElementById("altera");
+            alt.style.display = "block"
+        });
+
+        $('#alterar').on('ifUnchecked', function () {
+            var alt = document.getElementById("altera");
+            alt.style.display = "none"
+
+        });
+    });
+
+    function myFunction() {
+        var mylist = document.getElementById("myList");
+        document.getElementById("Observacao").value = mylist.options[mylist.selectedIndex].id;
+    }
+</script>
 }

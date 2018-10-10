@@ -315,7 +315,9 @@
     </script>
 
     <script type="text/javascript">
-        $('.clockpicker').clockpicker();
+        $('.clockpicker').clockpicker({
+            placement: 'top',
+        });
 
         $('#data_1 .input-group.date').datepicker({
             todayBtn: "linked",

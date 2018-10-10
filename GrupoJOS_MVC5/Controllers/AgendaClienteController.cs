@@ -226,7 +226,7 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Concluir(double Id, string Observacao, DateTime DataFinalizada, List<string> Empresas)
+        public ActionResult Concluir(double Id, string Observacao, string alterar, DateTime DataFinalizada, DateTime HoraFinalizada, List<string> Empresas)
         {
             ViewModelAgenda agenda = new ViewModelAgenda();
             agenda = servico_agenda.AgendaPorX("agenda.idagenda", Id.ToString());
@@ -234,13 +234,21 @@ namespace GrupoJOS_MVC5.Controllers
             ViewBag.TextoPadrao = servico_texto.ListaTexto();
             ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
             ViewBag.EmpresasApresentadas = agenda.empresa;
+            DateTime datafim;
 
             if (string.IsNullOrEmpty(Observacao)) { ViewBag.ErroObs = "Deve haver uma observação escrita"; return View(agenda); }
             if (Empresas == null || Empresas.Count == 0) { ViewBag.ErroEmpresa = "Deve ser selecionado ao menos uma Clinica"; return View(agenda); }
+            if (!string.IsNullOrEmpty(alterar))
+            {
+                datafim = DataFinalizada.Date.Add(HoraFinalizada.TimeOfDay);
+            }
+            else
+            {
+                datafim = DateTime.Now;
+            }
 
-
-            servico_agenda.ConcluiAgenda(Id, Observacao, DataFinalizada, Empresas);
-            servico_agenda.AtualizaUltimaVisita(agenda.cliente.idcliente,DateTime.Now);
+            servico_agenda.ConcluiAgenda(Id, Observacao, datafim, Empresas);
+            servico_agenda.AtualizaUltimaVisita(agenda.cliente.idcliente, datafim);
 
             return RedirectToAction("Index", "AgendaCliente");
         }

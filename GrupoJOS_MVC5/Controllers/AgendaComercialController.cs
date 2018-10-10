@@ -214,18 +214,26 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Concluir(double Id, double idclientecomercial, string Observacao, DateTime DataFinalizada)
+        public ActionResult Concluir(double Id, double idclientecomercial, string Observacao, string alterar, DateTime DataFinalizada, DateTime HoraFinalizada)
         {
             ViewModelAgendaComercial agenda = new ViewModelAgendaComercial();
             agenda = servico_agenda.AgendaComercialPorX("agenda.idagenda", Id.ToString());
 
             ViewBag.TextoPadrao = servico_texto.ListaTexto();
+            DateTime datafim;
 
             if (string.IsNullOrEmpty(Observacao)) { ViewBag.ErroObs = "Deve haver uma observação escrita"; return View(agenda); }
+            if (!string.IsNullOrEmpty(alterar))
+            {
+                datafim = DataFinalizada.Date.Add(HoraFinalizada.TimeOfDay);
+            }
+            else
+            {
+                datafim = DateTime.Now;
+            }
 
-
-            servico_agenda.ConcluiAgendaComercial(Id, Observacao, DataFinalizada);
-            servico_agenda.AtualizaUltimaVisitaComercial(idclientecomercial,DateTime.Now);
+            servico_agenda.ConcluiAgendaComercial(Id, Observacao, datafim);
+            servico_agenda.AtualizaUltimaVisitaComercial(idclientecomercial, datafim);
 
             return RedirectToAction("Index", "AgendaComercial");
         }

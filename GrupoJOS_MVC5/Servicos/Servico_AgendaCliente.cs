@@ -457,7 +457,7 @@ namespace GrupoJOS_MVC5.Servicos
         {
             try
             {
-                string DataFinalizadaReal = DateTime.Now.ToString("yyy-MM-dd HH:mm");
+                string DataFinalizadaReal = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
                 using (MySqlConnection connection = new MySqlConnection(MySQLServer))
                 {
@@ -465,7 +465,7 @@ namespace GrupoJOS_MVC5.Servicos
                     SQL = "UPDATE agenda " +
                         "SET Observacoes = '" + observacoes + "', " +
                         "Status = '1', " +
-                        "DataFinalizada = '"+ DataFinalizada.ToString("yyy - MM - dd HH: mm")+"' " +
+                        "DataFinalizada = '"+ DataFinalizada.ToString("yyyy-MM-dd HH:mm")+"', " +
                         "DataFinalizadaReal = '"+ DataFinalizadaReal +"' " +
                         "WHERE idagenda = " + idagenda + " ";
 
@@ -805,7 +805,7 @@ namespace GrupoJOS_MVC5.Servicos
         {
             try
             {
-                string DataFinalizadaReal = DateTime.Now.ToString("yyy-MM-dd HH:mm");
+                string DataFinalizadaReal = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
                 using (MySqlConnection connection = new MySqlConnection(MySQLServer))
                 {
@@ -813,8 +813,8 @@ namespace GrupoJOS_MVC5.Servicos
                     SQL = "UPDATE agenda " +
                         "SET Observacoes = '" + observacoes + "', " +
                         " Status = '1', " +
-                        " DataFinalizada = '" + DataFinalizadaReal + "' " +
-                        " DataFinalizada = '" + DataFinalizada.ToString("yyy-MM-dd HH:mm") + "' " +
+                        " DataFinalizada = '" + DataFinalizadaReal + "', " +
+                        " DataFinalizada = '" + DataFinalizada.ToString("yyyy-MM-dd HH:mm") + "' " +
                         " WHERE idagenda = " + idagenda + " ";
 
                     connection.Open();

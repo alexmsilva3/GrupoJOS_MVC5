@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Atendimentos";
+    ViewBag.Title = "Visitas";
     var inicio = DateTime.Now;
     var inicio_1 = inicio.ToShortDateString();
 
@@ -21,7 +21,7 @@
                 <a>Relatorios</a>
             </li>
             <li class="active">
-                <a href="@Url.Action("Atendimentos", "Relatorios")"><strong>@ViewBag.Title</strong></a>
+                <a href="@Url.Action("Visitas", "Relatorios")"><strong>@ViewBag.Title</strong></a>
             </li>
         </ol>
     </div>
@@ -49,8 +49,8 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-content">
+                        <div class="">
+                            <div class="">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>

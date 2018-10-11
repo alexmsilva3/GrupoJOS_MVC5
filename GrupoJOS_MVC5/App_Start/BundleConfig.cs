@@ -455,6 +455,12 @@ namespace GrupoJOS_MVC5
             bundles.Add(new ScriptBundle("~/plugins/html2canvas").Include(
                       "~/Scripts/plugins/html2canvas/html2canvas.js"));
 
+            //Wizard
+            bundles.Add(new StyleBundle("~/plugins/wizard").Include(
+                      "~/Content/plugins/wizard/material-bootstrap-wizard.css"));
+
+            bundles.Add(new ScriptBundle("~/plugins/wizard").Include(
+                      "~/Scripts/plugins/wizard/material-bootstrap-wizard.js"));
 
         }
     }

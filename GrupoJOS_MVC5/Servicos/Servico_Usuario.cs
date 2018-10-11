@@ -260,18 +260,13 @@ namespace GrupoJOS_MVC5.Servicos
                     " "+ PermissaoAgenda + "," + PermissaoAgendaComercial + ", " + PermissaoCliente + ", " + PermissaoClienteComercial + ", " + PermissaoEmpresas + ", " +
                     " " + PermissaoEspecialidades + ", " + PermissaoRamos + ", " + PermissaoRelatorios + ", " + PermissaoTextos + ", " + PermissaoUsuarios + ");";
 
-                if (!String.IsNullOrEmpty(Empresa) && perfil == "3")
-                {
-                    InsereUsuarioEmpresa("x", Empresa);
-                }
-
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
                 connection.Close();
                 double idusuario = command.LastInsertedId;
 
-                if (!String.IsNullOrEmpty(Empresa))
+                if (!String.IsNullOrEmpty(Empresa) && perfil == "3")
                 {
                     InsereUsuarioEmpresa(idusuario.ToString(), Empresa);
                 }

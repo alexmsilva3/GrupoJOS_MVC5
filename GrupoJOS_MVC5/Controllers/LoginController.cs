@@ -22,7 +22,7 @@ namespace GrupoJOS_MVC5.Controllers
             {
                 if (usuario.UsuarioPerfil == "3")
                 {
-                    return Redirect("/Relatorios/Atendimentos");
+                    return Redirect("/Relatorios/Visitas");
                 }
                 return Redirect("/Home/Index");
             }
@@ -142,7 +142,7 @@ namespace GrupoJOS_MVC5.Controllers
 
                     if (Request.Cookies["UsuarioPerfil"].Value == "3")
                     {
-                        return Redirect("/Relatorios/Atendimentos");
+                        return Redirect("/Relatorios/Visitas");
                     }
                     return Redirect("/Home/Index");
 

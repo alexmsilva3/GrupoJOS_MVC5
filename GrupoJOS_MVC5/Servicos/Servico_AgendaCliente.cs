@@ -211,6 +211,98 @@ namespace GrupoJOS_MVC5.Servicos
         }
         #endregion
 
+        #region ListaAgendaEmpresa
+        public List<ViewModelAgenda> ListaAgendaEmpresa(string idempresa)
+        {
+            List<ViewModelAgenda> ListaAgendaPorX = new List<ViewModelAgenda>();
+
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "SELECT agenda.*, clientes.* " +
+                    " FROM agenda" +
+                    " INNER JOIN clientes ON agenda.Cliente = clientes.idcliente" +
+                    " WHERE agenda.Status = '0' " +
+                    " AND agenda.idagenda IN (select idagenda from agenda_emp where agenda_emp.idempresa = "+ idempresa + " )";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ViewModelAgenda ag = new ViewModelAgenda();
+                    ag.agenda = new Model_Agenda();
+                    ag.cliente = new Model_Cliente();
+                    ag.empresa = new List<Model_Empresa>();
+
+                    ag.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
+                    ag.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
+                    ag.agenda.DataVisita = TratarConversaoDeDados.TrataString(reader["DataVisita"]);
+                    ag.agenda.HoraVisita = TratarConversaoDeDados.TrataString(reader["HoraVisita"]);
+                    ag.agenda.Cliente = TratarConversaoDeDados.TrataDouble(reader["Cliente"]);
+                    ag.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
+                    ag.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
+                    ag.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
+
+                    ag.cliente.idcliente = TratarConversaoDeDados.TrataDouble(reader["idcliente"]);
+                    ag.cliente.CRM = TratarConversaoDeDados.TrataString(reader["CRM"]);
+                    ag.cliente.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
+                    ag.cliente.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
+                    ag.cliente.Aniversario_m = TratarConversaoDeDados.TrataString(reader["Aniversario_m"]);
+                    ag.cliente.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
+                    ag.cliente.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
+                    ag.cliente.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
+                    ag.cliente.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
+                    ag.cliente.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
+                    ag.cliente.Fone_Celular = TratarConversaoDeDados.TrataString(reader["Fone_Celular"]);
+                    ag.cliente.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
+                    ag.cliente.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
+                    ag.cliente.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
+                    ag.cliente.Aniversario_c = TratarConversaoDeDados.TrataString(reader["Aniversario_c"]);
+                    ag.cliente.Horario_In = TratarConversaoDeDados.TrataString(reader["Horario_In"]);
+                    ag.cliente.Horario_Out = TratarConversaoDeDados.TrataString(reader["Horario_Out"]);
+                    ag.cliente.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
+                    ag.cliente.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
+                    ag.cliente.NomeEspecialidade1 = TratarConversaoDeDados.TrataString(reader["Especialidade1"]);
+                    ag.cliente.NomeEspecialidade2 = TratarConversaoDeDados.TrataString(reader["Especialidade2"]);
+                    ag.cliente.NomeEspecialidade3 = TratarConversaoDeDados.TrataString(reader["Especialidade3"]);
+                    ag.cliente.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
+                    ag.cliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
+
+
+                    ag.empresa = new List<Model_Empresa>();
+                    var emp = servico_agemp.ListaAgendaEmpresa(ag.agenda.idagenda);
+                    for (int i = 0; i < emp.Count; i++)
+                    {
+                        ag.empresa.Add(new Model_Empresa()
+                        {
+                            idempresa = emp[i].idempresa,
+                            Nome = emp[i].Nome,
+                            RazaoSocial = emp[i].RazaoSocial,
+                            CNPJ = emp[i].CNPJ,
+                            InscricaoEstadual = emp[i].InscricaoEstadual,
+                            Endereco = emp[i].Endereco,
+                            Num = emp[i].Num,
+                            Bairro = emp[i].Bairro,
+                            Cidade = emp[i].Cidade,
+                            UF = emp[i].UF,
+                            Contato = emp[i].Contato,
+                            Email = emp[i].Email,
+                            Fone1 = emp[i].Fone1,
+                            Fone2 = emp[i].Fone2
+                        });
+                    }
+
+                    ListaAgendaPorX.Add(ag);
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return ListaAgendaPorX;
+        }
+        #endregion
+
         #region ListaAgendaData
         public List<ViewModelAgenda> ListaAgendData(DateTime DataInicio, DateTime DataFim, string usuario, string status)
         {

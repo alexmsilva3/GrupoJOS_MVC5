@@ -173,9 +173,11 @@
                 <li class="@Html.IsSelected(controller: "Relatorios")">
                     <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label" data-i18n="nav.relatorios">Relatorios</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Relatorios", cssClass: "in")">
-                        <li class="@Html.IsSelected(controller:"Relatorios",action: "Atendimentos")"><a href="@Url.Action("Atendimentos", "Relatorios")">Atendimento</a></li>
+                        <li class="@Html.IsSelected(controller:"Relatorios",action: "Visitas")"><a href="@Url.Action("Visitas", "Relatorios")">Visitas</a></li>
+                        <li class="@Html.IsSelected(controller:"Relatorios",action: "Agenda")"><a href="@Url.Action("Agenda", "Relatorios", new {IdEmpresa})" >Agenda</a></li>
+                        
                         @if (adm == "True")
-                        {
+                                {
                             <li class="@Html.IsSelected(controller: "Relatorios", action: "Gerencial")"><a href="@Url.Action("Gerencial", "Relatorios")">Gerencial</a></li>
                         }
                     </ul>

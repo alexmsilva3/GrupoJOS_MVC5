@@ -124,6 +124,40 @@
                     </div>
                 </div>
 
+               
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox-content">
+                            <p for="observacoes">Observações dadas a essa visita:</p>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <textarea rows="4" class="form-control no-resize" id="Observacao" name="Observacao">@Model.agenda.Observacoes</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="ibox-content">
+                            <p>Data e  Hora em que foi finalizada:</p>
+                            <label>Data</label>
+                            <div class="form-group" id="data_2">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" name="DataFinalizada" id="DataFinalizada" value="@Model.agenda.DataFinalizada.Substring(0,10)">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <label>Hora</label>
+                            <div class="input-group clockpicker" data-autoclose="true">
+                                <input type="text" class="form-control" name="HoraFinalizada" id="HoraFinalizada" value="@Model.agenda.DataFinalizada.Substring(11,5)">
+                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
                 <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
             }

@@ -27,7 +27,7 @@ namespace GrupoJOS_MVC5.Servicos
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT agenda.*, clientes.* " +
+                SQL = "SELECT agenda.*, clientes.*, clientes.Observacoes AS ObservacoesCliente " +
                     " FROM agenda" +
                     " INNER JOIN clientes ON agenda.Cliente = clientes.idcliente" +
                     " WHERE " + campo + " = " + valor + " ";
@@ -51,6 +51,7 @@ namespace GrupoJOS_MVC5.Servicos
                     AgendaPorX.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
                     AgendaPorX.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
                     AgendaPorX.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
+                    AgendaPorX.agenda.DataFinalizadaReal = TratarConversaoDeDados.TrataString(reader["DataFinalizadaReal"]);
 
                     AgendaPorX.cliente.idcliente = TratarConversaoDeDados.TrataDouble(reader["idcliente"]);
                     AgendaPorX.cliente.CRM = TratarConversaoDeDados.TrataString(reader["CRM"]);
@@ -70,7 +71,7 @@ namespace GrupoJOS_MVC5.Servicos
                     AgendaPorX.cliente.Horario_In = TratarConversaoDeDados.TrataString(reader["Horario_In"]);
                     AgendaPorX.cliente.Horario_Out = TratarConversaoDeDados.TrataString(reader["Horario_Out"]);
                     AgendaPorX.cliente.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
-                    AgendaPorX.cliente.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
+                    AgendaPorX.cliente.Observacoes = TratarConversaoDeDados.TrataString(reader["ObservacoesCliente"]);
                     AgendaPorX.cliente.NomeEspecialidade1 = TratarConversaoDeDados.TrataString(reader["Especialidade1"]);
                     AgendaPorX.cliente.NomeEspecialidade2 = TratarConversaoDeDados.TrataString(reader["Especialidade2"]);
                     AgendaPorX.cliente.NomeEspecialidade3 = TratarConversaoDeDados.TrataString(reader["Especialidade3"]);
@@ -456,9 +457,52 @@ namespace GrupoJOS_MVC5.Servicos
                 string SQL = "";
                 SQL = "UPDATE agenda " +
                     "SET DataVisita = '" + Data.ToString("yyyy-MM-dd") + "', " +
-                    "HoraVisita = '" + Hora + "', " +
-                    "Cliente = '" + Cliente + "' " +
+                    " HoraVisita = '" + Hora + "', " +
+                    " Cliente = '" + Cliente + "' " +
                     "WHERE idagenda = "+ idagenda + " ";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+
+                //remover
+                SQL = "";
+                foreach (var item in Empresas)
+                {
+                    SQL = "DELETE FROM agenda_emp WHERE idagenda = " + idagenda + " ";
+                    MySqlCommand command2 = new MySqlCommand(SQL, connection);
+                    command2.ExecuteNonQuery();
+                }
+
+                //inserir
+                SQL = "";
+                foreach (var item in Empresas)
+                {
+                    SQL = "INSERT INTO agenda_emp VALUES (" + idagenda + "," + item + "); ";
+                    MySqlCommand command3 = new MySqlCommand(SQL, connection);
+                    command3.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
+        #endregion
+
+        #region Atualiza Agenda Completa
+        public void AtualizaAgendaCompleta(double idagenda, DateTime Data, string Hora, double Cliente, List<string> Empresas, string obs, DateTime DataFinalizada)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                Hora.Substring(0, 5);
+
+                string SQL = "";
+                SQL = "UPDATE agenda " +
+                    "SET DataVisita = '" + Data.ToString("yyyy-MM-dd") + "', " +
+                    " HoraVisita = '" + Hora + "', " +
+                    " Cliente = '" + Cliente + "', " +
+                    " Observacoes = '" + obs + "', " +
+                    " DataFinalizada = '" + DataFinalizada.ToString("yyyy-MM-dd hh:mm") + "' " +
+                    "WHERE idagenda = " + idagenda + " ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -685,6 +729,7 @@ namespace GrupoJOS_MVC5.Servicos
                     AgendaComercialPorX.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
                     AgendaComercialPorX.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
                     AgendaComercialPorX.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
+                    AgendaComercialPorX.agenda.DataFinalizadaReal = TratarConversaoDeDados.TrataString(reader["DataFinalizadaReal"]);
 
                     //AgendaComercialPorX.clienteComercial
                     AgendaComercialPorX.clienteComercial.idclientecomercial = TratarConversaoDeDados.TrataDouble(reader["idclientecomercial"]);
@@ -880,9 +925,33 @@ namespace GrupoJOS_MVC5.Servicos
                 string SQL = "";
                 SQL = "UPDATE agenda " +
                     "SET DataVisita = '" + Data.ToString("yyyy-MM-dd") + "', " +
-                    "HoraVisita = '" + Hora + "', " +
-                    "Comercial = '" + idClienteComercial + "' " +
-                    "WHERE idagenda = " + idagenda + " ";
+                    " HoraVisita = '" + Hora + "', " +
+                    " Comercial = '" + idClienteComercial + "' " +
+                    " WHERE idagenda = " + idagenda + " ";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        #endregion
+
+        #region AtualizaAgendaComercial Completa
+        public void AtualizaAgendaComercialCompleta(double idagenda, DateTime Data, string Hora, double idClienteComercial, string obs, DateTime DataFinalizada)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                Hora.Substring(0, 5);
+
+                string SQL = "";
+                SQL = "UPDATE agenda " +
+                    "SET DataVisita = '" + Data.ToString("yyyy-MM-dd") + "', " +
+                    " HoraVisita = '" + Hora + "', " +
+                    " Comercial = '" + idClienteComercial + "', " +
+                    " DataFinalizada = '" + DataFinalizada.ToString("yyyy-MM-dd hh:mm") + "', " +
+                    " Observacoes = '" + obs + "' " +
+                    " WHERE idagenda = " + idagenda + " ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);

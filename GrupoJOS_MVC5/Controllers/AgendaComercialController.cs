@@ -153,9 +153,6 @@ namespace GrupoJOS_MVC5.Controllers
                 agenda = servico_agenda.AgendaComercialPorX("agenda.idagenda", Id.ToString());
 
                 ViewBag.ListaClienteComercial = servico_clienteComercial.ListaClienteComercial();
-                ViewBag.Data = agenda.agenda.DataVisita;
-                ViewBag.Hora = agenda.agenda.HoraVisita;
-                ViewBag.ClienteComercial = agenda.agenda.Comercial;
 
                 return View(agenda);
             }
@@ -163,7 +160,7 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Editar(string Id, DateTime DataVisita, string HoraVisita, double idClienteComercial)
+        public ActionResult Editar(string Id, DateTime DataVisita, string HoraVisita, double idClienteComercial, string Observacao)
         {
             ViewBag.ListadeClienteComercial = servico_clienteComercial.ListaClienteComercial();
 
@@ -172,10 +169,44 @@ namespace GrupoJOS_MVC5.Controllers
             if (double.IsNaN(idClienteComercial)) { ViewBag.ErroCliente = "Cliente Comercial inválido"; return View(); }
 
             var idagenda = Convert.ToDouble(Id);
-
             servico_agenda.AtualizaAgendaComercial(idagenda, DataVisita, HoraVisita, idClienteComercial);
 
             return RedirectToAction("Visualizar/"+Id, "AgendaComercial");
+        }
+        #endregion
+
+        #region EdiçãoVisita Completa
+        [HttpGet]
+        public ActionResult EditarVisita(double Id)
+        {
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgendaComercial == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                ViewModelAgendaComercial agenda = new ViewModelAgendaComercial();
+                agenda = servico_agenda.AgendaComercialPorX("agenda.idagenda", Id.ToString());
+
+                ViewBag.ListaClienteComercial = servico_clienteComercial.ListaClienteComercial();
+
+                return View(agenda);
+            }
+            return RedirectToAction("Index", "Login");
+        }
+
+        [HttpPost]
+        public ActionResult EditarVisita(string Id, DateTime DataVisita, string HoraVisita, double idClienteComercial, string Observacao, DateTime DataFinalizada, DateTime HoraFinalizada)
+        {
+            ViewBag.ListadeClienteComercial = servico_clienteComercial.ListaClienteComercial();
+
+            if (DataVisita == null) { ViewBag.ErroData = "Data inválida"; return View(); }
+            if (string.IsNullOrEmpty(HoraVisita)) { ViewBag.ErroHora = "Hora inválida"; return View(); }
+            if (double.IsNaN(idClienteComercial)) { ViewBag.ErroCliente = "Cliente Comercial inválido"; return View(); }
+
+            var idagenda = Convert.ToDouble(Id);
+            DateTime datafim = DataFinalizada.Date.Add(HoraFinalizada.TimeOfDay);
+            servico_agenda.AtualizaAgendaComercialCompleta(idagenda, DataVisita, HoraVisita, idClienteComercial, Observacao, datafim);
+
+            return RedirectToAction("Visualizar/" + Id, "AgendaComercial");
         }
         #endregion
 

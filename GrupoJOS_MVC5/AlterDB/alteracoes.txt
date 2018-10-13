@@ -5,3 +5,7 @@ ALTER TABLE `grupojos`.`agenda`
 ADD COLUMN `DataFinalizadaReal` DATETIME NULL DEFAULT NULL AFTER `DataFinalizada`;
 
 =======================================================================================
+12/10/2018
+
+update agenda set DataFinalizadaReal = DataFinalizada
+=======================================================================================

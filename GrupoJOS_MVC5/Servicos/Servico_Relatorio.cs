@@ -17,9 +17,9 @@ namespace GrupoJOS_MVC5.Servicos
         Servico_AgendaEmpresa servico_agemp = new Servico_AgendaEmpresa();
 
         #region RelatorioDeAtendimentos
-        public ViewModelRelatorioAtendimentos RelatorioDeAtendimentos(double idempresa, DateTime DataInicio, DateTime DataFim)
+        public ViewModelRelatorioVisitas RelatorioDeAtendimentos(double idempresa, DateTime DataInicio, DateTime DataFim)
         {
-            ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
+            ViewModelRelatorioVisitas relatorio = new ViewModelRelatorioVisitas();
             relatorio.ContagemPorEspecialidade = servico_especialidade.ListaEspecialidade();
             relatorio.relatorioAtendimento = new ViewModelEmpresaAgenda();
             relatorio.relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa(idempresa.ToString());

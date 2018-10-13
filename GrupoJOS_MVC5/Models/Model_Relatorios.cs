@@ -12,7 +12,7 @@ namespace GrupoJOS_MVC5.Models
 
     }
 
-    public class ViewModelRelatorioAtendimentos
+    public class ViewModelRelatorioVisitas
     {
         public ViewModelEmpresaAgenda relatorioAtendimento { get; set; }
         public List<Model_Especialidade> ContagemPorEspecialidade { get; set; }

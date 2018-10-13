@@ -14,19 +14,7 @@ namespace GrupoJOS_MVC5.Controllers
 
         public ActionResult Index()
         {
-            Servico_Relatorio servico_relatorio = new Servico_Relatorio();
-            ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
-
-            var DataInicio = DateTime.Now.AddMonths(-1);
-            var DataFim = DateTime.Now.AddDays(5);
-
-            relatorio = servico_relatorio.RelatorioDeAtendimentos(1, DataInicio, DataFim);
-
-            relatorio.DataInicio = DataInicio;
-            relatorio.DataFim = DataFim;
-
-
-            return View(relatorio);
+            return View();
         }
     }
 

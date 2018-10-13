@@ -58,7 +58,7 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult VisitasResultado(double idempresa, DateTime DataInicio, DateTime DataFim)
         {
-                ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
+                ViewModelRelatorioVisitas relatorio = new ViewModelRelatorioVisitas();
 
                 relatorio = servico_relatorio.RelatorioDeAtendimentos(idempresa, DataInicio, DataFim);
                 relatorio.DataInicio = DataInicio;

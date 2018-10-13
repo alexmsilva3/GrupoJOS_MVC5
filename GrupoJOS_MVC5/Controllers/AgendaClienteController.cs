@@ -162,10 +162,6 @@ namespace GrupoJOS_MVC5.Controllers
 
                 ViewBag.ListadeClientes = servico_cliente.ListaClientes();
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
-                ViewBag.Data = agenda.agenda.DataVisita;
-                ViewBag.Hora = agenda.agenda.HoraVisita;
-                ViewBag.Cliente = agenda.cliente.idcliente;
-                ViewBag.Empresas = agenda.empresa;
 
                 return View(agenda);
             }
@@ -173,7 +169,7 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Editar(string Id, DateTime DataVisita, string HoraVisita, double Cliente, List<string> Empresas)
+        public ActionResult Editar(string Id, DateTime DataVisita, string HoraVisita, double Cliente, List<string> Empresas, string Observacao)
         {
             ViewBag.ListadeClientes = servico_cliente.ListaClientes();
             ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
@@ -188,6 +184,47 @@ namespace GrupoJOS_MVC5.Controllers
             servico_agenda.AtualizaAgenda(idagenda, DataVisita, HoraVisita, Cliente, Empresas);
 
             return RedirectToAction("Visualizar/"+Id, "AgendaCliente");
+        }
+        #endregion
+
+        #region Edição Completa
+        [HttpGet]
+        public ActionResult EditarVisita(double Id)
+        {
+            var cookie = servico_login.CheckCookie();
+
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                ViewModelAgenda agenda = new ViewModelAgenda();
+                var valor = Id.ToString();
+                agenda = servico_agenda.AgendaPorX("agenda.idagenda", valor);
+
+                ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+                ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
+
+                return View(agenda);
+            }
+            return RedirectToAction("Index", "Login");
+        }
+
+        [HttpPost]
+        public ActionResult EditarVisita(string Id, DateTime DataVisita, string HoraVisita, double Cliente, List<string> Empresas, string Observacao, DateTime DataFinalizada, DateTime HoraFinalizada)
+        {
+            ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+            ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
+
+            if (DataVisita == null) { ViewBag.ErroData = "Data inválida"; return View(); }
+            if (string.IsNullOrEmpty(HoraVisita)) { ViewBag.ErroHora = "Hora inválida"; return View(); }
+            if (double.IsNaN(Cliente)) { ViewBag.ErroCliente = "Cliente inválido"; return View(); }
+            if (Empresas == null) { ViewBag.ErroEmpresa = "Deve ser selecionado ao menos uma Clinica"; return View(); }
+
+            var idagenda = Convert.ToDouble(Id);
+
+            DateTime datafim = DataFinalizada.Date.Add(HoraFinalizada.TimeOfDay);
+
+            servico_agenda.AtualizaAgendaCompleta(idagenda, DataVisita, HoraVisita, Cliente, Empresas, Observacao, datafim);
+
+            return RedirectToAction("Visualizar/" + Id, "AgendaCliente");
         }
         #endregion
 

@@ -14,7 +14,7 @@ namespace GrupoJOS_MVC5.Servicos
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
         Servico_Especialidade servico_esp = new Servico_Especialidade();
 
-        #region ListaClienteTst
+        #region ListaCliente
         public List<Model_Cliente> ListaClientes()
         {
             List<Model_Cliente> ListaClientes = new List<Model_Cliente>();
@@ -56,77 +56,6 @@ namespace GrupoJOS_MVC5.Servicos
                     cli.NomeEspecialidade3 = TratarConversaoDeDados.TrataString(reader["Especialidade3"]);
                     cli.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
                     cli.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
-
-                    //cli.Especialidade_Selecionada = new List<Model_Especialidade>();
-
-                    //var esp = servico_esp.ListaClienteEspecialidade(cli.idcliente);
-
-                    //for (int i = 0; i < esp.Count; i++)
-                    //{
-                    //    cli.Especialidade_Selecionada.Add(new Model_Especialidade()
-                    //    {
-                    //        idespecialidade = esp[i].idespecialidade,
-                    //        Nome = esp[i].Nome,
-                    //        Observacao = esp[i].Observacao
-                    //    });
-                    //}
-
-                    ListaClientes.Add(cli);
-                }
-                reader.Close();
-                connection.Close();
-            }
-            return ListaClientes;
-        }
-        #endregion
-
-        #region Lista Clientes
-        public List<Model_Cliente> ListaClientes2()
-        {
-            List<Model_Cliente> ListaClientes = new List<Model_Cliente>();
-            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-            {
-                string SQL = "";
-                SQL = "SELECT * FROM clientes ORDER BY idcliente"; //LIMIT 10
-
-                //dapper
-                //connection.Open();
-                //ListaClientes = connection.Query<Model_Cliente>(SQL).ToList();
-
-                connection.Open();
-                MySqlCommand command = new MySqlCommand(SQL, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-
-
-                while (reader.Read())
-                {
-                    Model_Cliente cli = new Model_Cliente();
-                    cli.idcliente = TratarConversaoDeDados.TrataDouble(reader["idcliente"]);
-                    cli.CRM = TratarConversaoDeDados.TrataString(reader["CRM"]);
-                    cli.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
-                    cli.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
-                    cli.Aniversario_m = TratarConversaoDeDados.TrataString(reader["Aniversario_m"]);
-                    cli.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
-                    cli.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
-                    cli.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
-                    cli.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
-                    cli.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
-                    cli.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
-                    cli.Fone_Celular = TratarConversaoDeDados.TrataString(reader["Fone_Celular"]);
-                    cli.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
-                    cli.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
-                    cli.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
-                    cli.Aniversario_c = TratarConversaoDeDados.TrataString(reader["Aniversario_c"]);
-                    cli.Horario_In = TratarConversaoDeDados.TrataString(reader["Horario_In"]);
-                    cli.Horario_Out = TratarConversaoDeDados.TrataString(reader["Horario_Out"]);
-                    cli.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
-
-                    cli.NomeEspecialidade1 = TratarConversaoDeDados.TrataString(reader["Especialidade1"]);
-                    cli.NomeEspecialidade2 = TratarConversaoDeDados.TrataString(reader["Especialidade2"]);
-                    cli.NomeEspecialidade3 = TratarConversaoDeDados.TrataString(reader["Especialidade3"]);
-                    cli.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
-                    cli.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
-                    
 
                     //cli.Especialidade_Selecionada = new List<Model_Especialidade>();
 

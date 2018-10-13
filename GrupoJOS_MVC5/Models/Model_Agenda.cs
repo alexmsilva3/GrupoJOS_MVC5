@@ -27,6 +27,7 @@ namespace GrupoJOS_MVC5.Models
 
         public string Status { get; set; }
         public string DataFinalizada { get; set; }
+        public string DataFinalizadaReal { get; set; }
     }
 
 
@@ -68,12 +69,14 @@ namespace GrupoJOS_MVC5.Models
     {
         public Model_Agenda agenda { get; set; }
         public Model_Cliente cliente { get; set;}
+        public Model_Usuario usuario { get; set; }
         public List<Model_Empresa> empresa { get; set; }
     }
 
     public class ViewModelAgendaComercial
     {
         public Model_Agenda agenda { get; set; }
+        public Model_Usuario usuario {get;set;}
         public Model_ClienteComercial clienteComercial { get; set; }
     }
 

@@ -12,6 +12,8 @@ namespace GrupoJOS_MVC5.Controllers
     public class RelatoriosController : Controller
     {
         Servico_Usuario servico_usuario = new Servico_Usuario();
+        Servico_Cliente servico_cliente = new Servico_Cliente();
+        Servico_ClienteComercial servico_clienteComercial = new Servico_ClienteComercial();
         Servico_AgendaCliente servico_agenda = new Servico_AgendaCliente();
         Servico_Login servico_login = new Servico_Login();
         Servico_Empresa servico_empresa = new Servico_Empresa();
@@ -149,7 +151,35 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
+                ViewBag.ListaEmpresa = servico_empresa.ListaEmpresa();
+                ViewBag.ListaUsuario = servico_usuario.ListaUsuarios();
+                ViewBag.ListaCliente = servico_cliente.ListaClientes();
+                ViewBag.ListaClienteComercial = servico_clienteComercial.ListaClienteComercial();
+
                 return View("~/Views/Relatorios/Gerencial/Index.cshtml");
+            }
+
+            return RedirectToAction("Index", "Login");
+        }
+
+        public ActionResult GerencialResultado(ViewModelCampos campos)
+        {
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                ViewModelRelatorioGerencial relatorio = new ViewModelRelatorioGerencial();
+                relatorio.campos = campos;
+
+                relatorio = servico_relatorio.RelatorioGerencial(relatorio);
+
+                if (relatorio.campos.tipo == "0")
+                {
+                    return View("~/Views/Relatorios/Gerencial/ResultadoP.cshtml", relatorio);
+                }
+                else if (relatorio.campos.tipo == "1")
+                {
+                    return View("~/Views/Relatorios/Gerencial/ResultadoC.cshtml", relatorio);
+                }
             }
 
             return RedirectToAction("Index", "Login");

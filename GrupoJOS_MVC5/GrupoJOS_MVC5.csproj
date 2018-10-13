@@ -890,6 +890,8 @@
     <Content Include="Views\Usuarios\Editar.cshtml" />
     <Content Include="Views\Relatorios\Gerencial\Index.cshtml" />
     <Content Include="Views\Relatorios\Agenda\Index.cshtml" />
+    <Content Include="Views\Relatorios\Gerencial\ResultadoP.cshtml" />
+    <Content Include="Views\Relatorios\Gerencial\ResultadoC.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

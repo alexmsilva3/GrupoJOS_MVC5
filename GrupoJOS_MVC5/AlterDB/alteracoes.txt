@@ -9,3 +9,20 @@ ADD COLUMN `DataFinalizadaReal` DATETIME NULL DEFAULT NULL AFTER `DataFinalizada
 
 update agenda set DataFinalizadaReal = DataFinalizada
 =======================================================================================
+15/10
+
+CREATE TABLE `grupojos`.`horarios` (
+  `idcliente` BIGINT NOT NULL,
+  `segEntrada` TIME NULL DEFAULT NULL,
+  `segSaida` TIME NULL DEFAULT NULL,
+  `terEntrada` TIME NULL DEFAULT NULL,
+  `terSaida` TIME NULL DEFAULT NULL,
+  `quaEntrada` TIME NULL DEFAULT NULL,
+  `quarSaida` TIME NULL DEFAULT NULL,
+  `quiEntrada` TIME NULL DEFAULT NULL,
+  `quiSaida` TIME NULL DEFAULT NULL,
+  `sexEntrada` TIME NULL DEFAULT NULL,
+  `sexSaida` TIME NULL DEFAULT NULL
+  PRIMARY KEY (`idcliente`),
+  UNIQUE INDEX `idcliente_UNIQUE` (`idcliente` ASC));
+=======================================================================================

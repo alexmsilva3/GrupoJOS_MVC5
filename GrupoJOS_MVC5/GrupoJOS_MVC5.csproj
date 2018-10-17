@@ -158,6 +158,7 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\Model_ClienteComercial.cs" />
+    <Compile Include="Models\Model_Horario.cs" />
     <Compile Include="Models\Model_Ramos.cs" />
     <Compile Include="Models\Model_Home.cs" />
     <Compile Include="Models\Model_Agenda.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="Servicos\Servico_Cliente.cs" />
     <Compile Include="Servicos\Servico_ClienteComercial.cs" />
     <Compile Include="Servicos\Servico_Empresa.cs" />
+    <Compile Include="Servicos\Servico_Horario.cs" />
     <Compile Include="Servicos\Servico_Ramos.cs" />
     <Compile Include="Servicos\Servico_Relatorio.cs" />
     <Compile Include="Servicos\Servico_Texto.cs" />

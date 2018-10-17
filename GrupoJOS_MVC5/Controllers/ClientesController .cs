@@ -13,6 +13,7 @@ namespace GrupoJOS_MVC5.Controllers
     public class ClientesController : Controller
     {
         Servico_Cliente servico_cliente = new Servico_Cliente();
+        Servico_Horario servico_horario = new Servico_Horario();
         Servico_Especialidade servico_especialidade = new Servico_Especialidade();
         Servico_Login servico_login = new Servico_Login();
 
@@ -62,7 +63,7 @@ namespace GrupoJOS_MVC5.Controllers
 
             if (ModelState.IsValid)
             {
-                servico_cliente.InsereCliente(cli.Nome, cli.CRM, cli.Email, cli.Aniversario_m, cli.Endereco, cli.Num, cli.Cidade, cli.Bairro, cli.UF, cli.CEP, cli.Fone_Celular, cli.Fone1, cli.Fone2, cli.Contato, cli.Aniversario_c, cli.Horario_In, cli.Horario_Out, cli.Observacoes, cli.NomeEspecialidade1, cli.NomeEspecialidade2, cli.NomeEspecialidade3, cli.NomeEspecialidade4, cli.NomeEspecialidade5);
+                servico_cliente.InsereCliente(cli);
                 return RedirectToAction("Index");
             }
             return View();
@@ -76,10 +77,9 @@ namespace GrupoJOS_MVC5.Controllers
             if ((cookie.UsuarioValidado && cookie.PermissaoCliente == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 Model_Cliente cliente = new Model_Cliente();
-                var valor = Id.ToString();
 
                 //Popula Cliente ja com a lista de especialidade selecionada
-                cliente = servico_cliente.BuscaCliente("idcliente", valor);
+                cliente = servico_cliente.BuscaCliente(Id);
 
                 //Lista com Todas as Especialidades
                 ViewBag.ListaEspecialidade = servico_especialidade.ListaEspecialidade();
@@ -94,15 +94,15 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Editar(Model_Cliente cli)
         {
             //carrega cliente pra pegar as especialidades
-            Model_Cliente cliente = new Model_Cliente();
-            cliente = servico_cliente.BuscaCliente("idcliente", cli.idcliente.ToString());
+            //Model_Cliente cliente = new Model_Cliente();
+            //cliente = servico_cliente.BuscaCliente("idcliente", cli.idcliente.ToString());
 
             //Cria lsita de volta, se der erro no cadastro precisa popular a lista
             ViewBag.ListaEspecialidade = servico_especialidade.ListaEspecialidade();
 
             if (ModelState.IsValid)
             {
-                servico_cliente.AtualizaCliente(cli.Nome, cli.CRM, cli.Email, cli.Aniversario_m, cli.Endereco, cli.Num, cli.Cidade, cli.Bairro, cli.UF, cli.CEP, cli.Fone_Celular, cli.Fone1, cli.Fone2, cli.Contato, cli.Aniversario_c, cli.Horario_In, cli.Horario_Out, cli.Observacoes, cli.idcliente.ToString(), cli.NomeEspecialidade1, cli.NomeEspecialidade2, cli.NomeEspecialidade3, cli.NomeEspecialidade4, cli.NomeEspecialidade5);
+                servico_cliente.AtualizaCliente(cli);
                 return RedirectToAction("Index");
             }
             return View(cli);

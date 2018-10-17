@@ -18,6 +18,18 @@ namespace GrupoJOS_MVC5.Servicos
                 return "";
             }
         }
+        public static long TrataLong(object valor)
+        {
+            try
+            {
+                return Convert.ToInt64(valor);
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+        }
         public static decimal TrataDecimal(object valor)
         {
             try

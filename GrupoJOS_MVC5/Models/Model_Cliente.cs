@@ -48,7 +48,6 @@ namespace GrupoJOS_MVC5.Models
         public string NomeEspecialidade4 { get; set; }
         public string NomeEspecialidade5 { get; set; }
 
-        //public List<Model_Especialidade> Especialidade_Selecionada { get; set; }
-        //public List<Model_Especialidade> Especialidade_NSelecionada { get; set; }
+        public Model_Horario horario { get; set; }
     }
 }

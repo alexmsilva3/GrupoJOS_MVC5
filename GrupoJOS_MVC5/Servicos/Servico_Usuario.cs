@@ -21,12 +21,10 @@ namespace GrupoJOS_MVC5.Servicos
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT usuarios.*, usuarios_empresas.*, empresas.Nome AS NomeEmpresa FROM usuarios " +
-                     " LEFT JOIN usuarios_empresas " +
-                     " ON usuarios.idusuario = usuarios_empresas.idusuario " +
+                SQL = "SELECT usuarios.*, empresas.Nome AS NomeEmpresa FROM usuarios " +
                      " LEFT JOIN empresas" +
-                     " ON empresas.idempresa = usuarios_empresas.idempresa" +
-                     " WHERE usuarios.Email = '" +usuario+"' AND usuarios.Senha = '"+senha+"' ";
+                     " ON empresas.idempresa = usuarios.FKidempresa" +
+                     " WHERE usuarios.Email = '" +usuario+"' AND usuarios.Senha = '"+senha+"' AND usuarios.Ativo = True ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -54,7 +52,7 @@ namespace GrupoJOS_MVC5.Servicos
                     AutenticaUsuario.PermissaoTextos = TratarConversaoDeDados.TrataString(reader["PermissaoTextos"]);
                     AutenticaUsuario.PermissaoUsuarios = TratarConversaoDeDados.TrataString(reader["PermissaoUsuarios"]);
 
-                    AutenticaUsuario.idempresa = TratarConversaoDeDados.TrataDouble(reader["idempresa"]);
+                    AutenticaUsuario.FKidempresa = TratarConversaoDeDados.TrataDouble(reader["FKidempresa"]);
                     AutenticaUsuario.NomeEmpresa = TratarConversaoDeDados.TrataString(reader["NomeEmpresa"]);
 
                 }
@@ -93,8 +91,7 @@ namespace GrupoJOS_MVC5.Servicos
             {
                 string SQL = "";
                 SQL = "SELECT * FROM usuarios " +
-                    " LEFT JOIN usuarios_empresas " +
-                    " ON usuarios.idusuario = usuarios_empresas.idusuario " +
+                    " WHERE usuarios.Ativo = True" +
                     " ORDER BY usuarios.idusuario";
 
                 connection.Open();
@@ -113,8 +110,45 @@ namespace GrupoJOS_MVC5.Servicos
                     user.Perfil = TratarConversaoDeDados.TrataString(reader["Perfil"]);
                     user.UltimoAcesso = TratarConversaoDeDados.TrataDateTime(reader["UltimoAcesso"]);
 
-                    user.idempresa = TratarConversaoDeDados.TrataInt(reader["idempresa"]);
-                    user.NomeEmpresa = servico_empresa.BuscaEmpresaComUsuario(user.idempresa.ToString()).Nome;
+                    user.FKidempresa = TratarConversaoDeDados.TrataInt(reader["FKidempresa"]);
+                    user.NomeEmpresa = servico_empresa.BuscaEmpresaComUsuario(user.FKidempresa.ToString()).Nome;
+
+                    ListaUsuarios.Add(user);
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return ListaUsuarios;
+        }
+        #endregion
+
+        #region Lista Usuarios Interno
+        public List<Model_Usuario> ListaUsuariosInterno()
+        {
+            Servico_Empresa servico_empresa = new Servico_Empresa();
+
+            List<Model_Usuario> ListaUsuarios = new List<Model_Usuario>();
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "SELECT * FROM usuarios " +
+                    " WHERE usuarios.Perfil <> 3" +
+                    " ORDER BY usuarios.idusuario";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Model_Usuario user = new Model_Usuario();
+                    user.idusuario = TratarConversaoDeDados.TrataDouble(reader["idusuario"]);
+                    user.Administrador = TratarConversaoDeDados.TrataBit(reader["Administrador"]);
+                    user.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
+                    user.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
+                    user.Senha = TratarConversaoDeDados.TrataString(reader["Senha"]);
+                    user.Perfil = TratarConversaoDeDados.TrataString(reader["Perfil"]);
+                    user.UltimoAcesso = TratarConversaoDeDados.TrataDateTime(reader["UltimoAcesso"]);
 
                     ListaUsuarios.Add(user);
                 }
@@ -133,9 +167,8 @@ namespace GrupoJOS_MVC5.Servicos
             {
                 string SQL = "";
                 SQL = "SELECT * FROM usuarios " +
-                    " LEFT JOIN usuarios_empresas " +
-                    " ON usuarios.idusuario = usuarios_empresas.idusuario " +
-                    " WHERE usuarios_empresas.idempresa = " + idempresa+" " +
+                    " WHERE usuarios.FKidempresa = " + idempresa+" " +
+                    " AND usuarios.Ativo = True" +
                     " ORDER BY usuarios.idusuario";
 
                 connection.Open();
@@ -172,11 +205,9 @@ namespace GrupoJOS_MVC5.Servicos
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT usuarios.*, usuarios_empresas.*, empresas.Nome AS NomeEmpresa FROM usuarios" +
-                    " LEFT JOIN usuarios_empresas " +
-                    " ON usuarios.idusuario = usuarios_empresas.idusuario " +
+                SQL = "SELECT usuarios.*, empresas.Nome AS NomeEmpresa FROM usuarios" +
                     " LEFT JOIN empresas " +
-                    " ON empresas.idempresa = usuarios_empresas.idempresa " +
+                    " ON empresas.idempresa = usuarios.FKidempresa " +
                     " WHERE usuarios.idusuario = "+ idusuario + "";
 
                 connection.Open();
@@ -205,7 +236,7 @@ namespace GrupoJOS_MVC5.Servicos
                     BuscaUsuario.PermissaoTextos = TratarConversaoDeDados.TrataString(reader["PermissaoTextos"]);
                     BuscaUsuario.PermissaoUsuarios = TratarConversaoDeDados.TrataString(reader["PermissaoUsuarios"]);
 
-                    BuscaUsuario.idempresa = TratarConversaoDeDados.TrataDouble(reader["idempresa"]);
+                    BuscaUsuario.FKidempresa = TratarConversaoDeDados.TrataDouble(reader["FKidempresa"]);
                     BuscaUsuario.NomeEmpresa = TratarConversaoDeDados.TrataString(reader["NomeEmpresa"]);
 
                 }
@@ -248,15 +279,20 @@ namespace GrupoJOS_MVC5.Servicos
                 PermissaoUsuarios = "0";
             }
 
+            if (String.IsNullOrEmpty(Empresa))
+            {
+                Empresa = "0";
+            }
+
 
             Model_Usuario InsereUsuario = new Model_Usuario();
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
                 SQL = "INSERT INTO usuarios" +
-                    "(Administrador,Nome,Email,Senha,Clientes,Perfil,UltimoAcesso,PermissaoAgenda,PermissaoAgendaComercial,PermissaoCliente,PermissaoClienteComercial,PermissaoEmpresas,PermissaoEspecialidades,PermissaoRamos,PermissaoRelatorios,PermissaoTextos,PermissaoUsuarios)" +
+                    "(Administrador,Nome,Email,Senha,Clientes,FKidempresa,Perfil,UltimoAcesso,Ativo,PermissaoAgenda,PermissaoAgendaComercial,PermissaoCliente,PermissaoClienteComercial,PermissaoEmpresas,PermissaoEspecialidades,PermissaoRamos,PermissaoRelatorios,PermissaoTextos,PermissaoUsuarios)" +
                     "VALUES" +
-                    "(" + adm + ",'" + nome + "','" + email + "','" + senha + "','" + cliente + "',"+perfil+",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', " +
+                    "(" + adm + ",'" + nome + "','" + email + "','" + senha + "','" + cliente + "',"+Empresa+","+perfil+",'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', True, " +
                     " "+ PermissaoAgenda + "," + PermissaoAgendaComercial + ", " + PermissaoCliente + ", " + PermissaoClienteComercial + ", " + PermissaoEmpresas + ", " +
                     " " + PermissaoEspecialidades + ", " + PermissaoRamos + ", " + PermissaoRelatorios + ", " + PermissaoTextos + ", " + PermissaoUsuarios + ");";
 
@@ -264,12 +300,7 @@ namespace GrupoJOS_MVC5.Servicos
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
                 connection.Close();
-                double idusuario = command.LastInsertedId;
-
-                if (!String.IsNullOrEmpty(Empresa) && perfil == "3")
-                {
-                    InsereUsuarioEmpresa(idusuario.ToString(), Empresa);
-                }
+                
             }
             return InsereUsuario;
         }
@@ -308,6 +339,11 @@ namespace GrupoJOS_MVC5.Servicos
                 PermissaoUsuarios = "0";
             }
 
+            if (!String.IsNullOrEmpty(Empresa) && perfil != "3")
+            {
+                Empresa = "0";
+            }
+
             Model_Usuario AtualizaUsuario = new Model_Usuario();
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
@@ -318,6 +354,7 @@ namespace GrupoJOS_MVC5.Servicos
                     " Email = '" + email + "'," +
                     " Senha = '" + senha + "'," +
                     " Clientes = '" + clientes + "'," +
+                    " FKidempresa = "+ Empresa +","+
                     " Perfil = '" + perfil + "'," +
                     " Administrador = " + adm + ", " +
 
@@ -333,11 +370,6 @@ namespace GrupoJOS_MVC5.Servicos
                     " PermissaoUsuarios = " + PermissaoUsuarios + " " +
                     " WHERE idusuario = " + id + "; ";
 
-                if (!String.IsNullOrEmpty(Empresa) && perfil == "3")
-                {
-                    InsereUsuarioEmpresa(id, Empresa);
-                }
-
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -349,38 +381,18 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Remove Usuario
-        public Model_Usuario RemoveUsuario(string id)
+        public void RemoveUsuario(string id)
         {
-            Model_Usuario RemoveUsuario = new Model_Usuario();
-
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "DELETE FROM usuarios WHERE idusuario = " + id + "; " +
-                    "DELETE FROM usuarios_empresas WHERE idusuario = "+id+" ;";
+                SQL = "UPDATE usuarios SET usuarios.Ativo = False WHERE idusuario = "+id+" ;";
+
+
+                //string SQL = "";
+                //SQL = "DELETE FROM usuarios WHERE idusuario = " + id + "; " +
+                //    "DELETE FROM usuarios_empresas WHERE idusuario = "+id+" ;";
                 
-                connection.Open();
-                MySqlCommand command = new MySqlCommand(SQL, connection);
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-            return RemoveUsuario;
-        }
-        #endregion
-
-        #region InserUsuarioEmpresa
-        public void InsereUsuarioEmpresa(string idusuario, string idempresa)
-        {
-            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-            {
-                string SQL = "";
-                SQL = "DELETE FROM usuarios_empresas WHERE idusuario = "+idusuario+"; "+ 
-                    
-                    "INSERT INTO usuarios_empresas " +
-                    " (idusuario, idempresa) " +
-                    " VALUES " +
-                    " ("+ idusuario + ","+ idempresa +" ); ";
-
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();

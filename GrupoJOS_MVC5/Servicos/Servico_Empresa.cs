@@ -115,8 +115,8 @@ namespace GrupoJOS_MVC5.Servicos
             {
                 string SQL = "";
                 SQL = "SELECT * FROM empresas" +
-                    " LEFT JOIN usuarios_empresas" +
-                    " ON empresas.idempresa = usuarios_empresas.idempresa" +
+                    " LEFT JOIN usuarios" +
+                    " ON empresas.idempresa = usuarios.FKidempresa" +
                     " WHERE empresas.idempresa = " + idempresa + "";
 
                 connection.Open();

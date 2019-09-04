@@ -62,7 +62,7 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if ((cookie.PermissaoUsuarios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                if (ModelState.IsValid && !String.IsNullOrEmpty(Empresa))
+                if (ModelState.IsValid)
                 {
                     servico_usuario.InsereUsuario(admin, user.Nome, user.Senha, user.Email, user.Clientes, user.Perfil, user.PermissaoAgenda, user.PermissaoAgendaComercial, user.PermissaoCliente, user.PermissaoClienteComercial, user.PermissaoEmpresas, user.PermissaoEspecialidades, user.PermissaoRamos, user.PermissaoRelatorios, user.PermissaoTextos, user.PermissaoUsuarios, Empresa);
                     return RedirectToAction("Index");

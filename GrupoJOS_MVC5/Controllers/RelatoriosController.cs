@@ -152,7 +152,7 @@ namespace GrupoJOS_MVC5.Controllers
             if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewBag.ListaEmpresa = servico_empresa.ListaEmpresa();
-                ViewBag.ListaUsuario = servico_usuario.ListaUsuarios();
+                ViewBag.ListaUsuario = servico_usuario.ListaUsuariosInterno();
                 ViewBag.ListaCliente = servico_cliente.ListaClientes();
                 ViewBag.ListaClienteComercial = servico_clienteComercial.ListaClienteComercial();
 

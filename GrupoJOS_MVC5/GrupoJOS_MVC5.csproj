@@ -143,6 +143,7 @@
     <Compile Include="Controllers\AgendaClienteController.cs" />
     <Compile Include="Controllers\ClientesController .cs" />
     <Compile Include="Controllers\ClientesComercialController.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\RamosController.cs" />

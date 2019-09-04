@@ -38,6 +38,7 @@ namespace GrupoJOS_MVC5.Models
         public bool Administrador { get; set; }
         public string Perfil { get; set; }
         public DateTime UltimoAcesso { get; set; }
+        public bool Ativo { get; set; }
 
         //PERMISSÕES
         public string PermissaoAgenda { get; set; }
@@ -52,7 +53,7 @@ namespace GrupoJOS_MVC5.Models
         public string PermissaoRelatorios { get; set; }
 
         //INNER JOIN EMPRESAS
-        public double idempresa { get; set; }
+        public double FKidempresa { get; set; }
         public string NomeEmpresa { get; set; }
     }
 
@@ -73,6 +74,7 @@ namespace GrupoJOS_MVC5.Models
         public DateTime UltimoAcesso { get; set; }
         public string Perfil { get; set; }
         public bool Lembrar { get; set; }
+        public bool Ativo { get; set; }
 
         //PERMISSÕES
         public string PermissaoAgenda { get; set; }
@@ -87,7 +89,7 @@ namespace GrupoJOS_MVC5.Models
         public string PermissaoRelatorios { get; set; }
 
         //INNER JOIN EMPRESAS
-        public double idempresa { get; set; }
+        public double FKidempresa { get; set; }
         public string NomeEmpresa { get; set; }
     }
 
@@ -102,5 +104,6 @@ namespace GrupoJOS_MVC5.Models
         public string Senha { get; set; }
 
         public bool Lembrar { get; set; }
+        public bool Ativo { get; set; }
     }
 }

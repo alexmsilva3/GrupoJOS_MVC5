@@ -18,11 +18,24 @@ CREATE TABLE `grupojos`.`horarios` (
   `terEntrada` TIME NULL DEFAULT NULL,
   `terSaida` TIME NULL DEFAULT NULL,
   `quaEntrada` TIME NULL DEFAULT NULL,
-  `quarSaida` TIME NULL DEFAULT NULL,
+  `quaSaida` TIME NULL DEFAULT NULL,
   `quiEntrada` TIME NULL DEFAULT NULL,
   `quiSaida` TIME NULL DEFAULT NULL,
   `sexEntrada` TIME NULL DEFAULT NULL,
   `sexSaida` TIME NULL DEFAULT NULL
   PRIMARY KEY (`idcliente`),
   UNIQUE INDEX `idcliente_UNIQUE` (`idcliente` ASC));
+=======================================================================================
+22/11
+
+ALTER TABLE `grupojos`.`usuarios` 
+ADD COLUMN `Ativo` BIT(1) NOT NULL DEFAULT 1 AFTER `UltimoAcesso`,
+ADD COLUMN `FKidempresa` BIGINT(20) NOT NULL DEFAULT 0 AFTER `Clientes`;
+
+UPDATE usuarios AS u
+INNER JOIN usuarios_empresas AS ue ON u.idusuario = ue.idusuario
+SET u.FKidempresa = ue.idempresa
+    
+DROP TABLE usuarios_empresas;
+
 =======================================================================================

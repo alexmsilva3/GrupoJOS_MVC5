@@ -67,9 +67,9 @@ namespace GrupoJOS_MVC5.Controllers
                     HttpCookie IdEmpresa = new HttpCookie("IdEmpresa", "0");
                     HttpCookie NomeEmpresa = new HttpCookie("NomeEmpresa", "GrupoJOS");
 
-                    if (user.idempresa != 0)
+                    if (user.FKidempresa != 0)
                     {
-                        IdEmpresa = new HttpCookie("IdEmpresa", user.idempresa.ToString());
+                        IdEmpresa = new HttpCookie("IdEmpresa", user.FKidempresa.ToString());
                         NomeEmpresa = new HttpCookie("NomeEmpresa", user.NomeEmpresa.ToString());
                     }
 

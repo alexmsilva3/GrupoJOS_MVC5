@@ -224,7 +224,8 @@ namespace GrupoJOS_MVC5.Servicos
                     " FROM agenda" +
                     " INNER JOIN clientes ON agenda.Cliente = clientes.idcliente" +
                     " WHERE agenda.Status = '0' " +
-                    " AND agenda.idagenda IN (select idagenda from agenda_emp where agenda_emp.idempresa = "+ idempresa + " )";
+                    " AND agenda.idagenda IN (select idagenda from agenda_emp where agenda_emp.idempresa = "+ idempresa + " )" +
+                    " ORDER BY agenda.DataVisita ASC";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);

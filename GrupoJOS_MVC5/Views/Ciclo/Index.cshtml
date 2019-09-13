@@ -1,0 +1,339 @@
+﻿@{
+    ViewBag.Title = "Ciclo";
+    var date = DateTime.Now;
+    var data = date.ToShortDateString();
+    var perfil = Request.Cookies["UsuarioPerfil"].Value;
+}
+
+@model GrupoJOS_MVC5.Models.ViewModel_Ciclo
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li class="active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+        <h2> </h2>
+        <div class="pull-right">
+            <div class="btn-group">
+                <a href="Ciclo/Aplicar/"><button type="button" class="btn btn-w-m btn-primary"><i class="fa fa-check"></i> Aplicar Ciclo</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Ciclo - <b>Semana 1</b></h5>
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <a href="/Ciclo/Editar/1"<button type="button" class="btn btn-xs btn-default">Editar</button></a>
+                                <a href="/Ciclo/Cadastro/1"<button type="button" class="btn btn-xs btn-primary">Novo</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Segunda</th>
+                                    <th>Terça</th>
+                                    <th>Quarta</th>
+                                    <th>Quinta</th>
+                                    <th>Sexta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ciclo_semana1)
+                                {
+                                    <tr>
+                                        <td>@item.hora</td>
+
+                                        <td>@item.segunda.Nome<br>
+                                            @foreach (var seg in item.segunda_list) {<span class="label label-info">@seg </span>}
+                                        </td>
+
+                                        <td>@item.terca.Nome<br>
+                                            @foreach (var ter in item.terca_list) {<span class="label label-info">@ter </span>}
+                                        </td>
+
+                                        <td>@item.quarta.Nome<br>
+                                            @foreach (var qua in item.quarta_list) {<span class="label label-info">@qua </span>}
+                                        </td>
+
+                                        <td>@item.quinta.Nome<br>
+                                            @foreach (var qui in item.quinta_list) {<span class="label label-info">@qui </span>}
+                                        </td>
+
+                                        <td>@item.sexta.Nome<br>
+                                            @foreach (var sex in item.sexta_list) {<span class="label label-info">@sex </span>}
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Ciclo - <b>Semana 2</b></h5>
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <a href="/Ciclo/Editar/2"<button type="button" class="btn btn-xs btn-default">Editar</button></a>
+                                <a href="/Ciclo/Cadastro/2"<button type="button" class="btn btn-xs btn-primary">Novo</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Segunda</th>
+                                    <th>Terça</th>
+                                    <th>Quarta</th>
+                                    <th>Quinta</th>
+                                    <th>Sexta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ciclo_semana2)
+                                {
+                                    <tr>
+                                        <td>@item.hora</td>
+
+                                        <td>@item.segunda.Nome<br>
+                                            @foreach (var seg in item.segunda_list) {<span class="label label-info">@seg </span>}
+                                        </td>
+
+                                        <td>@item.terca.Nome<br>
+                                            @foreach (var ter in item.terca_list) {<span class="label label-info">@ter </span>}
+                                        </td>
+
+                                        <td>@item.quarta.Nome<br>
+                                            @foreach (var qua in item.quarta_list) {<span class="label label-info">@qua </span>}
+                                        </td>
+
+                                        <td>@item.quinta.Nome<br>
+                                            @foreach (var qui in item.quinta_list) {<span class="label label-info">@qui </span>}
+                                        </td>
+
+                                        <td>@item.sexta.Nome<br>
+                                            @foreach (var sex in item.sexta_list) {<span class="label label-info">@sex </span>}
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Ciclo - <b>Semana 3</b></h5>
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <a href="/Ciclo/Editar/3"<button type="button" class="btn btn-xs btn-default">Editar</button></a>
+                                <a href="/Ciclo/Cadastro/3"<button type="button" class="btn btn-xs btn-primary">Novo</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Segunda</th>
+                                    <th>Terça</th>
+                                    <th>Quarta</th>
+                                    <th>Quinta</th>
+                                    <th>Sexta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ciclo_semana3)
+                                {
+                                    <tr>
+                                        <td>@item.hora</td>
+
+                                        <td>@item.segunda.Nome<br>
+                                            @foreach (var seg in item.segunda_list) {<span class="label label-info">@seg </span>}
+                                        </td>
+
+                                        <td>@item.terca.Nome<br>
+                                            @foreach (var ter in item.terca_list) {<span class="label label-info">@ter </span>}
+                                        </td>
+
+                                        <td>@item.quarta.Nome<br>
+                                            @foreach (var qua in item.quarta_list) {<span class="label label-info">@qua </span>}
+                                        </td>
+
+                                        <td>@item.quinta.Nome<br>
+                                            @foreach (var qui in item.quinta_list) {<span class="label label-info">@qui </span>}
+                                        </td>
+
+                                        <td>@item.sexta.Nome<br>
+                                            @foreach (var sex in item.sexta_list) {<span class="label label-info">@sex </span>}
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Ciclo - <b>Semana 4</b></h5>
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <a href="/Ciclo/Editar/4"<button type="button" class="btn btn-xs btn-default">Editar</button></a>
+                                <a href="/Ciclo/Cadastro/4"<button type="button" class="btn btn-xs btn-primary">Novo</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Segunda</th>
+                                    <th>Terça</th>
+                                    <th>Quarta</th>
+                                    <th>Quinta</th>
+                                    <th>Sexta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ciclo_semana4)
+                                {
+                                    <tr>
+                                        <td>@item.hora</td>
+
+                                        <td>@item.segunda.Nome<br>
+                                            @foreach (var seg in item.segunda_list) {<span class="label label-info">@seg </span>}
+                                        </td>
+
+                                        <td>@item.terca.Nome<br>
+                                            @foreach (var ter in item.terca_list) {<span class="label label-info">@ter </span>}
+                                        </td>
+
+                                        <td>@item.quarta.Nome<br>
+                                            @foreach (var qua in item.quarta_list) {<span class="label label-info">@qua </span>}
+                                        </td>
+
+                                        <td>@item.quinta.Nome<br>
+                                            @foreach (var qui in item.quinta_list) {<span class="label label-info">@qui </span>}
+                                        </td>
+
+                                        <td>@item.sexta.Nome<br>
+                                            @foreach (var sex in item.sexta_list) {<span class="label label-info">@sex </span>}
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/clockpicker")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/toastr")
+
+    <script>
+        function AssignButtonClicked(elem) {
+            var id = $(elem).data('assigned-id');
+            var id2 = $(elem).data('cliente-id');
+            $('#agendaId').val(id);
+            $('#clienteId').val(id2);
+        }
+
+
+        $("#addRegister").submit(function (e) {
+
+            var id = $('#agendaId').val();
+            var id2 = $('#clienteId').val();
+            var form = $(this);
+            var url = "/AgendaCliente/Reagendar/" + id;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    console.log(data);
+                    toastr.success("Reagendado com sucesso!");
+                    window.location = "/AgendaCliente/Index";
+                },
+                error: function (data) {
+                    console.log(data);
+                    toastr.error("Ops, algo deu errado =(");
+                }
+            });
+            e.preventDefault();
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+        $('.clockpicker').clockpicker({
+            placement: 'top',
+        });
+
+        $('#data_1 .input-group.date').datepicker({
+            todayBtn: "linked",
+            format: 'dd/mm/yyyy',
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            todayHighlight: true,
+            startDate: '@data',
+            autoclose: true
+        });
+
+    </script>
+}

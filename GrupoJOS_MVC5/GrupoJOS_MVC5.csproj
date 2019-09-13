@@ -15,7 +15,7 @@
     <AssemblyName>GrupoJOS_MVC5</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -141,7 +141,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AgendaComercialController.cs" />
     <Compile Include="Controllers\AgendaClienteController.cs" />
-    <Compile Include="Controllers\ClientesController .cs" />
+    <Compile Include="Controllers\CicloController.cs" />
     <Compile Include="Controllers\ClientesComercialController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
@@ -168,6 +168,7 @@
     <Compile Include="Models\Model_Especialidade.cs" />
     <Compile Include="Models\Model_Relatorios.cs" />
     <Compile Include="Models\Model_teste.cs" />
+    <Compile Include="Models\Model_Ciclo.cs" />
     <Compile Include="Models\Model_Texto.cs" />
     <Compile Include="Models\Model_Cookie.cs" />
     <Compile Include="Models\Model_Usuario.cs" />
@@ -181,11 +182,12 @@
     <Compile Include="Servicos\Servico_ClienteComercial.cs" />
     <Compile Include="Servicos\Servico_Empresa.cs" />
     <Compile Include="Servicos\Servico_Horario.cs" />
+    <Compile Include="Servicos\Servico_Login.cs" />
     <Compile Include="Servicos\Servico_Ramos.cs" />
     <Compile Include="Servicos\Servico_Relatorio.cs" />
+    <Compile Include="Servicos\Servico_Ciclo.cs" />
     <Compile Include="Servicos\Servico_Texto.cs" />
     <Compile Include="Servicos\Servico_Especialidade.cs" />
-    <Compile Include="Servicos\Servico_Login .cs" />
     <Compile Include="Servicos\Servico_Usuario.cs" />
     <Compile Include="Servicos\TratarConversaoDeDados.cs" />
   </ItemGroup>
@@ -897,6 +899,10 @@
     <Content Include="Views\Relatorios\Gerencial\ResultadoC.cshtml" />
     <Content Include="Views\AgendaCliente\EditarVisita.cshtml" />
     <Content Include="Views\AgendaComercial\EditarVisita.cshtml" />
+    <Content Include="Views\Ciclo\Cadastro.cshtml" />
+    <Content Include="Views\Ciclo\Index.cshtml" />
+    <Content Include="Views\Ciclo\Editar.cshtml" />
+    <Content Include="Views\Ciclo\EditarCiclo.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -920,7 +926,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59003</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58893/</IISUrl>
+          <IISUrl>http://localhost:8081</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

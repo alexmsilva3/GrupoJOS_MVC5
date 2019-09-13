@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Ciclo";
+    var id = ViewBag.IdSemana;
+    var date = DateTime.Now;
+    var data = date.ToShortDateString();
+    var perfil = Request.Cookies["UsuarioPerfil"].Value;
+}
+
+@model List<GrupoJOS_MVC5.Models.Model_Ciclo>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li class="active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+        <h2> </h2>
+        <div class="pull-right">
+            <div class="btn-group">
+                <a href="Ciclo/Remover/@id"><button type="button" class="btn btn-w-m btn-danger"><i class="fa fa-trash"></i> Remover Ciclo</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Edição de Ciclo - <b>Semana @id</b></h5>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Segunda</th>
+                                    <th></th>
+                                    <th>Terça</th>
+                                    <th></th>
+                                    <th>Quarta</th>
+                                    <th></th>
+                                    <th>Quinta</th>
+                                    <th></th>
+                                    <th>Sexta</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.hora</td>
+
+                                        <td>@item.segunda.Nome<br>
+                                            @foreach (var seg in item.segunda_list) {<span class="label label-info">@seg </span>}
+                                        </td>
+                                        <td><a href="/Ciclo/EditarCiclo/2?@item.idciclo"><button class="btn btn-default dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+
+
+                                        <td>@item.terca.Nome<br>
+                                            @foreach (var ter in item.terca_list) {<span class="label label-info">@ter </span>}
+                                        </td>
+                                        <td><a href="/Ciclo/EditarCiclo/3?@item.idciclo"><button class="btn btn-default dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+
+
+                                        <td>@item.quarta.Nome<br>
+                                            @foreach (var qua in item.quarta_list) {<span class="label label-info">@qua </span>}
+                                        </td>
+                                        <td><a href="/Ciclo/EditarCiclo/4?@item.idciclo"><button class="btn btn-default dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+
+
+                                        <td>@item.quinta.Nome<br>
+                                            @foreach (var qui in item.quinta_list) {<span class="label label-info">@qui </span>}
+                                        </td>
+                                        <td><a href="/Ciclo/EditarCiclo/5?@item.idciclo"><button class="btn btn-default dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+
+
+                                        <td>@item.sexta.Nome<br>
+                                            @foreach (var sex in item.sexta_list) {<span class="label label-info">@sex </span>}
+                                        </td>
+                                        <td><a href="/Ciclo/EditarCiclo/6?@item.idciclo"><button class="btn btn-default dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/clockpicker")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/toastr")
+
+    <script>
+        function AssignButtonClicked(elem) {
+            var id = $(elem).data('assigned-id');
+            var id2 = $(elem).data('cliente-id');
+            $('#agendaId').val(id);
+            $('#clienteId').val(id2);
+        }
+
+
+        $("#addRegister").submit(function (e) {
+
+            var id = $('#agendaId').val();
+            var id2 = $('#clienteId').val();
+            var form = $(this);
+            var url = "/AgendaCliente/Reagendar/" + id;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    console.log(data);
+                    toastr.success("Reagendado com sucesso!");
+                    window.location = "/AgendaCliente/Index";
+                },
+                error: function (data) {
+                    console.log(data);
+                    toastr.error("Ops, algo deu errado =(");
+                }
+            });
+            e.preventDefault();
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+        $('.clockpicker').clockpicker({
+            placement: 'top',
+        });
+
+        $('#data_1 .input-group.date').datepicker({
+            todayBtn: "linked",
+            format: 'dd/mm/yyyy',
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            todayHighlight: true,
+            startDate: '@data',
+            autoclose: true
+        });
+
+    </script>
+}

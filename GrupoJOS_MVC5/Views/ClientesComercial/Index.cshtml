@@ -66,7 +66,7 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>@item.Nome</td>
+                                        <td>@item.Nome <br> <b>Ultima Visita:</b> @item.UltimaVisita</td>
                                         <td>@item.RazaoSocial</td>
                                         <td>@item.Cidade</td>
                                         <td>
@@ -81,7 +81,7 @@
                                             @if(item.Conveniado == 1){<i class="fa fa-bookmark"></i><p>Conveniado</p>}
                                             else{<i><p>Sem Convênio</p></i>}
                                         </td>
-                                        <td>
+                                        <td width="15%">
                                             <div class="js-sweetalert">
                                                 <a href="/AgendaComercial/Cadastro/@item.idclientecomercial"><button type="button" title="Agendar Visita" class="btn btn-warning dim"><i class="fa fa-clock-o"></i></button></a>
                                                 <a href="/ClientesComercial/Editar/@item.idclientecomercial"><button type="button" class="btn btn-success dim"><i class="fa fa-edit"></i></button></a>

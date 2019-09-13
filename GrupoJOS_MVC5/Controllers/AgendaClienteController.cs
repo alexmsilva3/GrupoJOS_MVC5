@@ -17,8 +17,6 @@ namespace GrupoJOS_MVC5.Controllers
         Servico_Login servico_login = new Servico_Login();
         Servico_Texto servico_texto = new Servico_Texto();
 
-        //teste
-
 
         #region Index
         public ActionResult Index()
@@ -372,5 +370,7 @@ namespace GrupoJOS_MVC5.Controllers
             return RedirectToAction("Index", "Login");
         }
         #endregion
+
+        
     }
 }

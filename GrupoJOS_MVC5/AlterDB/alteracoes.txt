@@ -39,3 +39,34 @@ SET u.FKidempresa = ue.idempresa
 DROP TABLE usuarios_empresas;
 
 =======================================================================================
+16/09
+APÓS INSERIR NOVOS MEDICOS
+UPDATE clientes as tb1
+INNER JOIN especialidades as tb2
+ON tb1.Especialidade1 = tb2.idespecialidade
+SET tb1.Especialidade1 = tb2.nome
+
+
+CREATE TABLE `ciclos` (
+  `idciclo` int(11) NOT NULL,
+  `hora` time DEFAULT NULL,
+  `idusuario` bigint(20) DEFAULT NULL,
+  `semana` int(1) DEFAULT NULL,
+  `segunda` varchar(100) NOT NULL DEFAULT 'Vazio',
+  `segunda_emp` varchar(100) NOT NULL DEFAULT 'Vazio',
+  `terca` varchar(100) NOT NULL DEFAULT 'Vazio',
+  `terca_emp` varchar(100) NOT NULL DEFAULT 'Vazio',
+  `quarta` varchar(100) NOT NULL DEFAULT 'Vazio',
+  `quarta_emp` varchar(100) NOT NULL DEFAULT 'Vazio',
+  `quinta` varchar(100) NOT NULL DEFAULT 'Vazio',
+  `quinta_emp` varchar(100) NOT NULL DEFAULT 'Vazio',
+  `sexta` varchar(100) NOT NULL DEFAULT 'Vazio',
+  `sexta_emp` varchar(100) NOT NULL DEFAULT 'Vazio'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `ciclos`
+  ADD PRIMARY KEY (`idciclo`);
+
+ALTER TABLE `ciclos`
+  MODIFY `idciclo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+COMMIT;

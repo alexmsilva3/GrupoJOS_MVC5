@@ -38,8 +38,8 @@
                         <h5>Ciclo - <b>Semana 1</b></h5>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="/Ciclo/Editar/1"<button type="button" class="btn btn-xs btn-default">Editar</button></a>
-                                <a href="/Ciclo/Cadastro/1"<button type="button" class="btn btn-xs btn-primary">Novo</button></a>
+                                <a href="/Ciclo/Editar/1"><button type="button" class="btn btn-xs btn-default">Editar</button></a>
+                                <a href="/Ciclo/Cadastro/1"><button type="button" class="btn btn-xs btn-primary">Novo</button></a>
                             </div>
                         </div>
                     </div>
@@ -97,8 +97,8 @@
                         <h5>Ciclo - <b>Semana 2</b></h5>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="/Ciclo/Editar/2"<button type="button" class="btn btn-xs btn-default">Editar</button></a>
-                                <a href="/Ciclo/Cadastro/2"<button type="button" class="btn btn-xs btn-primary">Novo</button></a>
+                                <a href="/Ciclo/Editar/2"><button type="button" class="btn btn-xs btn-default">Editar</button></a>
+                                <a href="/Ciclo/Cadastro/2"><button type="button" class="btn btn-xs btn-primary">Novo</button></a>
                             </div>
                         </div>
                     </div>
@@ -156,8 +156,8 @@
                         <h5>Ciclo - <b>Semana 3</b></h5>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="/Ciclo/Editar/3"<button type="button" class="btn btn-xs btn-default">Editar</button></a>
-                                <a href="/Ciclo/Cadastro/3"<button type="button" class="btn btn-xs btn-primary">Novo</button></a>
+                                <a href="/Ciclo/Editar/3"><button type="button" class="btn btn-xs btn-default">Editar</button></a>
+                                <a href="/Ciclo/Cadastro/3"><button type="button" class="btn btn-xs btn-primary">Novo</button></a>
                             </div>
                         </div>
                     </div>
@@ -215,8 +215,8 @@
                         <h5>Ciclo - <b>Semana 4</b></h5>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="/Ciclo/Editar/4"<button type="button" class="btn btn-xs btn-default">Editar</button></a>
-                                <a href="/Ciclo/Cadastro/4"<button type="button" class="btn btn-xs btn-primary">Novo</button></a>
+                                <a href="/Ciclo/Editar/4"><button type="button" class="btn btn-xs btn-default">Editar</button></a>
+                                <a href="/Ciclo/Cadastro/4"><button type="button" class="btn btn-xs btn-primary">Novo</button></a>
                             </div>
                         </div>
                     </div>
@@ -271,69 +271,8 @@
 
 @section Styles {
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
-    @Styles.Render("~/plugins/dataPickerStyles")
-    @Styles.Render("~/plugins/clockpickerStyles")
-    @Styles.Render("~/plugins/toastrStyles")
-    @Styles.Render("~/plugins/awesomeCheckboxStyles")
 }
 
 @section Scripts {
     @Scripts.Render("~/plugins/dataTables")
-    @Scripts.Render("~/plugins/clockpicker")
-    @Scripts.Render("~/plugins/dataPicker")
-    @Scripts.Render("~/plugins/toastr")
-
-    <script>
-        function AssignButtonClicked(elem) {
-            var id = $(elem).data('assigned-id');
-            var id2 = $(elem).data('cliente-id');
-            $('#agendaId').val(id);
-            $('#clienteId').val(id2);
-        }
-
-
-        $("#addRegister").submit(function (e) {
-
-            var id = $('#agendaId').val();
-            var id2 = $('#clienteId').val();
-            var form = $(this);
-            var url = "/AgendaCliente/Reagendar/" + id;
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(), // serializes the form's elements.
-                success: function (data) {
-                    console.log(data);
-                    toastr.success("Reagendado com sucesso!");
-                    window.location = "/AgendaCliente/Index";
-                },
-                error: function (data) {
-                    console.log(data);
-                    toastr.error("Ops, algo deu errado =(");
-                }
-            });
-            e.preventDefault();
-        });
-
-
-    </script>
-
-    <script type="text/javascript">
-        $('.clockpicker').clockpicker({
-            placement: 'top',
-        });
-
-        $('#data_1 .input-group.date').datepicker({
-            todayBtn: "linked",
-            format: 'dd/mm/yyyy',
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: false,
-            todayHighlight: true,
-            startDate: '@data',
-            autoclose: true
-        });
-
-    </script>
 }

@@ -47,8 +47,12 @@ namespace GrupoJOS_MVC5.Models
         public int idciclo { get; set; }
         public string hora { get; set; }
         public double idusuario { get; set; }
+        public int semana { get; set; }
+        public int iddia { get; set; }
 
         public int idcliente { get; set; }
         public string lista_emp { get; set; }
+
+        public string dia { get; set; }
     }
 }

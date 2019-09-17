@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Cadastro de Ciclo";
+    ViewBag.Title = "Edição de Ciclo";
     var semana = ViewBag.Semana;
     var date = DateTime.Now;
     var data = date.ToShortDateString();
@@ -15,7 +15,7 @@
                 <a href="@Url.Action("Index", "Home")">Home</a>
             </li>
             <li>
-                <a>Agenda</a>
+                <a href="@Url.Action("Index", "Ciclo")">Ciclo</a>
             </li>
             <li class="active">
                 <strong>@ViewBag.Title</strong>
@@ -25,12 +25,10 @@
 </div>
 
 
-
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>Cadastro de Ciclo - <b>Semana @semana</b></h5>
+            <h5>@ViewBag.Title - <b>Semana @semana</b></h5>
         </div>
         <div class="ibox-content">
             @using (Html.BeginForm())
@@ -39,6 +37,9 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                 <input type="hidden" name="semana" value="@semana" />
+                <input type="hidden" name="iddia" value="@Model.iddia" />
+                <input type="hidden" name="idciclo" value="@Model.idciclo" />
+
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="ibox float-e-margins">
@@ -49,11 +50,18 @@
                                 </p>
 
                                 <select class="chosen-select" tabindex="2" name="DiaVisita">
-                                    <option id="2">Segunda</option>
-                                    <option id="3">Terça</option>
-                                    <option id="4">Quarta</option>
-                                    <option id="5">Quinta</option>
-                                    <option id="6">Sexta</option>
+                                    @foreach (var item in ViewBag.DiasSemana)
+                                    {
+                                        if (item == Model.dia)
+                                        {
+                                            <option value='@item' selected> @item</option>
+                                        }
+                                        else
+                                        {
+                                            <option value='@item'> @item</option>
+                                        }
+                                    }
+
                                 </select>
 
                                 <span class="field-validation-error text-danger" data-valmsg-for="DiaVisita" data-valmsg-replace="true">@ViewBag.ErroData</span>
@@ -131,6 +139,11 @@
 
                 <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
                 <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
+
+                <div class="pull-right">
+                    <!--a href="/Ciclo/RemoverCicloItem/Model.iddia/Model.idciclo/Model.semana"><button type="button" class="btn btn-danger m-t-15 waves-effect"><i class="fa fa-eraser"></i> APAGAR</button></a-->
+                    <button type="button" class="btn btn-danger m-t-15 waves-effect" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@Model.iddia" data-ciclo-id="@Model.idciclo" data-semana-id="@Model.semana"><i class="fa fa-eraser"></i> APAGAR</button>
+                </div>
             }
         </div>
     </div>
@@ -147,11 +160,40 @@
     @Scripts.Render("~/plugins/chosen")
     @Scripts.Render("~/plugins/clockpicker")
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        function AssignButtonClicked(elem) {
+            var iddia = $(elem).data('assigned-id');
+            var idciclo = $(elem).data('ciclo-id');
+            var semana = $(elem).data('semana-id');
+            swal({
+                title: "Tem certeza?",
+                text: "Esse registro sera apagado e nao podera ser recuperado!",
+                icon: "warning",
+                buttons: { cancel: "Cancelar", ok: "Sim, pode remover!" },
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Removido!", "Registro foi removido com sucesso!", "success")
+                            .then((value) => {
+                                $.post("/Ciclo/RemoverCicloItem/" + iddia + "/" + idciclo + "");
+                                window.location = "/Ciclo/Editar/"+semana+"";
+                            });
+                    } else {
+                        swal("Cancelado!", "O registro não foi removido", "error");
+                    }
+                });
+        }
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('.chosen-select').chosen({ width: "100%" });
-
             $('.clockpicker').clockpicker();
         });
     </script>
+
+
 }

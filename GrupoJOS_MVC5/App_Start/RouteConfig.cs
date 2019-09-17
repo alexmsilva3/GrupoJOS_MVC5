@@ -18,6 +18,12 @@ namespace GrupoJOS_MVC5
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "EditarCiclo",
+                url: "{controller}/{action}/{id}/{id2}",
+                defaults: new { controller = "Ciclo", action = "EditarCiclo", id = UrlParameter.Optional, id2 = UrlParameter.Optional }
+            );
         }
 
     }

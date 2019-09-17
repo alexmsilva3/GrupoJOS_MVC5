@@ -249,16 +249,17 @@ namespace GrupoJOS_MVC5.Servicos
         public Model_CicloRes BuscaCiclo(int iddia, int idciclo)
         {
             Model_CicloRes BuscaCiclo = new Model_CicloRes();
+            BuscaCiclo.iddia = iddia;
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
 
-                if (iddia == 2) { SQL = "SELECT idciclo, idusuario, hora, segunda, segunda_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
-                else if (iddia == 3) { SQL = "SELECT idciclo, idusuario, hora, terca, terca_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
-                else if (iddia == 4) { SQL = "SELECT idciclo, idusuario, hora, quarta, quarta_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
-                else if (iddia == 5) { SQL = "SELECT idciclo, idusuario, hora, quinta, quinta_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
-                else if (iddia == 6) { SQL = "SELECT idciclo, idusuario, hora, sexta, sexta_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
+                if (iddia == 2) { SQL = "SELECT idciclo, idusuario, hora, semana, segunda, segunda_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
+                else if (iddia == 3) { SQL = "SELECT idciclo, idusuario, hora, semana, terca, terca_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
+                else if (iddia == 4) { SQL = "SELECT idciclo, idusuario, hora, semana, quarta, quarta_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
+                else if (iddia == 5) { SQL = "SELECT idciclo, idusuario, hora, semana, quinta, quinta_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
+                else if (iddia == 6) { SQL = "SELECT idciclo, idusuario, hora, semana, sexta, sexta_emp FROM ciclos WHERE idciclo = " + idciclo + " "; }
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -273,6 +274,8 @@ namespace GrupoJOS_MVC5.Servicos
                         BuscaCiclo.hora = TratarConversaoDeDados.TrataString(reader["hora"]);
                         BuscaCiclo.idcliente = TratarConversaoDeDados.TrataInt(reader["segunda"]);
                         BuscaCiclo.lista_emp = TratarConversaoDeDados.TrataString(reader["segunda_emp"]);
+                        BuscaCiclo.semana = TratarConversaoDeDados.TrataInt(reader["semana"]);
+                        BuscaCiclo.dia = "Segunda";
                     }
                 }
                 else if (iddia == 3)
@@ -284,6 +287,8 @@ namespace GrupoJOS_MVC5.Servicos
                         BuscaCiclo.hora = TratarConversaoDeDados.TrataString(reader["hora"]);
                         BuscaCiclo.idcliente = TratarConversaoDeDados.TrataInt(reader["terca"]);
                         BuscaCiclo.lista_emp = TratarConversaoDeDados.TrataString(reader["terca_emp"]);
+                        BuscaCiclo.semana = TratarConversaoDeDados.TrataInt(reader["semana"]);
+                        BuscaCiclo.dia = "Terça";
                     }
                 }
                 else if (iddia == 4)
@@ -295,6 +300,8 @@ namespace GrupoJOS_MVC5.Servicos
                         BuscaCiclo.hora = TratarConversaoDeDados.TrataString(reader["hora"]);
                         BuscaCiclo.idcliente = TratarConversaoDeDados.TrataInt(reader["quarta"]);
                         BuscaCiclo.lista_emp = TratarConversaoDeDados.TrataString(reader["quarta_emp"]);
+                        BuscaCiclo.semana = TratarConversaoDeDados.TrataInt(reader["semana"]);
+                        BuscaCiclo.dia = "Quarta";
                     }
                 }
                 else if (iddia == 5)
@@ -306,6 +313,8 @@ namespace GrupoJOS_MVC5.Servicos
                         BuscaCiclo.hora = TratarConversaoDeDados.TrataString(reader["hora"]);
                         BuscaCiclo.idcliente = TratarConversaoDeDados.TrataInt(reader["quinta"]);
                         BuscaCiclo.lista_emp = TratarConversaoDeDados.TrataString(reader["quinta_emp"]);
+                        BuscaCiclo.semana = TratarConversaoDeDados.TrataInt(reader["semana"]);
+                        BuscaCiclo.dia = "Quinta";
                     }
                 }
                 else if (iddia == 6)
@@ -317,6 +326,8 @@ namespace GrupoJOS_MVC5.Servicos
                         BuscaCiclo.hora = TratarConversaoDeDados.TrataString(reader["hora"]);
                         BuscaCiclo.idcliente = TratarConversaoDeDados.TrataInt(reader["sexta"]);
                         BuscaCiclo.lista_emp = TratarConversaoDeDados.TrataString(reader["sexta_emp"]);
+                        BuscaCiclo.semana = TratarConversaoDeDados.TrataInt(reader["semana"]);
+                        BuscaCiclo.dia = "Sexta";
                     }
                 }
 
@@ -324,6 +335,93 @@ namespace GrupoJOS_MVC5.Servicos
                 connection.Close();
             }
             return BuscaCiclo;
+        }
+        #endregion
+
+        #region Remover Ciclo (Semana)
+        public void RemoveCicloSemana(int semana, double idusuario)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "DELETE FROM ciclos WHERE semana = " + semana + " AND idusuario = "+ idusuario +"; ";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        #endregion
+
+        #region Remover Ciclo (Linha)
+        public void RemoveCicloLinha(int idciclo)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "DELETE FROM ciclos WHERE idciclo = " + idciclo + " ";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        #endregion
+
+        #region Remover Ciclo (Item)
+        public void RemoveCicloItem(int iddia, int idciclo)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                if (iddia == 2)
+                {
+                    SQL = "UPDATE ciclos " +
+                    "SET " +
+                    " segunda = 'Vazio', " +
+                    " segunda_emp = 'Vazio' " +
+                    " WHERE idciclo = '" + idciclo + "'; ";
+                }
+                else if (iddia == 3)
+                {
+                    SQL = "UPDATE ciclos " +
+                    "SET " +
+                    " terca = 'Vazio', " +
+                    " terca_emp = 'Vazio' " +
+                    " WHERE idciclo = '" + idciclo + "'; ";
+                }
+                else if (iddia == 4)
+                {
+                    SQL = "UPDATE ciclos " +
+                    "SET " +
+                    " quarta = 'Vazio', " +
+                    " quarta_emp = 'Vazio' " +
+                    " WHERE idciclo = '" + idciclo + "'; ";
+                }
+                else if (iddia == 5)
+                {
+                    SQL = "UPDATE ciclos " +
+                    "SET " +
+                    " quinta = 'Vazio', " +
+                    " quinta_emp = 'Vazio' " +
+                    " WHERE idciclo = '" + idciclo + "'; ";
+                }
+                else if (iddia == 6)
+                {
+                    SQL = "UPDATE ciclos " +
+                    "SET " +
+                    " sexta = 'Vazio', " +
+                    " sexta_emp = 'Vazio' " +
+                    " WHERE idciclo = '" + idciclo + "'; ";
+                }
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
         #endregion
     }

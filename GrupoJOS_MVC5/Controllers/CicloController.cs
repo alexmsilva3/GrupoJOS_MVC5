@@ -33,6 +33,17 @@ namespace GrupoJOS_MVC5.Controllers
                 viewModel_Ciclo.ciclo_semana3 = servico_ciclo.ListaCiclos(usuarioid, 3);
                 viewModel_Ciclo.ciclo_semana4 = servico_ciclo.ListaCiclos(usuarioid, 4);
 
+                #region Trata Data
+                //envia a primeira segunda feira por ViewBag
+                var primeiroDiaMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                while ((int)primeiroDiaMes.DayOfWeek != 1)
+                {
+                    primeiroDiaMes = primeiroDiaMes.AddDays(1);
+                }
+                ViewBag.Data = primeiroDiaMes.ToShortDateString();
+
+                #endregion
+
                 return View(viewModel_Ciclo);
             }
             return RedirectToAction("Index", "Login");
@@ -203,6 +214,48 @@ namespace GrupoJOS_MVC5.Controllers
         }
         #endregion
 
+        #region Aplicar
+        [HttpPost]
+        public ActionResult Aplicar(DateTime DataInicio)
+        {
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                int DateOfWeek = (int)DataInicio.DayOfWeek;
 
+                //Verifica se o dia selecionado é segunda feira
+                if (DateOfWeek == 1)
+                {
+                    //Verifica Historico
+                    if (true)
+                    {
+                        double idusuario = int.Parse(cookie.UsuarioID);
+                        servico_ciclo.AplicaCiclo(idusuario, DataInicio);
+                        //return RedirectToAction("Aplicar", "Ciclo");
+                        return View();
+                    }
+                    else
+                    {
+                       return RedirectToAction("Erro2", "Ciclo");
+                    }
+                }
+                //Mostra página de erro pois dia selecionado foi != segunda
+                else { return RedirectToAction("Erro1","Ciclo"); }
+                
+            }
+            return RedirectToAction("Index", "Login");
+        }
+        #endregion
+
+        #region Erros
+        public ActionResult Erro1()
+        {
+            return View();
+        }
+        public ActionResult Erro2()
+        {
+            return View();
+        }
+        #endregion
     }
 }

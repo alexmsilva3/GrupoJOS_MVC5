@@ -903,6 +903,9 @@
     <Content Include="Views\Ciclo\Index.cshtml" />
     <Content Include="Views\Ciclo\Editar.cshtml" />
     <Content Include="Views\Ciclo\EditarCiclo.cshtml" />
+    <Content Include="Views\Ciclo\Aplicar.cshtml" />
+    <Content Include="Views\Ciclo\Erro1.cshtml" />
+    <Content Include="Views\Ciclo\Erro2.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

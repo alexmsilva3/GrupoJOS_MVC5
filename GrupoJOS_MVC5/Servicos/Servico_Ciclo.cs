@@ -13,6 +13,7 @@ namespace GrupoJOS_MVC5.Servicos
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
         Servico_Cliente servico_cliente = new Servico_Cliente();
         Servico_Empresa servico_empresa = new Servico_Empresa();
+        Servico_AgendaCliente servico_agenda = new Servico_AgendaCliente();
 
         #region ListaCiclos
         public List<Model_Ciclo> ListaCiclos(double idusuario, int semana)
@@ -22,7 +23,7 @@ namespace GrupoJOS_MVC5.Servicos
             cliente_vazio.Nome = "Vazio";
             cliente_vazio.idcliente = 0;
 
-            Model_Empresa empresa_vazio = new Model_Empresa();
+            ViewModelEmpresaResumida empresa_vazio = new ViewModelEmpresaResumida();
             empresa_vazio.Nome = "Vazio";
             empresa_vazio.idempresa = 0;
 
@@ -46,11 +47,11 @@ namespace GrupoJOS_MVC5.Servicos
                     ciclo.idusuario = TratarConversaoDeDados.TrataDouble(reader["idusuario"]);
 
                     //instancia as listas
-                    ciclo.segunda_list = new List<string>();
-                    ciclo.terca_list = new List<string>();
-                    ciclo.quarta_list = new List<string>();
-                    ciclo.quinta_list = new List<string>();
-                    ciclo.sexta_list = new List<string>();
+                    ciclo.segunda_list = new List<ViewModelEmpresaResumida>();
+                    ciclo.terca_list = new List<ViewModelEmpresaResumida>();
+                    ciclo.quarta_list = new List<ViewModelEmpresaResumida>();
+                    ciclo.quinta_list = new List<ViewModelEmpresaResumida>();
+                    ciclo.sexta_list = new List<ViewModelEmpresaResumida>();
 
                     val = TratarConversaoDeDados.TrataString(reader["segunda"]);
                     if (val != "Vazio")
@@ -58,10 +59,10 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.segunda = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.segunda_emp = TratarConversaoDeDados.TrataString(reader["segunda_emp"]);
                         foreach (var item in ciclo.segunda_emp.Split(',').ToList())
-                        { ciclo.segunda_list.Add(servico_empresa.BuscaEmpresa(item).Nome); }
+                        { ciclo.segunda_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
 
                     }
-                    else { ciclo.segunda = cliente_vazio; ciclo.segunda_list.Add("Vazio"); }
+                    else { ciclo.segunda = cliente_vazio; ciclo.segunda_list.Add(empresa_vazio); }
                     /****************************************************************************************/
                     val = TratarConversaoDeDados.TrataString(reader["terca"]);
                     if (val != "Vazio")
@@ -69,9 +70,9 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.terca = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.terca_emp = TratarConversaoDeDados.TrataString(reader["terca_emp"]);
                         foreach (var item in ciclo.terca_emp.Split(',').ToList())
-                        { ciclo.terca_list.Add(servico_empresa.BuscaEmpresa(item).Nome); }
+                        { ciclo.terca_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
                     }
-                    else { ciclo.terca = cliente_vazio; ciclo.terca_list.Add("Vazio"); }
+                    else { ciclo.terca = cliente_vazio; ciclo.terca_list.Add(empresa_vazio); }
                     /****************************************************************************************/
                     val = TratarConversaoDeDados.TrataString(reader["quarta"]);
                     if (val != "Vazio")
@@ -79,9 +80,9 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.quarta = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.quarta_emp = TratarConversaoDeDados.TrataString(reader["quarta_emp"]);
                         foreach (var item in ciclo.quarta_emp.Split(',').ToList())
-                        { ciclo.quarta_list.Add(servico_empresa.BuscaEmpresa(item).Nome); }
+                        { ciclo.quarta_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
                     }
-                    else { ciclo.quarta = cliente_vazio; ciclo.quarta_list.Add("Vazio"); }
+                    else { ciclo.quarta = cliente_vazio; ciclo.quarta_list.Add(empresa_vazio); }
                     /****************************************************************************************/
                     val = TratarConversaoDeDados.TrataString(reader["quinta"]);
                     if (val != "Vazio")
@@ -89,9 +90,9 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.quinta = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.quinta_emp = TratarConversaoDeDados.TrataString(reader["quinta_emp"]);
                         foreach (var item in ciclo.quinta_emp.Split(',').ToList())
-                        { ciclo.quinta_list.Add(servico_empresa.BuscaEmpresa(item).Nome); }
+                        { ciclo.quinta_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
                     }
-                    else { ciclo.quinta = cliente_vazio; ciclo.quinta_list.Add("Vazio"); }
+                    else { ciclo.quinta = cliente_vazio; ciclo.quinta_list.Add(empresa_vazio); }
                     /****************************************************************************************/
                     val = TratarConversaoDeDados.TrataString(reader["sexta"]);
                     if (val != "Vazio")
@@ -99,9 +100,9 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.sexta = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.sexta_emp = TratarConversaoDeDados.TrataString(reader["sexta_emp"]);
                         foreach (var item in ciclo.sexta_emp.Split(',').ToList())
-                        { ciclo.sexta_list.Add(servico_empresa.BuscaEmpresa(item).Nome); }
+                        { ciclo.sexta_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
                     }
-                    else { ciclo.sexta = cliente_vazio; ciclo.sexta_list.Add("Vazio"); }
+                    else { ciclo.sexta = cliente_vazio; ciclo.sexta_list.Add(empresa_vazio); }
                     /****************************************************************************************/
 
                     ListaCiclos.Add(ciclo);
@@ -421,6 +422,55 @@ namespace GrupoJOS_MVC5.Servicos
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
                 connection.Close();
+            }
+        }
+        #endregion
+
+        #region Aplicar
+        public void AplicaCiclo(double idusuario, DateTime DataInicio)
+        {
+
+            ViewModel_Ciclo viewModel_Ciclo = new ViewModel_Ciclo();
+
+            viewModel_Ciclo.ciclo_semana1 = ListaCiclos(idusuario, 1);
+            viewModel_Ciclo.ciclo_semana2 = ListaCiclos(idusuario, 2);
+            viewModel_Ciclo.ciclo_semana3 = ListaCiclos(idusuario, 3);
+            viewModel_Ciclo.ciclo_semana4 = ListaCiclos(idusuario, 4);
+
+            foreach (var item in viewModel_Ciclo.ciclo_semana1)
+            {
+                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio, item.hora, item.segunda.idcliente, item.segunda_list); }
+                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(1), item.hora, item.terca.idcliente, item.terca_list); }
+                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(2), item.hora, item.quarta.idcliente, item.quarta_list); }
+                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(3), item.hora, item.quinta.idcliente, item.quinta_list); }
+                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(4), item.hora, item.sexta.idcliente, item.sexta_list); }
+            }
+
+            foreach (var item in viewModel_Ciclo.ciclo_semana2)
+            {
+                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(7), item.hora, item.segunda.idcliente, item.segunda_list); }
+                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(8), item.hora, item.terca.idcliente, item.terca_list); }
+                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(9), item.hora, item.quarta.idcliente, item.quarta_list); }
+                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(10), item.hora, item.quinta.idcliente, item.quinta_list); }
+                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(11), item.hora, item.sexta.idcliente, item.sexta_list); }
+            }
+
+            foreach (var item in viewModel_Ciclo.ciclo_semana3)
+            {
+                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(14), item.hora, item.segunda.idcliente, item.segunda_list); }
+                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(15), item.hora, item.terca.idcliente, item.terca_list); }
+                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(16), item.hora, item.quarta.idcliente, item.quarta_list); }
+                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(17), item.hora, item.quinta.idcliente, item.quinta_list); }
+                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(18), item.hora, item.sexta.idcliente, item.sexta_list); }
+            }
+
+            foreach (var item in viewModel_Ciclo.ciclo_semana4)
+            {
+                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(21), item.hora, item.segunda.idcliente, item.segunda_list); }
+                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(22), item.hora, item.terca.idcliente, item.terca_list); }
+                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(23), item.hora, item.quarta.idcliente, item.quarta_list); }
+                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(24), item.hora, item.quinta.idcliente, item.quinta_list); }
+                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(25), item.hora, item.sexta.idcliente, item.sexta_list); }
             }
         }
         #endregion

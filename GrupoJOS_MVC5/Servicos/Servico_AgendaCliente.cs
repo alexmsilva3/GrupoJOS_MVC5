@@ -418,7 +418,7 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Insere Agenda
-        public void InsereAgenda(double Usuario, DateTime Data, string Hora, double Cliente, List<string> Empresas)
+        public void InsereAgenda(double Usuario, DateTime Data, string Hora, double Cliente, List<ViewModelEmpresaResumida> ListaEmpresas)
         {
             Hora.Substring(0,5);
 
@@ -436,9 +436,9 @@ namespace GrupoJOS_MVC5.Servicos
                 double id = command.LastInsertedId;
 
                 SQL = "";
-                foreach (var item in Empresas)
+                foreach (var item in ListaEmpresas)
                 {
-                    SQL = "INSERT INTO agenda_emp VALUES ("+id+","+item+"); ";
+                    SQL = "INSERT INTO agenda_emp VALUES ("+id+","+item.idempresa+"); ";
                     MySqlCommand command2 = new MySqlCommand(SQL, connection);
                     command2.ExecuteNonQuery();
                 }

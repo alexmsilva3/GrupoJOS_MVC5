@@ -117,7 +117,17 @@ namespace GrupoJOS_MVC5.Controllers
             var user = Request.Cookies["UsuarioID"].Value;
             var Usuario = Convert.ToDouble(user);
 
-            servico_agenda.InsereAgenda(Usuario, DataVisita, HoraVisita, Cliente, Empresas);
+            List<ViewModelEmpresaResumida> ListaEmpresas = new List<ViewModelEmpresaResumida>();
+            foreach (var item in Empresas)
+            {
+                ViewModelEmpresaResumida emp = new ViewModelEmpresaResumida();
+                emp.idempresa = int.Parse(item);
+                emp.Nome = item;
+
+                ListaEmpresas.Add(emp);
+            }
+
+            servico_agenda.InsereAgenda(Usuario, DataVisita, HoraVisita, Cliente, ListaEmpresas);
 
             return RedirectToAction("Index", "AgendaCliente");
         }

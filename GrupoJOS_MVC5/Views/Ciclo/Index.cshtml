@@ -2,6 +2,8 @@
     ViewBag.Title = "Ciclo";
     var data = ViewBag.Data;
     var perfil = Request.Cookies["UsuarioPerfil"].Value;
+    DateTime? data_inicio = Model.historico.data_inicio;
+    DateTime? data_fim = Model.historico.data_fim;
 }
 
 @model GrupoJOS_MVC5.Models.ViewModel_Ciclo
@@ -12,6 +14,9 @@
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index","AgendaCliente")">Agenda</a>
             </li>
             <li class="active">
                 <strong>@ViewBag.Title</strong>
@@ -307,7 +312,26 @@
         </div>
 
         <div class="row wrapper border-bottom white-bg">
-            <div class="col-lg-12">
+            <div class="col-lg-10">
+                <br>
+                <h3>Ultimo Ciclo:</h3>
+                <ol class="breadcrumb">
+                    <li>
+                        @if (data_inicio.HasValue)
+                        {
+                            <b>@Model.historico.data_inicio.ToShortDateString()</b>
+                        }
+                    </li>
+                    <li>
+                        @if (data_fim.HasValue)
+                        {
+                            <b>@Model.historico.data_fim.ToShortDateString()</b>
+                        }
+                    </li>
+                </ol>
+                <br>
+            </div>
+            <div class="col-lg-2">
                 <div class="pull-right">
                     <br>
                     <div class="btn-group">
@@ -317,6 +341,7 @@
                 </div>
             </div>
         </div>
+
         <br>
     </div>
 
@@ -358,7 +383,50 @@
                 </div>
             </div>
         </form>
+    </div>
 
+
+    <div class="modal inmodal" id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <form method="post" id="addRegister" action="/Ciclo/Desfazer/">
+            <div class="modal-dialog">
+                <div class="modal-content animated bounceInRight">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <i class="fa fa-undo modal-icon"></i>
+                        <h4 class="modal-title">Desfazer Ciclo</h4>
+                        <font class="font-bold text-danger" size="3">
+                            Ao desfazer Ciclo <b>TODOS</b> os agendamentos cadastrados pelo iclo serão <b>excluídos</b> permanentemente, sem a possibilidade de retorno.<br>
+                            Inclusive caso tenha realizado alguma visita a mesma também será excluida!
+                        </font>
+                        <br>
+                        <small>Se não tiver certeza, entre em contato com o Desenvolvedor</small>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-content">
+                                        <h3>Tem certeza que deseja realizar essa operação?</h3>
+                                        <p>Digite "SIM" na caixa de texto:</p>
+                                        <div class="form-group">
+                                            <div class="input-group text">
+                                                <input type="text" class="form-control" name="Validacao">
+                                                <span class="input-group-addon"><i class="fa fa-check"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning">Desfazer</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 
 </div>

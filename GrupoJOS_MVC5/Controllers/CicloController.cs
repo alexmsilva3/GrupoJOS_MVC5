@@ -24,14 +24,16 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                double usuarioid = double.Parse(cookie.UsuarioID);
+                double idusuario = double.Parse(cookie.UsuarioID);
 
                 ViewModel_Ciclo viewModel_Ciclo = new ViewModel_Ciclo();
 
-                viewModel_Ciclo.ciclo_semana1 = servico_ciclo.ListaCiclos(usuarioid, 1);
-                viewModel_Ciclo.ciclo_semana2 = servico_ciclo.ListaCiclos(usuarioid, 2);
-                viewModel_Ciclo.ciclo_semana3 = servico_ciclo.ListaCiclos(usuarioid, 3);
-                viewModel_Ciclo.ciclo_semana4 = servico_ciclo.ListaCiclos(usuarioid, 4);
+                viewModel_Ciclo.ciclo_semana1 = servico_ciclo.ListaCiclos(idusuario, 1);
+                viewModel_Ciclo.ciclo_semana2 = servico_ciclo.ListaCiclos(idusuario, 2);
+                viewModel_Ciclo.ciclo_semana3 = servico_ciclo.ListaCiclos(idusuario, 3);
+                viewModel_Ciclo.ciclo_semana4 = servico_ciclo.ListaCiclos(idusuario, 4);
+
+                viewModel_Ciclo.historico = servico_ciclo.UltimoCiclo(idusuario);
 
                 #region Trata Data
                 //envia a primeira segunda feira por ViewBag
@@ -226,12 +228,12 @@ namespace GrupoJOS_MVC5.Controllers
                 //Verifica se o dia selecionado é segunda feira
                 if (DateOfWeek == 1)
                 {
+                    double idusuario = int.Parse(cookie.UsuarioID);
                     //Verifica Historico
-                    if (true)
+                    Historico hist = servico_ciclo.UltimoCiclo(idusuario);
+                    if (hist.data_fim < DataInicio )
                     {
-                        double idusuario = int.Parse(cookie.UsuarioID);
                         servico_ciclo.AplicaCiclo(idusuario, DataInicio);
-                        //return RedirectToAction("Aplicar", "Ciclo");
                         return View();
                     }
                     else
@@ -242,6 +244,28 @@ namespace GrupoJOS_MVC5.Controllers
                 //Mostra página de erro pois dia selecionado foi != segunda
                 else { return RedirectToAction("Erro1","Ciclo"); }
                 
+            }
+            return RedirectToAction("Index", "Login");
+        }
+        #endregion
+
+        #region Desfazer Ciclo
+        [HttpPost]
+        public ActionResult Desfazer(string Validacao)
+        {
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                //Verifica se o dia selecionado é segunda feira
+                if (Validacao == "SIM")
+                {
+                    double idusuario = int.Parse(cookie.UsuarioID);
+                    servico_ciclo.DesfazerCiclo(idusuario);
+                    return View();
+                }
+                //Mostra página de erro pois dia selecionado foi != segunda
+                else { return RedirectToAction("Index", "Ciclo"); }
+
             }
             return RedirectToAction("Index", "Login");
         }

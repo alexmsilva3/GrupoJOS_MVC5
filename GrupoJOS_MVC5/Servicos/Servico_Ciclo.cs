@@ -429,6 +429,8 @@ namespace GrupoJOS_MVC5.Servicos
         #region Aplicar
         public void AplicaCiclo(double idusuario, DateTime DataInicio)
         {
+            //adiciona historico
+            double ultimoId = AdicionaHistorico(idusuario, DataInicio);
 
             ViewModel_Ciclo viewModel_Ciclo = new ViewModel_Ciclo();
 
@@ -437,40 +439,143 @@ namespace GrupoJOS_MVC5.Servicos
             viewModel_Ciclo.ciclo_semana3 = ListaCiclos(idusuario, 3);
             viewModel_Ciclo.ciclo_semana4 = ListaCiclos(idusuario, 4);
 
+            //Atualiza historico em cada inserção
+
             foreach (var item in viewModel_Ciclo.ciclo_semana1)
             {
-                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio, item.hora, item.segunda.idcliente, item.segunda_list); }
-                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(1), item.hora, item.terca.idcliente, item.terca_list); }
-                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(2), item.hora, item.quarta.idcliente, item.quarta_list); }
-                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(3), item.hora, item.quinta.idcliente, item.quinta_list); }
-                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(4), item.hora, item.sexta.idcliente, item.sexta_list); }
+                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio, item.hora, item.segunda.idcliente, item.segunda_list); AtualizaHistorico(ultimoId, DataInicio); }
+                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(1), item.hora, item.terca.idcliente, item.terca_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(1)); }
+                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(2), item.hora, item.quarta.idcliente, item.quarta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(2)); }
+                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(3), item.hora, item.quinta.idcliente, item.quinta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(3)); }
+                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(4), item.hora, item.sexta.idcliente, item.sexta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(4)); }
             }
 
             foreach (var item in viewModel_Ciclo.ciclo_semana2)
             {
-                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(7), item.hora, item.segunda.idcliente, item.segunda_list); }
-                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(8), item.hora, item.terca.idcliente, item.terca_list); }
-                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(9), item.hora, item.quarta.idcliente, item.quarta_list); }
-                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(10), item.hora, item.quinta.idcliente, item.quinta_list); }
-                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(11), item.hora, item.sexta.idcliente, item.sexta_list); }
+                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(7), item.hora, item.segunda.idcliente, item.segunda_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(7)); }
+                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(8), item.hora, item.terca.idcliente, item.terca_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(8)); }
+                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(9), item.hora, item.quarta.idcliente, item.quarta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(9)); }
+                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(10), item.hora, item.quinta.idcliente, item.quinta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(10)); }
+                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(11), item.hora, item.sexta.idcliente, item.sexta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(11)); }
             }
 
             foreach (var item in viewModel_Ciclo.ciclo_semana3)
             {
-                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(14), item.hora, item.segunda.idcliente, item.segunda_list); }
-                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(15), item.hora, item.terca.idcliente, item.terca_list); }
-                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(16), item.hora, item.quarta.idcliente, item.quarta_list); }
-                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(17), item.hora, item.quinta.idcliente, item.quinta_list); }
-                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(18), item.hora, item.sexta.idcliente, item.sexta_list); }
+                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(14), item.hora, item.segunda.idcliente, item.segunda_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(14)); }
+                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(15), item.hora, item.terca.idcliente, item.terca_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(15)); }
+                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(16), item.hora, item.quarta.idcliente, item.quarta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(16)); }
+                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(17), item.hora, item.quinta.idcliente, item.quinta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(17)); }
+                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(18), item.hora, item.sexta.idcliente, item.sexta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(18)); }
             }
 
             foreach (var item in viewModel_Ciclo.ciclo_semana4)
             {
-                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(21), item.hora, item.segunda.idcliente, item.segunda_list); }
-                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(22), item.hora, item.terca.idcliente, item.terca_list); }
-                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(23), item.hora, item.quarta.idcliente, item.quarta_list); }
-                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(24), item.hora, item.quinta.idcliente, item.quinta_list); }
-                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(25), item.hora, item.sexta.idcliente, item.sexta_list); }
+                if (item.segunda.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(21), item.hora, item.segunda.idcliente, item.segunda_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(21)); }
+                if (item.terca.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(22), item.hora, item.terca.idcliente, item.terca_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(22)); }
+                if (item.quarta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(23), item.hora, item.quarta.idcliente, item.quarta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(23)); }
+                if (item.quinta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(24), item.hora, item.quinta.idcliente, item.quinta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(24)); }
+                if (item.sexta.Nome != "Vazio") { servico_agenda.InsereAgenda(item.idusuario, DataInicio.AddDays(25), item.hora, item.sexta.idcliente, item.sexta_list); AtualizaHistorico(ultimoId, DataInicio.AddDays(25)); }
+            }
+
+            //atualiza historico
+        }
+        #endregion
+
+        #region Historico
+        public double AdicionaHistorico(double idusuario, DateTime DataInicio)
+        {
+            double idhistorico;
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+
+                SQL = "INSERT INTO historico_ciclos(idusuario, data_inicio, ciclo_inicio)" +
+                    " VALUES (" + idusuario + ",'" + DataInicio.ToString("yyyy-MM-dd") + "', (SELECT MAX(idagenda) FROM agenda))";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+                idhistorico = command.LastInsertedId;
+                connection.Close();
+            }
+            return idhistorico;
+        }
+
+        public void AtualizaHistorico(double idhistorico, DateTime datafim)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "UPDATE historico_ciclos SET " +
+                    " ciclo_fim = (SELECT MAX(idagenda) FROM agenda), " +
+                    " data_fim = '" +datafim.ToString("yyyy-MM-dd")+ "' " +
+                    " WHERE idhistorico = " +idhistorico+ "; ";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+                idhistorico = command.LastInsertedId;
+                connection.Close();
+            }
+        }
+        
+        public Historico UltimoCiclo(double idusuario)
+        {
+            Historico hist = new Historico();
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "SELECT * FROM historico_ciclos WHERE " +
+                    " idusuario = " + idusuario + " AND idhistorico = (SELECT MAX(idhistorico) FROM historico_ciclos WHERE idusuario = " +idusuario+ " );";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    hist.idhistorico = TratarConversaoDeDados.TrataInt(reader["idhistorico"]);
+                    hist.idusuario = TratarConversaoDeDados.TrataDouble(reader["idusuario"]);
+                    hist.data_inicio = TratarConversaoDeDados.TrataDateTime(reader["data_inicio"]);
+                    hist.data_fim = TratarConversaoDeDados.TrataDateTime(reader["data_fim"]);
+                    hist.ciclo_inicio = TratarConversaoDeDados.TrataInt(reader["ciclo_inicio"]);
+                    hist.ciclo_fim = TratarConversaoDeDados.TrataInt(reader["ciclo_fim"]);
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return hist;
+        }
+        #endregion
+
+        #region Desfazer
+        public void DesfazerCiclo(double idusuario)
+        {
+            Historico hist = new Historico();
+            hist = UltimoCiclo(idusuario);
+
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "SELECT idagenda FROM agenda WHERE " +
+                    " Usuario = " + idusuario + " AND (idagenda BETWEEN '"+hist.ciclo_inicio+"' AND '"+hist.ciclo_fim+ "' ) AND (DataVisita BETWEEN '" + hist.data_inicio.ToString("yyyy-MM-dd") + "' AND '" + hist.data_fim.ToString("yyyy-MM-dd") + "');";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    servico_agenda.RemoveAgenda(TratarConversaoDeDados.TrataInt(reader["idagenda"]));
+                }
+                reader.Close();
+
+                SQL = "";
+                SQL = "DELETE FROM historico_ciclo WHERE idhistorico = "+hist.idhistorico+"; ";
+                command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+
+                connection.Close();
             }
         }
         #endregion

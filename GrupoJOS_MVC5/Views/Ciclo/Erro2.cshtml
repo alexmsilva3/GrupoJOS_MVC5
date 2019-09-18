@@ -3,14 +3,15 @@
     var perfil = Request.Cookies["UsuarioPerfil"].Value;
 }
 
-@model GrupoJOS_MVC5.Models.ViewModel_Ciclo
-
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>@ViewBag.Title</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index","AgendaCliente")">Agenda</a>
             </li>
             <li class="active">
                 <strong>@ViewBag.Title</strong>
@@ -36,8 +37,13 @@
                             <div class="panel-body">
                                 <p>
                                     <font size="4">
-                                        Não foi possível aplicar o ciclo. O dia selecionada <b>DEVE</b> ser uma <b>SEGUNDA-FEIRA</b> para que o ciclo seja completado corretamente.<br>
+                                        Não foi possível aplicar o ciclo. O dia selecionada conflita com o último ciclo aplicado.<br>
+                                        O Cilo <b>NÃO DEVE</b> conflitar com o Ciclo a ser aplicado.<br>
                                         Retorne a página anterior e selecione o dia corretamente para aplicar o ciclo.
+                                    </font>
+                                    <br>
+                                    <font size="3">
+                                        Exemplo: Ultimo Ciclo foi do dia 01/10 á 30/10. O próximo Ciclo <b>DEVE</b> ser maior que 30/10.
                                     </font>
                                 </p>
                             </div>

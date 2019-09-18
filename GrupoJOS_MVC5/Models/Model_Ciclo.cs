@@ -40,6 +40,7 @@ namespace GrupoJOS_MVC5.Models
         public List<Model_Ciclo> ciclo_semana2 { get; set; }
         public List<Model_Ciclo> ciclo_semana3 { get; set; }
         public List<Model_Ciclo> ciclo_semana4 { get; set; }
+        public Historico historico { get; set; }
     }
 
     public class Model_CicloRes
@@ -54,5 +55,15 @@ namespace GrupoJOS_MVC5.Models
         public string lista_emp { get; set; }
 
         public string dia { get; set; }
+    }
+
+    public class Historico
+    {
+        public int idhistorico { get; set; }
+        public double idusuario { get; set; }
+        public DateTime data_inicio { get; set; }
+        public DateTime data_fim { get; set; }
+        public int ciclo_inicio { get; set; }
+        public int ciclo_fim { get; set; }
     }
 }

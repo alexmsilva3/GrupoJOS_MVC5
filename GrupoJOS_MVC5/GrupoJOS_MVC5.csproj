@@ -906,6 +906,7 @@
     <Content Include="Views\Ciclo\Aplicar.cshtml" />
     <Content Include="Views\Ciclo\Erro1.cshtml" />
     <Content Include="Views\Ciclo\Erro2.cshtml" />
+    <Content Include="Views\Ciclo\Desfazer.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

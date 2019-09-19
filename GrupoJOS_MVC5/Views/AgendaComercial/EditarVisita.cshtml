@@ -62,7 +62,7 @@
                                 </p>
 
                                 <div class="input-group clockpicker" data-autoclose="true">
-                                    <input type="text" class="form-control" name="HoraVisita" value="@Model.agenda.HoraVisita">
+                                    <input type="text" class="form-control" autocomplete="off" name="HoraVisita" value="@Model.agenda.HoraVisita">
                                     <span class="input-group-addon">
                                         <span class="fa fa-clock-o"></span>
                                     </span>
@@ -126,7 +126,7 @@
                             </div>
                             <label>Hora</label>
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" class="form-control" name="HoraFinalizada" id="HoraFinalizada" value="@Model.agenda.DataFinalizada.Substring(11,5)">
+                                <input type="text" class="form-control" autocomplete="off" name="HoraFinalizada" id="HoraFinalizada" value="@Model.agenda.DataFinalizada.Substring(11,5)">
                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                             </div>
                         </div>

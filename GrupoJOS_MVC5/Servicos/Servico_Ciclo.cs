@@ -571,7 +571,7 @@ namespace GrupoJOS_MVC5.Servicos
                 reader.Close();
 
                 SQL = "";
-                SQL = "DELETE FROM historico_ciclo WHERE idhistorico = "+hist.idhistorico+"; ";
+                SQL = "DELETE FROM historico_ciclos WHERE idhistorico = "+hist.idhistorico+"; ";
                 command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
 

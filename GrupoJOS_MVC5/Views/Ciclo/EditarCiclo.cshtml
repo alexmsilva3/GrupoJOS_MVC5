@@ -80,7 +80,7 @@
                                 </p>
 
                                 <div class="input-group clockpicker" data-autoclose="true">
-                                    <input type="text" class="form-control" name="HoraVisita" value="@Model.hora">
+                                    <input type="text" class="form-control" autocomplete="off" name="HoraVisita" value="@Model.hora">
                                     <span class="input-group-addon">
                                         <span class="fa fa-clock-o"></span>
                                     </span>
@@ -144,8 +144,7 @@
                 <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
 
                 <div class="pull-right">
-                    <!--a href="/Ciclo/RemoverCicloItem/Model.iddia/Model.idciclo/Model.semana"><button type="button" class="btn btn-danger m-t-15 waves-effect"><i class="fa fa-eraser"></i> APAGAR</button></a-->
-                    <button type="button" class="btn btn-danger m-t-15 waves-effect" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@Model.iddia" data-ciclo-id="@Model.idciclo" data-semana-id="@Model.semana"><i class="fa fa-eraser"></i> APAGAR</button>
+                    <button type="button" class="btn btn-warning m-t-15 waves-effect" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@Model.iddia" data-ciclo-id="@Model.idciclo" data-semana-id="@Model.semana"><i class="fa fa-eraser"></i> APAGAR</button>
                 </div>
             }
         </div>

@@ -48,57 +48,73 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Hora</th>
-                                    <th>Segunda</th>
-                                    <th>Terça</th>
-                                    <th>Quarta</th>
-                                    <th>Quinta</th>
-                                    <th>Sexta</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.ciclo_semana1)
-                                {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
-                                        <td>@item.hora</td>
-
-                                        <td>
-                                            @item.segunda.Nome<br>
-                                            @foreach (var seg in item.segunda_list)
-                                            {<span class="label label-info">@seg.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.terca.Nome<br>
-                                            @foreach (var ter in item.terca_list)
-                                            {<span class="label label-info">@ter.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.quarta.Nome<br>
-                                            @foreach (var qua in item.quarta_list)
-                                            {<span class="label label-info">@qua.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.quinta.Nome<br>
-                                            @foreach (var qui in item.quinta_list)
-                                            {<span class="label label-info">@qui.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.sexta.Nome<br>
-                                            @foreach (var sex in item.sexta_list)
-                                            {<span class="label label-info">@sex.Nome </span>}
-                                        </td>
+                                        <th>Hora</th>
+                                        <th>Segunda</th>
+                                        <th>Terça</th>
+                                        <th>Quarta</th>
+                                        <th>Quinta</th>
+                                        <th>Sexta</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ciclo_semana1)
+                                    {
+                                        <tr>
+                                            <td>@item.hora</td>
+
+                                            <td>
+                                                @item.segunda.Nome<br>
+                                                @foreach (var seg in item.segunda_list)
+                                                {
+                                                    if (seg.Nome == "Vazio"){<p class="label label-default">@seg.Nome </p><br>}
+                                                    else { <p class="label label-info">@seg.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.terca.Nome<br>
+                                                @foreach (var ter in item.terca_list)
+                                                {
+                                                    if (ter.Nome == "Vazio"){<p class="label label-default">@ter.Nome </p><br>}
+                                                    else { <p class="label label-info">@ter.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.quarta.Nome<br>
+                                                @foreach (var qua in item.quarta_list)
+                                                {
+                                                    if (qua.Nome == "Vazio"){<p class="label label-default">@qua.Nome </p><br>}
+                                                    else { <p class="label label-info">@qua.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.quinta.Nome<br>
+                                                @foreach (var qui in item.quinta_list)
+                                                {
+                                                    if (qui.Nome == "Vazio"){<p class="label label-default">@qui.Nome </p><br>}
+                                                    else { <p class="label label-info">@qui.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.sexta.Nome<br>
+                                                @foreach (var sex in item.sexta_list)
+                                                {
+                                                    if (sex.Nome == "Vazio"){<p class="label label-default">@sex.Nome </p><br>}
+                                                    else { <p class="label label-info">@sex.Nome </p><br>}
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,56 +134,73 @@
                     </div>
                     <div class="ibox-content">
 
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Hora</th>
-                                    <th>Segunda</th>
-                                    <th>Terça</th>
-                                    <th>Quarta</th>
-                                    <th>Quinta</th>
-                                    <th>Sexta</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.ciclo_semana2)
-                                {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
-                                        <td>@item.hora</td>
-
-                                        <td>
-                                            @item.segunda.Nome<br>
-                                            @foreach (var seg in item.segunda_list)
-                                            {<span class="label label-info">@seg.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.terca.Nome<br>
-                                            @foreach (var ter in item.terca_list)
-                                            {<span class="label label-info">@ter.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.quarta.Nome<br>
-                                            @foreach (var qua in item.quarta_list)
-                                            {<span class="label label-info">@qua.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.quinta.Nome<br>
-                                            @foreach (var qui in item.quinta_list)
-                                            {<span class="label label-info">@qui.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.sexta.Nome<br>
-                                            @foreach (var sex in item.sexta_list)
-                                            {<span class="label label-info">@sex.Nome </span>}
-                                        </td>
+                                        <th>Hora</th>
+                                        <th>Segunda</th>
+                                        <th>Terça</th>
+                                        <th>Quarta</th>
+                                        <th>Quinta</th>
+                                        <th>Sexta</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ciclo_semana2)
+                                    {
+                                        <tr>
+                                            <td>@item.hora</td>
+
+                                            <td>
+                                                @item.segunda.Nome<br>
+                                                @foreach (var seg in item.segunda_list)
+                                                {
+                                                    if (seg.Nome == "Vazio"){<p class="label label-default">@seg.Nome </p><br>}
+                                                    else { <p class="label label-info">@seg.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.terca.Nome<br>
+                                                @foreach (var ter in item.terca_list)
+                                                {
+                                                    if (ter.Nome == "Vazio"){<p class="label label-default">@ter.Nome </p><br>}
+                                                    else { <p class="label label-info">@ter.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.quarta.Nome<br>
+                                                @foreach (var qua in item.quarta_list)
+                                                {
+                                                    if (qua.Nome == "Vazio"){<p class="label label-default">@qua.Nome </p><br>}
+                                                    else { <p class="label label-info">@qua.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.quinta.Nome<br>
+                                                @foreach (var qui in item.quinta_list)
+                                                {
+                                                    if (qui.Nome == "Vazio"){<p class="label label-default">@qui.Nome </p><br>}
+                                                    else { <p class="label label-info">@qui.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.sexta.Nome<br>
+                                                @foreach (var sex in item.sexta_list)
+                                                {
+                                                    if (sex.Nome == "Vazio"){<p class="label label-default">@sex.Nome </p><br>}
+                                                    else { <p class="label label-info">@sex.Nome </p><br>}
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -187,56 +220,73 @@
                     </div>
                     <div class="ibox-content">
 
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Hora</th>
-                                    <th>Segunda</th>
-                                    <th>Terça</th>
-                                    <th>Quarta</th>
-                                    <th>Quinta</th>
-                                    <th>Sexta</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.ciclo_semana3)
-                                {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
-                                        <td>@item.hora</td>
-
-                                        <td>
-                                            @item.segunda.Nome<br>
-                                            @foreach (var seg in item.segunda_list)
-                                            {<span class="label label-info">@seg.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.terca.Nome<br>
-                                            @foreach (var ter in item.terca_list)
-                                            {<span class="label label-info">@ter.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.quarta.Nome<br>
-                                            @foreach (var qua in item.quarta_list)
-                                            {<span class="label label-info">@qua.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.quinta.Nome<br>
-                                            @foreach (var qui in item.quinta_list)
-                                            {<span class="label label-info">@qui.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.sexta.Nome<br>
-                                            @foreach (var sex in item.sexta_list)
-                                            {<span class="label label-info">@sex.Nome </span>}
-                                        </td>
+                                        <th>Hora</th>
+                                        <th>Segunda</th>
+                                        <th>Terça</th>
+                                        <th>Quarta</th>
+                                        <th>Quinta</th>
+                                        <th>Sexta</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ciclo_semana3)
+                                    {
+                                        <tr>
+                                            <td>@item.hora</td>
+
+                                            <td>
+                                                @item.segunda.Nome<br>
+                                                @foreach (var seg in item.segunda_list)
+                                                {
+                                                    if (seg.Nome == "Vazio"){<p class="label label-default">@seg.Nome </p><br>}
+                                                    else { <p class="label label-info">@seg.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.terca.Nome<br>
+                                                @foreach (var ter in item.terca_list)
+                                                {
+                                                    if (ter.Nome == "Vazio"){<p class="label label-default">@ter.Nome </p><br>}
+                                                    else { <p class="label label-info">@ter.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.quarta.Nome<br>
+                                                @foreach (var qua in item.quarta_list)
+                                                {
+                                                    if (qua.Nome == "Vazio"){<p class="label label-default">@qua.Nome </p><br>}
+                                                    else { <p class="label label-info">@qua.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.quinta.Nome<br>
+                                                @foreach (var qui in item.quinta_list)
+                                                {
+                                                    if (qui.Nome == "Vazio"){<p class="label label-default">@qui.Nome </p><br>}
+                                                    else { <p class="label label-info">@qui.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.sexta.Nome<br>
+                                                @foreach (var sex in item.sexta_list)
+                                                {
+                                                    if (sex.Nome == "Vazio"){<p class="label label-default">@sex.Nome </p><br>}
+                                                    else { <p class="label label-info">@sex.Nome </p><br>}
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -255,57 +305,73 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Hora</th>
-                                    <th>Segunda</th>
-                                    <th>Terça</th>
-                                    <th>Quarta</th>
-                                    <th>Quinta</th>
-                                    <th>Sexta</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.ciclo_semana4)
-                                {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
-                                        <td>@item.hora</td>
-
-                                        <td>
-                                            @item.segunda.Nome<br>
-                                            @foreach (var seg in item.segunda_list)
-                                            {<span class="label label-info">@seg.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.terca.Nome<br>
-                                            @foreach (var ter in item.terca_list)
-                                            {<span class="label label-info">@ter.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.quarta.Nome<br>
-                                            @foreach (var qua in item.quarta_list)
-                                            {<span class="label label-info">@qua.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.quinta.Nome<br>
-                                            @foreach (var qui in item.quinta_list)
-                                            {<span class="label label-info">@qui.Nome </span>}
-                                        </td>
-
-                                        <td>
-                                            @item.sexta.Nome<br>
-                                            @foreach (var sex in item.sexta_list)
-                                            {<span class="label label-info">@sex </span>}
-                                        </td>
+                                        <th>Hora</th>
+                                        <th>Segunda</th>
+                                        <th>Terça</th>
+                                        <th>Quarta</th>
+                                        <th>Quinta</th>
+                                        <th>Sexta</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ciclo_semana4)
+                                    {
+                                        <tr>
+                                            <td>@item.hora</td>
+
+                                            <td>
+                                                @item.segunda.Nome<br>
+                                                @foreach (var seg in item.segunda_list)
+                                                {
+                                                    if (seg.Nome == "Vazio"){<p class="label label-default">@seg.Nome </p><br>}
+                                                    else { <p class="label label-info">@seg.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.terca.Nome<br>
+                                                @foreach (var ter in item.terca_list)
+                                                {
+                                                    if (ter.Nome == "Vazio"){<p class="label label-default">@ter.Nome </p><br>}
+                                                    else { <p class="label label-info">@ter.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.quarta.Nome<br>
+                                                @foreach (var qua in item.quarta_list)
+                                                {
+                                                    if (qua.Nome == "Vazio"){<p class="label label-default">@qua.Nome </p><br>}
+                                                    else { <p class="label label-info">@qua.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.quinta.Nome<br>
+                                                @foreach (var qui in item.quinta_list)
+                                                {
+                                                    if (qui.Nome == "Vazio"){<p class="label label-default">@qui.Nome </p><br>}
+                                                    else { <p class="label label-info">@qui.Nome </p><br>}
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @item.sexta.Nome<br>
+                                                @foreach (var sex in item.sexta_list)
+                                                {
+                                                    if (sex.Nome == "Vazio"){<p class="label label-default">@sex.Nome </p><br>}
+                                                    else { <p class="label label-info">@sex.Nome </p><br>}
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -346,7 +412,7 @@
     </div>
 
     <div class="modal inmodal" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <form method="post" id="addRegister" action="/Ciclo/Aplicar/">
+        <form method="post" id="addRegister" autocomplete="off" action="/Ciclo/Aplicar/">
             <div class="modal-dialog">
                 <div class="modal-content animated flipInY">
                     <div class="modal-header">
@@ -366,7 +432,7 @@
 
                                         <div class="form-group" id="data">
                                             <div class="input-group date">
-                                                <input type="text" class="form-control" name="DataInicio" id="DataInicio" value="@data">
+                                                <input type="text" class="form-control" name="DataInicio" id="DataInicio" value="@data" required>
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>
@@ -387,7 +453,7 @@
 
 
     <div class="modal inmodal" id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <form method="post" id="addRegister" action="/Ciclo/Desfazer/">
+        <form method="post" id="addRegister" autocomplete="off" action="/Ciclo/Desfazer/">
             <div class="modal-dialog">
                 <div class="modal-content animated bounceInRight">
                     <div class="modal-header">

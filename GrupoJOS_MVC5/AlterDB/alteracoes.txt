@@ -1,45 +1,34 @@
-﻿=======================================================================================
-09/10/2018
+﻿19/09/19
 
-ALTER TABLE `grupojos`.`agenda` 
-ADD COLUMN `DataFinalizadaReal` DATETIME NULL DEFAULT NULL AFTER `DataFinalizada`;
+CREATE TABLE `clientes_usu` (
+  `idcliente` bigint(100) NOT NULL,
+  `idusuario` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-=======================================================================================
-12/10/2018
-
-update agenda set DataFinalizadaReal = DataFinalizada
-=======================================================================================
-15/10
-
-CREATE TABLE `grupojos`.`horarios` (
-  `idcliente` BIGINT NOT NULL,
-  `segEntrada` TIME NULL DEFAULT NULL,
-  `segSaida` TIME NULL DEFAULT NULL,
-  `terEntrada` TIME NULL DEFAULT NULL,
-  `terSaida` TIME NULL DEFAULT NULL,
-  `quaEntrada` TIME NULL DEFAULT NULL,
-  `quaSaida` TIME NULL DEFAULT NULL,
-  `quiEntrada` TIME NULL DEFAULT NULL,
-  `quiSaida` TIME NULL DEFAULT NULL,
-  `sexEntrada` TIME NULL DEFAULT NULL,
-  `sexSaida` TIME NULL DEFAULT NULL
-  PRIMARY KEY (`idcliente`),
-  UNIQUE INDEX `idcliente_UNIQUE` (`idcliente` ASC));
-=======================================================================================
-22/11
-
-ALTER TABLE `grupojos`.`usuarios` 
-ADD COLUMN `Ativo` BIT(1) NOT NULL DEFAULT 1 AFTER `UltimoAcesso`,
-ADD COLUMN `FKidempresa` BIGINT(20) NOT NULL DEFAULT 0 AFTER `Clientes`;
-
-UPDATE usuarios AS u
-INNER JOIN usuarios_empresas AS ue ON u.idusuario = ue.idusuario
-SET u.FKidempresa = ue.idempresa
-    
-DROP TABLE usuarios_empresas;
+ALTER TABLE `clientes_usu`
+  ADD PRIMARY KEY (`idcliente`,`idusuario`);
+COMMIT;
 
 =======================================================================================
-16/09
+18/09/19
+
+CREATE TABLE `historico_ciclos` (
+  `idhistorico` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL,
+  `data_inicio` date NOT NULL,
+  `data_fim` date NOT NULL,
+  `ciclo_inicio` int(11) NOT NULL,
+  `ciclo_fim` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `historico_ciclos`
+ADD PRIMARY KEY (`idhistorico`);
+
+ALTER TABLE `historico_ciclos`
+MODIFY `idhistorico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+=======================================================================================
+16/09/19
+
 APÓS INSERIR NOVOS MEDICOS
 UPDATE clientes as tb1
 INNER JOIN especialidades as tb2
@@ -68,5 +57,42 @@ ALTER TABLE `ciclos`
   ADD PRIMARY KEY (`idciclo`);
 
 ALTER TABLE `ciclos`
-  MODIFY `idciclo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-COMMIT;
+MODIFY `idciclo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+=======================================================================================
+22/11/18
+
+ALTER TABLE `grupojos`.`usuarios` 
+ADD COLUMN `Ativo` BIT(1) NOT NULL DEFAULT 1 AFTER `UltimoAcesso`,
+ADD COLUMN `FKidempresa` BIGINT(20) NOT NULL DEFAULT 0 AFTER `Clientes`;
+
+UPDATE usuarios AS u
+INNER JOIN usuarios_empresas AS ue ON u.idusuario = ue.idusuario
+SET u.FKidempresa = ue.idempresa
+    
+DROP TABLE usuarios_empresas;
+=======================================================================================
+15/10/18
+
+CREATE TABLE `grupojos`.`horarios` (
+  `idcliente` BIGINT NOT NULL,
+  `segEntrada` TIME NULL DEFAULT NULL,
+  `segSaida` TIME NULL DEFAULT NULL,
+  `terEntrada` TIME NULL DEFAULT NULL,
+  `terSaida` TIME NULL DEFAULT NULL,
+  `quaEntrada` TIME NULL DEFAULT NULL,
+  `quaSaida` TIME NULL DEFAULT NULL,
+  `quiEntrada` TIME NULL DEFAULT NULL,
+  `quiSaida` TIME NULL DEFAULT NULL,
+  `sexEntrada` TIME NULL DEFAULT NULL,
+  `sexSaida` TIME NULL DEFAULT NULL
+  PRIMARY KEY (`idcliente`),
+  UNIQUE INDEX `idcliente_UNIQUE` (`idcliente` ASC));
+=======================================================================================
+12/10/2018
+
+update agenda set DataFinalizadaReal = DataFinalizada
+=======================================================================================
+09/10/2018
+
+ALTER TABLE `grupojos`.`agenda` 
+ADD COLUMN `DataFinalizadaReal` DATETIME NULL DEFAULT NULL AFTER `DataFinalizada`;

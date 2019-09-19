@@ -278,7 +278,7 @@ namespace GrupoJOS_MVC5.Servicos
             {
                 string SQL = "";
                 SQL = "DELETE FROM empresas WHERE idempresa = " + id + ";" +
-                    "UPDATE agenda_emp SET idempresa = 0 WHERE idempresa = "+ id +";" +
+                    "DELETE FROM agenda_emp WHERE idempresa = "+ id +";" +
                     "DELETE FROM usuarios WHERE idusuario IN (SELECT idusuario FROM usuarios_empresas WHERE idempresa = " + id + ");" +
                     "DELETE FROM usuarios_empresas WHERE idempresa = " + id + "; ";
 

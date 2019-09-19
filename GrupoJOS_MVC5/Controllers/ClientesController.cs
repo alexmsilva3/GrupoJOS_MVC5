@@ -108,5 +108,17 @@ namespace GrupoJOS_MVC5.Controllers
             return View(cli);
         }
         #endregion
+
+        #region TAG
+        public ActionResult Tag()
+        {
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.PermissaoCliente == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                return View(servico_cliente.ListaClientes());
+            }
+            return RedirectToAction("Index", "Login");
+        }
+        #endregion
     }
 }

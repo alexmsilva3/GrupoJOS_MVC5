@@ -45,75 +45,92 @@
                     </div>
                     <div class="ibox-content">
 
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Hora</th>
-                                    <th>Segunda</th>
-                                    <th></th>
-                                    <th>Terça</th>
-                                    <th></th>
-                                    <th>Quarta</th>
-                                    <th></th>
-                                    <th>Quinta</th>
-                                    <th></th>
-                                    <th>Sexta</th>
-                                    <th></th>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
-                                        <td>@item.hora</td>
-
-                                        <td>
-                                            @item.segunda.Nome<br>
-                                            @foreach (var seg in item.segunda_list)
-                                            {<span class="label label-info">@seg.Nome </span>}
-                                        </td>
-                                        <td><a href="/Ciclo/EditarCiclo/2/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
-
-
-                                        <td>
-                                            @item.terca.Nome<br>
-                                            @foreach (var ter in item.terca_list)
-                                            {<span class="label label-info">@ter.Nome </span>}
-                                        </td>
-                                        <td><a href="/Ciclo/EditarCiclo/3/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
-
-
-                                        <td>
-                                            @item.quarta.Nome<br>
-                                            @foreach (var qua in item.quarta_list)
-                                            {<span class="label label-info">@qua.Nome </span>}
-                                        </td>
-                                        <td><a href="/Ciclo/EditarCiclo/4/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
-
-
-                                        <td>
-                                            @item.quinta.Nome<br>
-                                            @foreach (var qui in item.quinta_list)
-                                            {<span class="label label-info">@qui.Nome </span>}
-                                        </td>
-                                        <td><a href="/Ciclo/EditarCiclo/5/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
-
-
-                                        <td>
-                                            @item.sexta.Nome<br>
-                                            @foreach (var sex in item.sexta_list)
-                                            {<span class="label label-info">@sex.Nome </span>}
-                                        </td>
-                                        <td><a href="/Ciclo/EditarCiclo/6/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
-
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-sm dim" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idciclo" data-semana-id="@id"><i class="fa fa-trash"></i></button>
-                                        </td>
+                                        <th>Hora</th>
+                                        <th>Segunda</th>
+                                        <th></th>
+                                        <th>Terça</th>
+                                        <th></th>
+                                        <th>Quarta</th>
+                                        <th></th>
+                                        <th>Quinta</th>
+                                        <th></th>
+                                        <th>Sexta</th>
+                                        <th></th>
+                                        <th>#</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.hora</td>
+
+                                            <td>
+                                                @item.segunda.Nome<br>
+                                                @foreach (var seg in item.segunda_list)
+                                                {
+                                                    if (seg.Nome == "Vazio"){<p class="label label-default">@seg.Nome </p><br>}
+                                                    else { <p class="label label-info">@seg.Nome </p><br>}
+                                                }
+                                            </td>
+                                            <td><a href="/Ciclo/EditarCiclo/2/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+
+
+                                            <td>
+                                                @item.terca.Nome<br>
+                                                @foreach (var ter in item.terca_list)
+                                                {
+                                                    if (ter.Nome == "Vazio"){<p class="label label-default">@ter.Nome </p><br>}
+                                                    else { <p class="label label-info">@ter.Nome </p><br>}
+                                                }
+                                            </td>
+                                            <td><a href="/Ciclo/EditarCiclo/3/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+
+
+                                            <td>
+                                                @item.quarta.Nome<br>
+                                                @foreach (var qua in item.quarta_list)
+                                                {
+                                                    if (qua.Nome == "Vazio"){<p class="label label-default">@qua.Nome </p><br>}
+                                                    else { <p class="label label-info">@qua.Nome </p><br>}
+                                                }
+                                            </td>
+                                            <td><a href="/Ciclo/EditarCiclo/4/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+
+
+                                            <td>
+                                                @item.quinta.Nome<br>
+                                                @foreach (var qui in item.quinta_list)
+                                                {
+                                                    if (qui.Nome == "Vazio"){<p class="label label-default">@qui.Nome </p><br>}
+                                                    else { <p class="label label-info">@qui.Nome </p><br>}
+                                                }
+                                            </td>
+                                            <td><a href="/Ciclo/EditarCiclo/5/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+
+
+                                            <td>
+                                                @item.sexta.Nome<br>
+                                                @foreach (var sex in item.sexta_list)
+                                                {
+                                                    if (sex.Nome == "Vazio"){<p class="label label-default">@sex.Nome </p><br>}
+                                                    else { <p class="label label-info">@sex.Nome </p><br>}
+                                                }
+                                            </td>
+                                            <td><a href="/Ciclo/EditarCiclo/6/@item.idciclo"><button class="btn btn-default btn-sm dim" type="button" title="Editar"><i class="fa fa-edit"></i></button></a></td>
+
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm dim" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idciclo" data-semana-id="@id"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -149,7 +166,7 @@
                     swal("Removido!", "Registro foi removido com sucesso!", "success")
                         .then((value) => {
                             $.post("/Ciclo/RemoverCicloLinha/" + idciclo + "");
-                            window.location = "/Ciclo/Editar/"+semana+"";
+                            window.location = "/Ciclo/";
                         });
                 } else {
                     swal("Cancelado!", "O registro não foi removido", "error");

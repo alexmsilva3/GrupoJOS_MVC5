@@ -5,26 +5,10 @@ using System.Web;
 
 namespace GrupoJOS_MVC5.Models
 {
-    public class Item
+    public class FullAndPartialViewModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class Model_teste
-    {
-        public IEnumerable<int> SelectedItemIds { get; set; }
-        public IEnumerable<Item> AvailableItems
-        {
-            get
-            {
-                return new[]
-                {
-                new Item { Id = 1, Name = "Item 1" },
-                new Item { Id = 2, Name = "Item 2" },
-                new Item { Id = 3, Name = "Item 3" },
-            };
-            }
-        }
+        public Model_Texto Texto { get; set; }
+        public List<Model_Empresa> ListaEmpresa { get; set; }
+        public List<Model_Texto> ListaTexto { get; set; }
     }
 }

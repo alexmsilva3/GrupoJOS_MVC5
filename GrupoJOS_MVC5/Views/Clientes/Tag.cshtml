@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "Tag";
+    var adm = Request.Cookies["UsuarioADM"].Value;
+    var usuario = Request.Cookies["UsuarioNome"].Value;
+    var idusuario = Request.Cookies["UsuarioID"].Value;
+}
+
+@model GrupoJOS_MVC5.Models.ViewModelClienteTag
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a>Profissional de Saúde</a>
+            </li>
+            <li class="active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins">
+
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-1"> Tag</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-2">@if (adm == "True") {<font> Gerenciar Tags</font>} else {<font>Minhas Tags</font>}</a></li>
+            </ul>
+            <div class="tab-content">
+
+                <div id="tab-1" class="tab-pane active">
+                    <div class="panel-body">
+
+                        <form method="POST" action="/Clientes/NovaTag">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox-content">
+                                   
+                                        <p> Selecione o Usuário: </p>
+                                        <div class="form-group">
+                                            <div>
+                                                <select data-placeholder="Selecione um usuario" class="chosen-select" tabindex="4" name="idusuario" id="NovaTag">
+                                                    @if (adm == "True")
+                                                    {
+                                                        foreach (var item in Model.ListaUsuarios)
+                                                        {
+                                                            <option value='@item.idusuario'> @item.Nome </option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <option selected value='@idusuario'> @usuario </option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox-content">
+                                        <p>
+                                            Profissionais que serão atribuídos ao Usuário:
+                                            <span class="field-validation-error text-danger" data-valmsg-for="Empresas" data-valmsg-replace="true"><br>@ViewBag.ErroCliente</span>
+                                        </p>
+                                        <div id="dvResultado1">
+                                            @{Html.RenderPartial("_TagTabela1", Model); }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
+                            <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div id="tab-2" class="tab-pane">
+                    <div class="panel-body">
+
+                        <form method="POST" action="/Clientes/EditaTag">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox-content">
+
+                                        <p> Selecione o Usuário: </p>
+                                        <div class="form-group">
+                                            <div>
+                                                <select data-placeholder="Selecione um usuario" class="chosen-select" tabindex="4" name="idusuario" id="EditaTag">
+                                                    @if (adm == "True")
+                                                    {
+                                                        foreach (var item in Model.ListaUsuarios)
+                                                        {
+                                                            <option value='@item.idusuario'> @item.Nome </option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value='@idusuario'> @usuario </option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox-content">
+                                        <p>
+                                            Profissionais que serão atribuídos ao Usuário:
+                                            <span class="field-validation-error text-danger" data-valmsg-for="Empresas" data-valmsg-replace="true"><br>@ViewBag.ErroCliente</span>
+                                        </p>
+                                        <div id="dvResultado2">
+                                            @{Html.RenderPartial("_TagTabela2", Model); }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
+                            <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/iCheck")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#NovaTag").change(function () {
+                var select = $("#NovaTag option:selected").val();
+                $('#dvResultado1').load('@(Url.Action("GetTags1","Clientes",null, Request.Url.Scheme))/' + select);
+            })
+        });
+
+        $(document).ready(function () {
+            $("#EditaTag").change(function () {
+                var select = $("#EditaTag option:selected").val();
+                $('#dvResultado2').load('@(Url.Action("GetTags2","Clientes",null, Request.Url.Scheme))/' + select);
+            })
+        });
+
+        $(document).ready(function () {
+            $('.chosen-select').chosen({ width: "100%" });
+
+            $('.dataTables-Ger').DataTable({
+            pageLength: 25,
+            responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: []
+            });
+
+            $('.dataTables-Tag').DataTable({
+            pageLength: 25,
+            responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: []
+            });
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+}

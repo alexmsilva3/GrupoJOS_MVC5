@@ -7,6 +7,7 @@ using GrupoJOS_MVC5.Models;
 using GrupoJOS_MVC5.Servicos;
 using MySql.Data.MySqlClient;
 using System.Web.Optimization;
+using System.Threading.Tasks;
 
 namespace GrupoJOS_MVC5.Controllers
 {
@@ -16,6 +17,7 @@ namespace GrupoJOS_MVC5.Controllers
         Servico_Horario servico_horario = new Servico_Horario();
         Servico_Especialidade servico_especialidade = new Servico_Especialidade();
         Servico_Login servico_login = new Servico_Login();
+        Servico_Usuario servico_usuario = new Servico_Usuario();
 
         #region Index
         public ActionResult Index()
@@ -93,10 +95,6 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Editar(Model_Cliente cli)
         {
-            //carrega cliente pra pegar as especialidades
-            //Model_Cliente cliente = new Model_Cliente();
-            //cliente = servico_cliente.BuscaCliente("idcliente", cli.idcliente.ToString());
-
             //Cria lsita de volta, se der erro no cadastro precisa popular a lista
             ViewBag.ListaEspecialidade = servico_especialidade.ListaEspecialidade();
 
@@ -115,7 +113,100 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if ((cookie.UsuarioValidado && cookie.PermissaoCliente == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                return View(servico_cliente.ListaClientes());
+                ViewModelClienteTag clientetag = new ViewModelClienteTag();
+                double idusuario = int.Parse(cookie.UsuarioID);
+                clientetag.ListaUsuarios = servico_usuario.ListaUsuarios();
+                clientetag.ListaClienteSemTag = servico_cliente.ListaClientesSemTag(idusuario);
+                clientetag.ListaClienteComTag = servico_cliente.ListaClientesComTag(idusuario);
+
+                return View(clientetag);
+            }
+            return RedirectToAction("Index", "Login");
+        }
+
+        #region GetTags
+        [HttpGet]
+        public ActionResult GetTags1(double id)
+        {
+            ModelState.Clear();
+            ViewModelClienteTag clientetag = new ViewModelClienteTag();
+            clientetag.ListaUsuarios = servico_usuario.ListaUsuarios();
+            clientetag.ListaClienteSemTag = servico_cliente.ListaClientesSemTag(id);
+            //clientetag.ListaClienteComTag = servico_cliente.ListaClientesComTag(id);
+
+            return PartialView("_TagTabela1",clientetag);
+        }
+
+        [HttpGet]
+        public ActionResult GetTags2(double id)
+        {
+            ModelState.Clear();
+            ViewModelClienteTag clientetag = new ViewModelClienteTag();
+            clientetag.ListaUsuarios = servico_usuario.ListaUsuarios();
+            //clientetag.ListaClienteSemTag = servico_cliente.ListaClientesSemTag(id);
+            clientetag.ListaClienteComTag = servico_cliente.ListaClientesComTag(id);
+
+            return PartialView("_TagTabela2", clientetag);
+        }
+        #endregion
+
+        [HttpPost]
+        public ActionResult NovaTag(double idusuario, List<string> clientes)
+        {
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.PermissaoCliente == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                ViewModelClienteTag clientetag = new ViewModelClienteTag();
+                clientetag.ListaUsuarios = servico_usuario.ListaUsuarios();
+                clientetag.ListaClienteSemTag = servico_cliente.ListaClientesSemTag(idusuario);
+                clientetag.ListaClienteComTag = servico_cliente.ListaClientesComTag(idusuario);
+
+                if (clientes == null) { ViewBag.ErroCliente = "Deve ser selecionado ao menos um Profissional"; return View(servico_cliente.ListaClientesSemTag(idusuario)); }
+
+                List<Model_Cliente> ListaClientes = new List<Model_Cliente>();
+                foreach (var item in clientes)
+                {
+                    Model_Cliente cli = new Model_Cliente();
+                    cli.idcliente = int.Parse(item);
+
+                    ListaClientes.Add(cli);
+                }
+                servico_cliente.InsereTagLista(idusuario,ListaClientes);
+
+                return RedirectToAction("Tag", "Clientes");
+            }
+            return RedirectToAction("Index", "Login");
+        }
+
+        [HttpPost]
+        public ActionResult EditaTag(double idusuario, List<string> clientes)
+        {
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.UsuarioValidado && cookie.PermissaoCliente == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                ViewModelClienteTag clientetag = new ViewModelClienteTag();
+                clientetag.ListaUsuarios = servico_usuario.ListaUsuarios();
+                clientetag.ListaClienteSemTag = servico_cliente.ListaClientesSemTag(idusuario);
+                clientetag.ListaClienteComTag = servico_cliente.ListaClientesComTag(idusuario);
+
+                if (clientes != null)
+                {
+                    List<Model_Cliente> ListaClientes = new List<Model_Cliente>();
+                    foreach (var item in clientes)
+                    {
+                        Model_Cliente cli = new Model_Cliente();
+                        cli.idcliente = int.Parse(item);
+
+                        ListaClientes.Add(cli);
+                    }
+                    servico_cliente.EditaTagLista(idusuario, ListaClientes);
+                }
+                else
+                {
+                    servico_cliente.EditaTagListaNull(idusuario);
+                }
+
+                return RedirectToAction("Tag", "Clientes");
             }
             return RedirectToAction("Index", "Login");
         }

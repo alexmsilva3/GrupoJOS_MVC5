@@ -107,6 +107,7 @@
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Clientes", cssClass: "in")">
                         <li class="@Html.IsSelected(controller:"Clientes", action: "Index")"><a href="@Url.Action("Index", "Clientes")">Geral</a></li>
                         <li class="@Html.IsSelected(controller:"Clientes", action: "Cadastro")"><a href="@Url.Action("Cadastro", "Clientes")">Cadastro</a></li>
+                        <li class="@Html.IsSelected(controller:"Clientes", action: "Tag")"><a href="@Url.Action("Tag", "Clientes")">TAG</a></li>
                     </ul>
                 </li>
             }

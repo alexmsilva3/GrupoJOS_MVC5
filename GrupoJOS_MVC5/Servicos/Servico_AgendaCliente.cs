@@ -468,12 +468,10 @@ namespace GrupoJOS_MVC5.Servicos
 
                 //remover
                 SQL = "";
-                foreach (var item in Empresas)
-                {
-                    SQL = "DELETE FROM agenda_emp WHERE idagenda = " + idagenda + " ";
-                    MySqlCommand command2 = new MySqlCommand(SQL, connection);
-                    command2.ExecuteNonQuery();
-                }
+                SQL = "DELETE FROM agenda_emp WHERE idagenda = " + idagenda + " ";
+                MySqlCommand command2 = new MySqlCommand(SQL, connection);
+                command2.ExecuteNonQuery();
+                
 
                 //inserir
                 SQL = "";

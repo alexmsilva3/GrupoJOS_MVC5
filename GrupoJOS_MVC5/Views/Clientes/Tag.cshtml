@@ -174,18 +174,28 @@
         });
 
         $(document).ready(function () {
+            bind();
+        });
+
+        $(document).ajaxComplete(function (event, xhr, settings) {
+	        bind();
+        });	
+
+        function bind() {
             $('.chosen-select').chosen({ width: "100%" });
 
             $('.dataTables-Ger').DataTable({
-            pageLength: 25,
-            responsive: true,
+                pageLength: 25,
+                retrieve: true,
+                responsive: true,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: []
             });
 
             $('.dataTables-Tag').DataTable({
-            pageLength: 25,
-            responsive: true,
+                pageLength: 25,
+                retrieve: true,
+                responsive: true,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: []
             });
@@ -194,6 +204,9 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
-        });
+        }
+
+        
+
     </script>
 }

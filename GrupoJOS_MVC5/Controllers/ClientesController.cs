@@ -125,8 +125,9 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         #region GetTags
+        //PartialViewResult
         [HttpGet]
-        public ActionResult GetTags1(double id)
+        public PartialViewResult GetTags1(double id)
         {
             ModelState.Clear();
             ViewModelClienteTag clientetag = new ViewModelClienteTag();
@@ -138,7 +139,7 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetTags2(double id)
+        public PartialViewResult GetTags2(double id)
         {
             ModelState.Clear();
             ViewModelClienteTag clientetag = new ViewModelClienteTag();

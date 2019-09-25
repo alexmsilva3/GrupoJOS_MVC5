@@ -386,8 +386,8 @@ namespace GrupoJOS_MVC5.Servicos
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "UPDATE usuarios SET usuarios.Ativo = False WHERE idusuario = "+id+" ;";
-
+                SQL = "UPDATE usuarios SET usuarios.Ativo = False WHERE idusuario = "+id+"; " +
+                    "DELETE FROM clientes_usu where idusuario = " + id+" ;";
 
                 //string SQL = "";
                 //SQL = "DELETE FROM usuarios WHERE idusuario = " + id + "; " +

@@ -153,7 +153,7 @@ namespace GrupoJOS_MVC5.Controllers
             {
                 ViewBag.ListaEmpresa = servico_empresa.ListaEmpresa();
                 ViewBag.ListaUsuario = servico_usuario.ListaUsuariosInterno();
-                ViewBag.ListaCliente = servico_cliente.ListaClientes();
+                ViewBag.ListaCliente = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
                 ViewBag.ListaClienteComercial = servico_clienteComercial.ListaClienteComercial();
 
                 return View("~/Views/Relatorios/Gerencial/Index.cshtml");

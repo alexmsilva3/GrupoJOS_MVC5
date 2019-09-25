@@ -14,20 +14,34 @@ namespace GrupoJOS_MVC5.Servicos
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
         Servico_Especialidade servico_esp = new Servico_Especialidade();
         Servico_Horario servico_horario = new Servico_Horario();
+        Servico_Usuario servico_usuario = new Servico_Usuario();
 
         #region ListaCliente
-        public List<Model_Cliente> ListaClientes()
+        public List<Model_Cliente> ListaClientes(double idusuario)
         {
             List<Model_Cliente> ListaClientes = new List<Model_Cliente>();
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM clientes ORDER BY clientes.idcliente"; //LIMIT 10
+
+                SQL = "SELECT * FROM clientes_usu where idusuario = "+idusuario+"; ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
+                if (reader.HasRows)
+                {
+                    SQL = "SELECT * FROM clientes WHERE idcliente IN (SELECT idcliente FROM clientes_usu WHERE idusuario = "+idusuario+") ORDER BY clientes.idcliente";
+                }
+                else
+                {
+                    SQL = "SELECT * FROM clientes ORDER BY clientes.idcliente";
+                }
+
+                command = new MySqlCommand(SQL, connection);
+                reader.Close();
+                reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -359,7 +373,9 @@ namespace GrupoJOS_MVC5.Servicos
                 SQL = "DELETE FROM clientes WHERE idcliente = " + id + "; " +
                     "DELETE FROM agenda_emp WHERE idagenda IN (SELECT idagenda FROM agenda WHERE Cliente = "+ id +"); " +
                     "DELETE FROM agenda WHERE Cliente = " + id +"; "+
-                    "DELETE FROM horarios WHERE idcliente = " + id + "; ";
+                    "DELETE FROM horarios WHERE idcliente = " + id + "; " +
+                    "DELETE FROM clientes_usu where idcliente = "+id+"; " ;
+
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -462,6 +478,42 @@ namespace GrupoJOS_MVC5.Servicos
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
                 connection.Close();
+            }
+        }
+        #endregion
+
+        #region VerificaTag
+        public Model_Tag VerificaTag (double idusuario, List<string> ListaClientes)
+        {
+            Model_Tag tag = new Model_Tag();
+            tag.cliente = new Model_Cliente();
+            tag.usuario = new Model_Usuario();
+            tag.resultado = 0;
+            string SQL = "";
+            var idclientes = String.Join(",", ListaClientes.ToArray());
+
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                connection.Open();
+
+                SQL = "SELECT * FROM agenda WHERE Cliente NOT IN ("+idclientes+") AND status = 0 AND usuario = "+idusuario+"; ";
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        tag.resultado = TratarConversaoDeDados.TrataInt(reader["Cliente"]);
+                        tag.idagenda = TratarConversaoDeDados.TrataInt(reader["idagenda"]);
+                    }
+                    tag.cliente = BuscaCliente(tag.resultado);
+                }
+
+                reader.Close();
+                connection.Close();
+                tag.usuario = servico_usuario.BuscaUsuario(idusuario.ToString());
+
+                return tag;
             }
         }
         #endregion

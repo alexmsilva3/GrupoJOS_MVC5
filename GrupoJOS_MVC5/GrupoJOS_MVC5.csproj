@@ -169,6 +169,7 @@
     <Compile Include="Models\Model_Relatorios.cs" />
     <Compile Include="Models\Model_teste.cs" />
     <Compile Include="Models\Model_Ciclo.cs" />
+    <Compile Include="Models\Model_Tag.cs" />
     <Compile Include="Models\Model_Texto.cs" />
     <Compile Include="Models\Model_Cookie.cs" />
     <Compile Include="Models\Model_Usuario.cs" />
@@ -908,9 +909,9 @@
     <Content Include="Views\Ciclo\Erro2.cshtml" />
     <Content Include="Views\Ciclo\Desfazer.cshtml" />
     <Content Include="Views\Clientes\Tag.cshtml" />
-    <Content Include="Views\Clientes\TagBkp.cshtml" />
     <Content Include="Views\Clientes\_TagTabela1.cshtml" />
     <Content Include="Views\Clientes\_TagTabela2.cshtml" />
+    <Content Include="Views\Clientes\ErroTag.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

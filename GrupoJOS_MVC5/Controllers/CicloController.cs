@@ -59,7 +59,7 @@ namespace GrupoJOS_MVC5.Controllers
 
             if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+                ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
                 ViewBag.Semana = id;
 
@@ -71,7 +71,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Cadastro(string DiaVisita, string HoraVisita, double Cliente, List<string> Empresas, int Semana)
         {
-            ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+            var cookie = servico_login.CheckCookie();
+            ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
             ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
             ViewBag.Semana = Semana;
 
@@ -116,7 +117,7 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+                ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
 
                 diasSemana.Add("Segunda");
@@ -138,7 +139,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult EditarCiclo(int idciclo, int iddia, string DiaVisita, string HoraVisita, double Cliente, List<string> Empresas, int Semana)
         {
-            ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+            var cookie = servico_login.CheckCookie();
+            ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
             ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
 
             diasSemana.Add("Segunda");

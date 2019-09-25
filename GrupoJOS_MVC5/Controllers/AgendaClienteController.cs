@@ -91,7 +91,7 @@ namespace GrupoJOS_MVC5.Controllers
 
             if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+                ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
                 ViewBag.Cliente = Id;
 
@@ -106,7 +106,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Cadastro(DateTime DataVisita, string HoraVisita, double Cliente, List<string> Empresas)
         {
-            ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+            var cookie = servico_login.CheckCookie();
+            ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
             ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
 
             if (DataVisita == null) {ViewBag.ErroData = "Data inválida"; return View(); }
@@ -170,7 +171,7 @@ namespace GrupoJOS_MVC5.Controllers
                 var valor = Id.ToString();
                 agenda = servico_agenda.AgendaPorX("agenda.idagenda", valor);
 
-                ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+                ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
 
                 return View(agenda);
@@ -181,7 +182,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult Editar(string Id, DateTime DataVisita, string HoraVisita, double Cliente, List<string> Empresas, string Observacao)
         {
-            ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+            var cookie = servico_login.CheckCookie();
+            ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
             ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
 
             if (DataVisita == null) { ViewBag.ErroData = "Data inválida"; return View(); }
@@ -209,7 +211,7 @@ namespace GrupoJOS_MVC5.Controllers
                 var valor = Id.ToString();
                 agenda = servico_agenda.AgendaPorX("agenda.idagenda", valor);
 
-                ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+                ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
                 ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
 
                 return View(agenda);
@@ -220,7 +222,8 @@ namespace GrupoJOS_MVC5.Controllers
         [HttpPost]
         public ActionResult EditarVisita(string Id, DateTime DataVisita, string HoraVisita, double Cliente, List<string> Empresas, string Observacao, DateTime DataFinalizada, DateTime HoraFinalizada)
         {
-            ViewBag.ListadeClientes = servico_cliente.ListaClientes();
+            var cookie = servico_login.CheckCookie();
+            ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
             ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
 
             if (DataVisita == null) { ViewBag.ErroData = "Data inválida"; return View(); }

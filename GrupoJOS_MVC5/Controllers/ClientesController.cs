@@ -25,7 +25,7 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if ((cookie.UsuarioValidado && cookie.PermissaoCliente == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                return View(servico_cliente.ListaClientes());
+                return View(servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID)));
             }
             return RedirectToAction("Index", "Login");
         }
@@ -190,6 +190,7 @@ namespace GrupoJOS_MVC5.Controllers
                 clientetag.ListaClienteSemTag = servico_cliente.ListaClientesSemTag(idusuario);
                 clientetag.ListaClienteComTag = servico_cliente.ListaClientesComTag(idusuario);
 
+                //Verifica se a lista de clientes é ou não nula
                 if (clientes != null)
                 {
                     List<Model_Cliente> ListaClientes = new List<Model_Cliente>();
@@ -197,10 +198,22 @@ namespace GrupoJOS_MVC5.Controllers
                     {
                         Model_Cliente cli = new Model_Cliente();
                         cli.idcliente = int.Parse(item);
-
                         ListaClientes.Add(cli);
                     }
-                    servico_cliente.EditaTagLista(idusuario, ListaClientes);
+
+                    //Verifica se tem agenda marca para um dos clientes
+                    Model_Tag tag = new Model_Tag();
+                    tag = servico_cliente.VerificaTag(idusuario, clientes);
+                    if (tag.resultado >= 1)
+                    {
+                        //tem agenda pra um dos clientes da lista.
+                        return View("ErroTag",tag);
+                    }
+                    else
+                    {
+                        servico_cliente.EditaTagLista(idusuario, ListaClientes);
+                    }
+
                 }
                 else
                 {
@@ -210,6 +223,11 @@ namespace GrupoJOS_MVC5.Controllers
                 return RedirectToAction("Tag", "Clientes");
             }
             return RedirectToAction("Index", "Login");
+        }
+
+        public ActionResult ErroTag(Model_Tag tag)
+        {
+            return View();
         }
         #endregion
     }

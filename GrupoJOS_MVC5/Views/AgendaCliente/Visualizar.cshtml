@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Visualização Agendamento";
+    var adm = Request.Cookies["UsuarioADM"].Value;
     var date = DateTime.Now;
     var data = date.ToShortDateString();
 }
@@ -41,12 +42,25 @@
                                         As informações abaixo são referentes ao seu agendamento para com esse Profissional de Saúde e detalhes sobre clínicas a apresentar e dados do cliente.
                                     </small>
                                     <div class="row">
+                                        @if(Model.agenda.Status == "0")
+                                        {
                                         <div class="col-md-6">
                                             <a href="/AgendaCliente/Editar/@Model.agenda.idagenda"><button type="button" class="btn btn-warning btn-sm btn-block"><i class="fa fa-edit"></i> Editar</button></a>
                                         </div>
-                                        <div class="col-md-6">
-                                            <button type="button" class="btn btn-danger btn-sm btn-block" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@Model.agenda.idagenda"><i class="fa fa-times"></i> Remover</button>
-                                        </div>
+                                        }
+                                        
+                                        @if (adm == "True")
+                                        {
+                                            if(Model.agenda.Status == "1")
+                                            {
+                                                <div class="col-md-6">
+                                                <a href="/AgendaCliente/EditarVisita/@Model.agenda.idagenda"><button type="button" class="btn btn-warning btn-sm btn-block"><i class="fa fa-edit"></i> Editar Visita</button></a>
+                                            </div>
+                                            }
+                                            <div class="col-md-6">
+                                                <button type="button" class="btn btn-danger btn-sm btn-block" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@Model.agenda.idagenda"><i class="fa fa-times"></i> Remover</button>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +143,7 @@
                         <div class="full-height-scroll">
                             <ul class="list-group clear-list">
                                 <li class="list-group-item fist-item">
-                                    <span class="pull-right"> @Model.agenda.DataVisita.Substring(0,10) - @Model.agenda.HoraVisita </span>
+                                    <span class="pull-right"> @Model.agenda.DataVisita.Substring(0, 10) - @Model.agenda.HoraVisita </span>
                                     Visita
                                 </li>
                                 <li class="list-group-item">
@@ -141,14 +155,42 @@
                                     Email
                                 </li>
                             </ul>
-                            <strong>Observações</strong>
-                            <p>
-                                @Model.cliente.Observacoes
-                            </p>
                         </div>
                     </div>
+
                 </div>
             </div>
+            @if(Model.agenda.Status == "1")
+            {
+                <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
+                    <div class="vertical-timeline-block">
+                        <div class="vertical-timeline-icon navy-bg">
+                            <i class="fa fa-check"></i>
+                        </div>
+
+                        <div class="vertical-timeline-content">
+                            <h2>Visita Finalizada</h2>
+                            <div class="full-height-scroll">
+                                <ul class="list-group clear-list">
+                                    <li class="list-group-item fist-item">
+                                        <span class="pull-right"> @Model.agenda.DataFinalizada</span>
+                                        Finalizada em
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="pull-right">  @Model.agenda.DataFinalizadaReal </span>
+                                        Finalizada realmente em:
+                                    </li>
+                                </ul>
+                                <strong>Observações</strong>
+                                <p>
+                                    @Model.agenda.Observacoes
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
         </div>
 
         <div class="col-lg-4 m-b-lg">
@@ -198,6 +240,10 @@
                                     Aniversário Contato
                                 </li>
                             </ul>
+                            <strong>Observações</strong>
+                            <p>
+                                @Model.cliente.Observacoes
+                            </p>
                         </div>
                     </div>
                 </div>

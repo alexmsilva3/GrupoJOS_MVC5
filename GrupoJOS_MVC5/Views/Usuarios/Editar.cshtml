@@ -159,7 +159,7 @@
                                                 <select class="form-control m-b" id="Empresa" name="Empresa">
                                                     @foreach (var item in ViewBag.ListaEmpresas)
                                                     {
-                                                        if (Model.idempresa == item.idempresa)
+                                                        if (Model.FKidempresa == item.idempresa)
                                                         {
                                                             <option selected value='@item.idempresa'>@item.Nome</option>
                                                         }

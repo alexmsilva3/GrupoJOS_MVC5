@@ -1,7 +1,5 @@
 ﻿@{
-                /**/
-
-                ViewBag.Title = "Edição de Profissional de Saúde";
+    ViewBag.Title = "Edição de Profissional de Saúde";
 }
 
 @model GrupoJOS_MVC5.Models.Model_Cliente
@@ -36,357 +34,487 @@
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 @Html.HiddenFor(model => Model.idcliente)
 
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <label for="crm">CRM</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">style</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.CRM, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o CRM do cliente" } })
-                                                </div>
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="crm">CRM</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">style</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.CRM, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o CRM do cliente" } })
                                             </div>
-                                            @Html.ValidationMessageFor(model => model.CRM, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="col-md-3">
-                                            <label for="nome">Nome</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">star_border</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o nome do cliente" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="email_address">E-mail</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">mail_outline</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o e-mail" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="aniversario_m">Aniversário</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">cake</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Aniversario_m, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 30/07/2016" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Aniversario_m, "", new { @class = "text-danger" })
-                                        </div>
+                                        @Html.ValidationMessageFor(model => model.CRM, "", new { @class = "text-danger" })
                                     </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="endereco">Endereço</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">place</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control", placeholder = "Endereço" } })
-                                                </div>
+                                    <div class="col-md-3">
+                                        <label for="nome">Nome</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">star_border</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o nome do cliente" } })
                                             </div>
-                                            @Html.ValidationMessageFor(model => model.Endereco, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="numero">Número</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">my_location</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Num, new { htmlAttributes = new { @class = "form-control", placeholder = "Nº" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Num, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="cep">CEP</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">my_location</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control", placeholder = "CEP" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "text-danger" })
-                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
                                     </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="bairro">Bairro</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">map</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control", placeholder = "Bairro" } })
-                                                </div>
+                                    <div class="col-md-3">
+                                        <label for="email_address">E-mail</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">mail_outline</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o e-mail" } })
                                             </div>
-                                            @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="cidade">Cidade</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">location_city</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control", placeholder = "Cidade" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="estado">Estado</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">pin_drop</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.UF, new { htmlAttributes = new { @class = "form-control", placeholder = "Estado" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.UF, "", new { @class = "text-danger" })
-                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                     </div>
-                                    <br>
+                                    <div class="col-md-3">
+                                        <label for="aniversario_m">Aniversário</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">cake</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Aniversario_m, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 30/07/2016" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Aniversario_m, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="endereco">Endereço</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">place</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control", placeholder = "Endereço" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Endereco, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="numero">Número</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">my_location</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Num, new { htmlAttributes = new { @class = "form-control", placeholder = "Nº" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Num, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="cep">CEP</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">my_location</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control", placeholder = "CEP" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="bairro">Bairro</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">map</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control", placeholder = "Bairro" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="cidade">Cidade</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">location_city</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control", placeholder = "Cidade" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="estado">Estado</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">pin_drop</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.UF, new { htmlAttributes = new { @class = "form-control", placeholder = "Estado" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.UF, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <br>
 
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="celular">Telefone Celular</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">phone_iphone</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Fone_Celular, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: +55(042) 0000-0000" } })
-                                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="celular">Telefone Celular</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">phone_iphone</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Fone_Celular, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: +55(042) 0000-0000" } })
                                             </div>
-                                            @Html.ValidationMessageFor(model => model.Fone_Celular, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="telefone1">Telefone 1</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">phone</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Fone1, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: +55(042) 0000-0000" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Fone1, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="telefone2">Telefone 2</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">phone</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Fone2, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: +55(042) 0000-0000" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Fone2, "", new { @class = "text-danger" })
-                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Fone_Celular, "", new { @class = "text-danger" })
                                     </div>
-                                    <br>
-
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <label for="contato">Contato (Secretaria)</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">perm_identity</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Contato, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do contato" } })
-                                                </div>
+                                    <div class="col-md-4">
+                                        <label for="telefone1">Telefone 1</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">phone</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Fone1, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: +55(042) 0000-0000" } })
                                             </div>
-                                            @Html.ValidationMessageFor(model => model.Contato, "", new { @class = "text-danger" })
                                         </div>
-
-                                        <div class="col-md-3">
-                                            <label for="aniversario_s">Aniversário (Secretaria)</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">cake</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Aniversario_c, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 30/07/2016" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Aniversario_c, "", new { @class = "text-danger" })
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <label for="hora_in">Atendimento (A partir das)</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">access_time</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Horario_In, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 08:00" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Horario_In, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="hora_out">Atendimento (Até)</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="material-icons">access_time</i>
-                                                </span>
-                                                <div class="form-line">
-                                                    @Html.EditorFor(model => model.Horario_Out, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
-                                                </div>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Horario_Out, "", new { @class = "text-danger" })
-                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Fone1, "", new { @class = "text-danger" })
                                     </div>
-                                    <br>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="observacoes">Observações</label>
-                                            <div class="row clearfix">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <div class="form-line">
-                                                            @Html.TextAreaFor(model => model.Observacoes, 10, 100, new { htmlAttributes = new { @class = "form-control no-resize", placeholder = "Observações..." } })
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @Html.ValidationMessageFor(model => model.Observacoes, "", new { @class = "text-danger" })
+                                    <div class="col-md-4">
+                                        <label for="telefone2">Telefone 2</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">phone</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Fone2, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: +55(042) 0000-0000" } })
                                             </div>
                                         </div>
+                                        @Html.ValidationMessageFor(model => model.Fone2, "", new { @class = "text-danger" })
                                     </div>
-                                    <br>
-                                    <div class="row clearfix">
-                                        <div class="col-md-12">
-                                            <div class="card">
-                                                <div class="header">
-                                                    <h2>
-                                                        Especialidades
-                                                    </h2>
-                                                </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="contato">Contato (Secretaria)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">perm_identity</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Contato, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do contato" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Contato, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="aniversario_s">Aniversário (Secretaria)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">cake</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Aniversario_c, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 30/07/2016" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Aniversario_c, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="hora_in">Atendimento (A partir das)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">access_time</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Horario_In, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 08:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Horario_In, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="hora_out">Atendimento (Até)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">access_time</i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.Horario_Out, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Horario_Out, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label for="observacoes">Observações</label>
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
                                                 <div class="form-group">
-                                                    <label class="font-noraml">Especialidades 1.</label>
-                                                    <div>
-                                                        <select class="chosen-select" tabindex="4" name="NomeEspecialidade1">
-                                                            @foreach (var item in ViewBag.ListaEspecialidade)
-                                                            {
-                                                                if (item.Nome == Model.NomeEspecialidade1)
-                                                                {
-                                                                    <option value='@item.Nome' selected>@item.Nome</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value='@item.Nome'>@item.Nome</option>
-                                                                }
-
-                                                            }
-                                                        </select>
+                                                    <div class="form-line">
+                                                        @Html.TextAreaFor(model => model.Observacoes, 10, 100, new { htmlAttributes = new { @class = "form-control no-resize", placeholder = "Observações..." } })
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="font-noraml">Especialidades 2.</label>
-                                                    <div>
-                                                        <select class="chosen-select" tabindex="4" name="NomeEspecialidade2">
-                                                            @foreach (var item in ViewBag.ListaEspecialidade)
-                                                            {
-                                                                if (item.Nome == Model.NomeEspecialidade2)
-                                                                {
-                                                                    <option value='@item.Nome' selected>@item.Nome</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value='@item.Nome'>@item.Nome</option>
-                                                                }
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Observacoes, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
 
-                                                            }
-                                                        </select>
-                                                    </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <br>
+                                        <label>Entrada</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Segunda-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.segEntrada, new { htmlAttributes = new { placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.segEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Terça-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.terEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.terEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Quarta-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.quaEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.quaEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Quinta-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.quiEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.quiEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Sexta-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.sexEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.sexEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label>Saída</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.segSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.segSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.terSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.terSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.quaSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.quaSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.quiSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.quiSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.sexSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.sexSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row clearfix">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h2>
+                                                    Especialidades
+                                                </h2>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="font-noraml">Especialidades 1.</label>
+                                                <div>
+                                                    <select class="chosen-select" tabindex="4" name="NomeEspecialidade1">
+                                                        @foreach (var item in ViewBag.ListaEspecialidade)
+                            {
+                                if (item.Nome == Model.NomeEspecialidade1)
+                                {
+                                    <option value='@item.Nome' selected>@item.Nome</option>
+    }
+    else
+    {
+                            <option value='@item.Nome'>@item.Nome</option>
+}
+
+}
+                                                    </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="font-noraml">Especialidades 3.</label>
-                                                    <div>
-                                                        <select class="chosen-select" tabindex="4" name="NomeEspecialidade3">
-                                                            @foreach (var item in ViewBag.ListaEspecialidade)
-                                                            {
-                                                                if (item.Nome == Model.NomeEspecialidade3)
-                                                                {
-                                                                    <option value='@item.Nome' selected>@item.Nome</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value='@item.Nome'>@item.Nome</option>
-                                                                }
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="font-noraml">Especialidades 2.</label>
+                                                <div>
+                                                    <select class="chosen-select" tabindex="4" name="NomeEspecialidade2">
+                                                        @foreach (var item in ViewBag.ListaEspecialidade)
+                            {
+                                if (item.Nome == Model.NomeEspecialidade2)
+                                {
+                                    <option value='@item.Nome' selected>@item.Nome</option>
+    }
+    else
+    {
+                            <option value='@item.Nome'>@item.Nome</option>
+}
 
-                                                            }
-                                                        </select>
-                                                    </div>
+}
+                                                    </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="font-noraml">Especialidades 4.</label>
-                                                    <div>
-                                                        <select class="chosen-select" tabindex="4" name="NomeEspecialidade4">
-                                                            @foreach (var item in ViewBag.ListaEspecialidade)
-                                                            {
-                                                                if (item.Nome == Model.NomeEspecialidade4)
-                                                                {
-                                                                    <option value='@item.Nome' selected>@item.Nome</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value='@item.Nome'>@item.Nome</option>
-                                                                }
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="font-noraml">Especialidades 3.</label>
+                                                <div>
+                                                    <select class="chosen-select" tabindex="4" name="NomeEspecialidade3">
+                                                        @foreach (var item in ViewBag.ListaEspecialidade)
+                            {
+                                if (item.Nome == Model.NomeEspecialidade3)
+                                {
+                                    <option value='@item.Nome' selected>@item.Nome</option>
+    }
+    else
+    {
+                            <option value='@item.Nome'>@item.Nome</option>
+}
 
-                                                            }
-                                                        </select>
-                                                    </div>
+}
+                                                    </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="font-noraml">Especialidades 5.</label>
-                                                    <div>
-                                                        <select class="chosen-select" tabindex="4" name="NomeEspecialidade5">
-                                                            @foreach (var item in ViewBag.ListaEspecialidade)
-                                                            {
-                                                                if (item.Nome == Model.NomeEspecialidade5)
-                                                                {
-                                                                    <option value='@item.Nome' selected>@item.Nome</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value='@item.Nome'>@item.Nome</option>
-                                                                }
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="font-noraml">Especialidades 4.</label>
+                                                <div>
+                                                    <select class="chosen-select" tabindex="4" name="NomeEspecialidade4">
+                                                        @foreach (var item in ViewBag.ListaEspecialidade)
+                            {
+                                if (item.Nome == Model.NomeEspecialidade4)
+                                {
+                                    <option value='@item.Nome' selected>@item.Nome</option>
+    }
+    else
+    {
+                            <option value='@item.Nome'>@item.Nome</option>
+}
 
-                                                            }
-                                                        </select>
-                                                    </div>
+}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="font-noraml">Especialidades 5.</label>
+                                                <div>
+                                                    <select class="chosen-select" tabindex="4" name="NomeEspecialidade5">
+                                                        @foreach (var item in ViewBag.ListaEspecialidade)
+                            {
+                                if (item.Nome == Model.NomeEspecialidade5)
+                                {
+                                    <option value='@item.Nome' selected>@item.Nome</option>
+    }
+    else
+    {
+                            <option value='@item.Nome'>@item.Nome</option>
+}
+
+}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <br>
-                                    <button type="Submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
-                                    <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
-                                </form>
+                                </div>
+                                <br>
+                                <button type="Submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
+                                <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
+                            </form>
                             }
                         </div>
                     </div>
@@ -422,6 +550,17 @@
             $("#UF").mask("aa");
             $("#Aniversario_m").mask("99/99/9999");
             $("#Aniversario_c").mask("99/99/9999");
+
+            $("#horario_segEntrada").mask("99:99");
+            $("#horario_terEntrada").mask("99:99");
+            $("#horario_quaEntrada").mask("99:99");
+            $("#horario_quiEntrada").mask("99:99");
+            $("#horario_sexEntrada").mask("99:99");
+            $("#horario_segSaida").mask("99:99");
+            $("#horario_terSaida").mask("99:99");
+            $("#horario_quaSaida").mask("99:99");
+            $("#horario_quiSaida").mask("99:99");
+            $("#horario_sexSaida").mask("99:99");
         });
 
     </script>

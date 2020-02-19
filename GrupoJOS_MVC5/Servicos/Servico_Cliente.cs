@@ -13,20 +13,35 @@ namespace GrupoJOS_MVC5.Servicos
     {
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
         Servico_Especialidade servico_esp = new Servico_Especialidade();
+        Servico_Horario servico_horario = new Servico_Horario();
+        Servico_Usuario servico_usuario = new Servico_Usuario();
 
-        #region ListaClienteTst
-        public List<Model_Cliente> ListaClientes()
+        #region ListaCliente
+        public List<Model_Cliente> ListaClientes(double idusuario)
         {
             List<Model_Cliente> ListaClientes = new List<Model_Cliente>();
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM clientes ORDER BY clientes.idcliente"; //LIMIT 10
+
+                SQL = "SELECT * FROM clientes_usu where idusuario = "+idusuario+"; ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
+                if (reader.HasRows)
+                {
+                    SQL = "SELECT * FROM clientes WHERE idcliente IN (SELECT idcliente FROM clientes_usu WHERE idusuario = "+idusuario+") ORDER BY clientes.idcliente";
+                }
+                else
+                {
+                    SQL = "SELECT * FROM clientes ORDER BY clientes.idcliente";
+                }
+
+                command = new MySqlCommand(SQL, connection);
+                reader.Close();
+                reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -56,6 +71,8 @@ namespace GrupoJOS_MVC5.Servicos
                     cli.NomeEspecialidade3 = TratarConversaoDeDados.TrataString(reader["Especialidade3"]);
                     cli.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
                     cli.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
+
+                    //cli.horario = servico_horario.BuscaHorario(cli.idcliente);
 
                     //cli.Especialidade_Selecionada = new List<Model_Especialidade>();
 
@@ -80,18 +97,14 @@ namespace GrupoJOS_MVC5.Servicos
         }
         #endregion
 
-        #region Lista Clientes
-        public List<Model_Cliente> ListaClientes2()
+        #region ListaCliente Sem Tag
+        public List<Model_Cliente> ListaClientesSemTag(double idusuario)
         {
             List<Model_Cliente> ListaClientes = new List<Model_Cliente>();
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM clientes ORDER BY idcliente"; //LIMIT 10
-
-                //dapper
-                //connection.Open();
-                //ListaClientes = connection.Query<Model_Cliente>(SQL).ToList();
+                SQL = "SELECT * FROM clientes WHERE  idcliente NOT IN (SELECT idcliente FROM clientes_usu WHERE idusuario = '"+idusuario+"') ORDER BY clientes.idcliente";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -126,21 +139,58 @@ namespace GrupoJOS_MVC5.Servicos
                     cli.NomeEspecialidade3 = TratarConversaoDeDados.TrataString(reader["Especialidade3"]);
                     cli.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
                     cli.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
-                    
 
-                    //cli.Especialidade_Selecionada = new List<Model_Especialidade>();
+                    ListaClientes.Add(cli);
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return ListaClientes;
+        }
+        #endregion
 
-                    //var esp = servico_esp.ListaClienteEspecialidade(cli.idcliente);
+        #region ListaCliente Com Tag
+        public List<Model_Cliente> ListaClientesComTag(double idusuario)
+        {
+            List<Model_Cliente> ListaClientes = new List<Model_Cliente>();
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "SELECT * FROM clientes WHERE  idcliente IN (SELECT idcliente FROM clientes_usu WHERE idusuario = '" + idusuario + "') ORDER BY clientes.idcliente";
 
-                    //for (int i = 0; i < esp.Count; i++)
-                    //{
-                    //    cli.Especialidade_Selecionada.Add(new Model_Especialidade()
-                    //    {
-                    //        idespecialidade = esp[i].idespecialidade,
-                    //        Nome = esp[i].Nome,
-                    //        Observacao = esp[i].Observacao
-                    //    });
-                    //}
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    Model_Cliente cli = new Model_Cliente();
+                    cli.idcliente = TratarConversaoDeDados.TrataDouble(reader["idcliente"]);
+                    cli.CRM = TratarConversaoDeDados.TrataString(reader["CRM"]);
+                    cli.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
+                    cli.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
+                    cli.Aniversario_m = TratarConversaoDeDados.TrataString(reader["Aniversario_m"]);
+                    cli.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
+                    cli.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
+                    cli.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
+                    cli.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
+                    cli.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
+                    cli.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
+                    cli.Fone_Celular = TratarConversaoDeDados.TrataString(reader["Fone_Celular"]);
+                    cli.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
+                    cli.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
+                    cli.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
+                    cli.Aniversario_c = TratarConversaoDeDados.TrataString(reader["Aniversario_c"]);
+                    cli.Horario_In = TratarConversaoDeDados.TrataString(reader["Horario_In"]);
+                    cli.Horario_Out = TratarConversaoDeDados.TrataString(reader["Horario_Out"]);
+                    cli.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
+
+                    cli.NomeEspecialidade1 = TratarConversaoDeDados.TrataString(reader["Especialidade1"]);
+                    cli.NomeEspecialidade2 = TratarConversaoDeDados.TrataString(reader["Especialidade2"]);
+                    cli.NomeEspecialidade3 = TratarConversaoDeDados.TrataString(reader["Especialidade3"]);
+                    cli.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
+                    cli.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
 
                     ListaClientes.Add(cli);
                 }
@@ -152,14 +202,14 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Busca Cliente
-        public Model_Cliente BuscaCliente(string campo, string valor)
+        public Model_Cliente BuscaCliente(int idcliente)
         {
-            Model_Cliente BuscaCliente = new Model_Cliente();
+            Model_Cliente cliente = new Model_Cliente();
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
-                SQL = "SELECT * FROM clientes WHERE " + campo + " = " + valor + "";
+                SQL = "SELECT * FROM clientes WHERE idcliente = " + idcliente + "";
 
                 //dapper
                 //connection.Open();
@@ -171,31 +221,33 @@ namespace GrupoJOS_MVC5.Servicos
 
                 while (reader.Read())
                 {
-                    BuscaCliente.idcliente = TratarConversaoDeDados.TrataDouble(reader["idcliente"]);
-                    BuscaCliente.CRM = TratarConversaoDeDados.TrataString(reader["CRM"]);
-                    BuscaCliente.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
-                    BuscaCliente.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
-                    BuscaCliente.Aniversario_m = TratarConversaoDeDados.TrataString(reader["Aniversario_m"]);
-                    BuscaCliente.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
-                    BuscaCliente.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
-                    BuscaCliente.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
-                    BuscaCliente.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
-                    BuscaCliente.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
-                    BuscaCliente.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
-                    BuscaCliente.Fone_Celular = TratarConversaoDeDados.TrataString(reader["Fone_Celular"]);
-                    BuscaCliente.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
-                    BuscaCliente.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
-                    BuscaCliente.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
-                    BuscaCliente.Aniversario_c = TratarConversaoDeDados.TrataString(reader["Aniversario_c"]);
-                    BuscaCliente.Horario_In = TratarConversaoDeDados.TrataString(reader["Horario_In"]);
-                    BuscaCliente.Horario_Out = TratarConversaoDeDados.TrataString(reader["Horario_Out"]);
-                    BuscaCliente.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
+                    cliente.idcliente = TratarConversaoDeDados.TrataDouble(reader["idcliente"]);
+                    cliente.CRM = TratarConversaoDeDados.TrataString(reader["CRM"]);
+                    cliente.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
+                    cliente.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
+                    cliente.Aniversario_m = TratarConversaoDeDados.TrataString(reader["Aniversario_m"]);
+                    cliente.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
+                    cliente.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
+                    cliente.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
+                    cliente.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
+                    cliente.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
+                    cliente.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
+                    cliente.Fone_Celular = TratarConversaoDeDados.TrataString(reader["Fone_Celular"]);
+                    cliente.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
+                    cliente.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
+                    cliente.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
+                    cliente.Aniversario_c = TratarConversaoDeDados.TrataString(reader["Aniversario_c"]);
+                    cliente.Horario_In = TratarConversaoDeDados.TrataString(reader["Horario_In"]);
+                    cliente.Horario_Out = TratarConversaoDeDados.TrataString(reader["Horario_Out"]);
+                    cliente.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
 
-                    BuscaCliente.NomeEspecialidade1 = TratarConversaoDeDados.TrataString(reader["Especialidade1"]);
-                    BuscaCliente.NomeEspecialidade2 = TratarConversaoDeDados.TrataString(reader["Especialidade2"]);
-                    BuscaCliente.NomeEspecialidade3 = TratarConversaoDeDados.TrataString(reader["Especialidade3"]);
-                    BuscaCliente.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
-                    BuscaCliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
+                    cliente.NomeEspecialidade1 = TratarConversaoDeDados.TrataString(reader["Especialidade1"]);
+                    cliente.NomeEspecialidade2 = TratarConversaoDeDados.TrataString(reader["Especialidade2"]);
+                    cliente.NomeEspecialidade3 = TratarConversaoDeDados.TrataString(reader["Especialidade3"]);
+                    cliente.NomeEspecialidade4 = TratarConversaoDeDados.TrataString(reader["Especialidade4"]);
+                    cliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
+
+                    cliente.horario = servico_horario.BuscaHorario(cliente.idcliente);
 
                     //int valor2 = Convert.ToInt32(valor);
                     //var esp = servico_esp.ListaClienteEspecialidade(valor2);
@@ -215,17 +267,18 @@ namespace GrupoJOS_MVC5.Servicos
                 reader.Close();
                 connection.Close();
             }
-            return BuscaCliente;
+            return cliente;
         }
         #endregion
 
         #region Insere Cliente
-        public object InsereCliente(string nome, string crm, string email, string aniversario_m, string endereco, string num,
-            string cidade, string bairro, string uf, string cep, string fone_celular, string fone1, string fone2, string contato, string aniversario_c,
-            string hora_in, string hora_out, string obs, string esp1, string esp2, string esp3, string esp4, string esp5)
+        public Model_Cliente InsereCliente(Model_Cliente cliente)
         {
-            Model_Cliente InsereCliente = new Model_Cliente();
-            
+            if (cliente.NomeEspecialidade1 == "Sem Especialidade") { cliente.NomeEspecialidade1 = null; }
+            if (cliente.NomeEspecialidade2 == "Sem Especialidade") { cliente.NomeEspecialidade2 = null; }
+            if (cliente.NomeEspecialidade3 == "Sem Especialidade") { cliente.NomeEspecialidade3 = null; }
+            if (cliente.NomeEspecialidade4 == "Sem Especialidade") { cliente.NomeEspecialidade4 = null; }
+            if (cliente.NomeEspecialidade5 == "Sem Especialidade") { cliente.NomeEspecialidade5 = null; }
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
@@ -234,77 +287,77 @@ namespace GrupoJOS_MVC5.Servicos
                 SQL = "INSERT INTO clientes" +
                     "(CRM,Nome,Email,Aniversario_m,Endereco,Num,Cidade,Bairro,UF,CEP,Fone_Celular,Fone1,Fone2,Contato,Aniversario_c,Horario_In,Horario_Out,Observacoes,Especialidade1,Especialidade2,Especialidade3,Especialidade4,Especialidade5)" +
                     "VALUES"+
-                    "('" + crm + "','" + nome + "','" + email + "','" + aniversario_m + "','" + endereco + "','" + num + "','" + cidade + "','" + bairro + "','" + uf + "','" + cep + "','" + fone_celular + "','" + fone1 + "','" + fone2 + "','" + contato + "','" + aniversario_c + "','" + hora_in + "','" + hora_out + "','" + obs + "','" + esp1 + "','" + esp2 + "','" + esp3 + "','" + esp4 + "','" + esp5 + "');";
+                    "('" + cliente.CRM + "','" + cliente.Nome + "','" + cliente.Email + "','" + cliente.Aniversario_m + "','" + cliente.Endereco + "','" + cliente.Num + "'," +
+                    "'" + cliente.Cidade + "','" + cliente.Bairro + "','" + cliente.UF + "','" + cliente.CEP + "','" + cliente.Fone_Celular + "','" + cliente.Fone1 + "'," +
+                    "'" + cliente.Fone2 + "','" + cliente.Contato + "','" + cliente.Aniversario_c + "','" + cliente.Horario_In + "','" + cliente.Horario_Out + "','" + cliente.Observacoes + "'," +
+                    "'" + cliente.NomeEspecialidade1 + "','" + cliente.NomeEspecialidade2 + "','" + cliente.NomeEspecialidade3 + "','" + cliente.NomeEspecialidade4 + "','" + cliente.NomeEspecialidade5 + "');";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
-                //double id = command.LastInsertedId;
 
-                //SQL = "";
-                //foreach (var item in especialidades)
-                //{
-                //    item.Replace(" ", "");
-                //    SQL = "INSERT INTO clientes_esp VALUES (" + id + "," + item + ");";
-                //    MySqlCommand command2 = new MySqlCommand(SQL, connection);
-                //    command2.ExecuteNonQuery();
-                //}
+                cliente.horario.idcliente = command.LastInsertedId;
+
+                servico_horario.InsereHorario(cliente.horario);
+
                 connection.Close();
             }
-            return InsereCliente;
+            return cliente;
         }
         #endregion
 
         #region Atualiza Cliente
-        public Model_Cliente AtualizaCliente(string nome,string crm, string email, string aniversario_m, string endereco, string num,
-            string cidade, string bairro, string uf, string cep, string fone_celular, string fone1, string fone2, string contato, string aniversario_c,
-            string hora_in, string hora_out, string obs, string id, string esp1, string esp2, string esp3, string esp4, string esp5)
+        public Model_Cliente AtualizaCliente(Model_Cliente cliente)
         {
             Model_Cliente AtualizaCliente = new Model_Cliente();
 
-            if (esp1 == "Sem Especialidade") {esp1 = null;}
-            if (esp2 == "Sem Especialidade") { esp2 = null; }
-            if (esp3 == "Sem Especialidade") { esp3 = null; }
-            if (esp4 == "Sem Especialidade") { esp4 = null; }
-            if (esp5 == "Sem Especialidade") { esp5 = null; }
+            if (cliente.NomeEspecialidade1 == "Sem Especialidade") { cliente.NomeEspecialidade1 = null;}
+            if (cliente.NomeEspecialidade2 == "Sem Especialidade") { cliente.NomeEspecialidade2 = null; }
+            if (cliente.NomeEspecialidade3 == "Sem Especialidade") { cliente.NomeEspecialidade3 = null; }
+            if (cliente.NomeEspecialidade4 == "Sem Especialidade") { cliente.NomeEspecialidade4 = null; }
+            if (cliente.NomeEspecialidade5 == "Sem Especialidade") { cliente.NomeEspecialidade5 = null; }
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
 
                 SQL = "UPDATE clientes " +
-                    "SET Nome = '" + nome + "'," +
-                    "CRM = '" + crm + "'," +
-                    "Email = '" + email + "'," +
-                    "Aniversario_m = '" + aniversario_m + "'," +
-                    "Endereco = '" + endereco + "'," +
-                    "Num = '" + num + "'," +
-                    "Cidade = '" + cidade + "'," +
-                    "Bairro = '" + bairro + "'," +
-                    "UF = '" + uf + "'," +
-                    "CEP = '" + cep + "'," +
-                    "Fone_Celular = '" + fone_celular + "'," +
-                    "Fone1 = '" + fone1 + "'," +
-                    "Fone2 = '" + fone2 + "'," +
-                    "Contato = '" + contato + "'," +
-                    "Aniversario_c = '" + aniversario_c + "'," +
-                    "Horario_In = '" + hora_in + "'," +
-                    "Horario_Out = '" + hora_out + "'," +
-                    "Observacoes = '" + obs + "', " +
+                    "SET Nome = '" + cliente.Nome + "'," +
+                    "CRM = '" + cliente.CRM + "'," +
+                    "Email = '" + cliente.Email + "'," +
+                    "Aniversario_m = '" + cliente.Aniversario_m + "'," +
+                    "Endereco = '" + cliente.Endereco + "'," +
+                    "Num = '" + cliente.Num + "'," +
+                    "Cidade = '" + cliente.Cidade + "'," +
+                    "Bairro = '" + cliente.Bairro + "'," +
+                    "UF = '" + cliente.UF + "'," +
+                    "CEP = '" + cliente.CEP + "'," +
+                    "Fone_Celular = '" + cliente.Fone_Celular + "'," +
+                    "Fone1 = '" + cliente.Fone1 + "'," +
+                    "Fone2 = '" + cliente.Fone2 + "'," +
+                    "Contato = '" + cliente.Contato + "'," +
+                    "Aniversario_c = '" + cliente.Aniversario_c + "'," +
+                    "Horario_In = '" + cliente.Horario_In + "'," +
+                    "Horario_Out = '" + cliente.Horario_Out + "'," +
+                    "Observacoes = '" + cliente.Observacoes + "', " +
 
-                    "Especialidade1 = '" + esp1 + "', " +
-                    "Especialidade2 = '" + esp2 + "', " +
-                    "Especialidade3 = '" + esp3 + "', " +
-                    "Especialidade4 = '" + esp4 + "', " +
-                    "Especialidade5 = '" + esp5 + "' " +
+                    "Especialidade1 = '" + cliente.NomeEspecialidade1 + "', " +
+                    "Especialidade2 = '" + cliente.NomeEspecialidade2 + "', " +
+                    "Especialidade3 = '" + cliente.NomeEspecialidade3 + "', " +
+                    "Especialidade4 = '" + cliente.NomeEspecialidade4 + "', " +
+                    "Especialidade5 = '" + cliente.NomeEspecialidade5 + "' " +
 
 
-                    " WHERE idcliente = " + id + ";" ;
+                    " WHERE idcliente = " + cliente.idcliente + ";" ;
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
                 command.ExecuteNonQuery();
             }
+
+            cliente.horario.idcliente = cliente.idcliente;
+            servico_horario.AtualizaHorario(cliente.horario);
+
             return AtualizaCliente;
         }
         #endregion
@@ -318,8 +371,11 @@ namespace GrupoJOS_MVC5.Servicos
             {
                 string SQL = "";
                 SQL = "DELETE FROM clientes WHERE idcliente = " + id + "; " +
-                    "DELETE FROM agenda_emp WHERE idagenda IN (SELECT idagenda FROM agenda WHERE idcliente = "+ id +"); " +
-                    "DELETE FROM agenda WHERE idcliente = "+ id +"; ";
+                    "DELETE FROM agenda_emp WHERE idagenda IN (SELECT idagenda FROM agenda WHERE Cliente = "+ id +"); " +
+                    "DELETE FROM agenda WHERE Cliente = " + id +"; "+
+                    "DELETE FROM horarios WHERE idcliente = " + id + "; " +
+                    "DELETE FROM clientes_usu where idcliente = "+id+"; " ;
+
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -358,6 +414,107 @@ namespace GrupoJOS_MVC5.Servicos
             }
 
             return Total;
+        }
+        #endregion
+
+        #region Insere Tag
+        public void InsereTag(double idusuario, double idcliente)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "INSERT INTO clientes_usu VALUES (" + idcliente + "," + idusuario + ");";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        #endregion
+
+        #region Insere Tag Lista
+        public void InsereTagLista(double idusuario, List<Model_Cliente> ListaClientes)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                connection.Open();
+                foreach (var item in ListaClientes)
+                {
+                    string SQL = "INSERT INTO clientes_usu VALUES (" + item.idcliente + "," + idusuario + ");";
+                    MySqlCommand command = new MySqlCommand(SQL, connection);
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
+        #endregion
+
+        #region Edita Tag Lista
+        public void EditaTagLista(double idusuario, List<Model_Cliente> ListaClientes)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                connection.Open();
+                string SQL = "DELETE FROM clientes_usu WHERE idusuario = "+idusuario+"; ";
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+
+                foreach (var item in ListaClientes)
+                {
+                    SQL = "INSERT INTO clientes_usu VALUES (" + item.idcliente + "," + idusuario + ");";
+                    MySqlCommand command2 = new MySqlCommand(SQL, connection);
+                    command2.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
+
+        public void EditaTagListaNull(double idusuario)
+        {
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                connection.Open();
+                string SQL = "DELETE FROM clientes_usu WHERE idusuario = " + idusuario + "; ";
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        #endregion
+
+        #region VerificaTag
+        public Model_Tag VerificaTag (double idusuario, List<string> ListaClientes)
+        {
+            Model_Tag tag = new Model_Tag();
+            tag.cliente = new Model_Cliente();
+            tag.usuario = new Model_Usuario();
+            tag.resultado = 0;
+            string SQL = "";
+            var idclientes = String.Join(",", ListaClientes.ToArray());
+
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                connection.Open();
+
+                SQL = "SELECT * FROM agenda WHERE Cliente NOT IN ("+idclientes+") AND status = 0 AND usuario = "+idusuario+"; ";
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        tag.resultado = TratarConversaoDeDados.TrataInt(reader["Cliente"]);
+                        tag.idagenda = TratarConversaoDeDados.TrataInt(reader["idagenda"]);
+                    }
+                    tag.cliente = BuscaCliente(tag.resultado);
+                }
+
+                reader.Close();
+                connection.Close();
+                tag.usuario = servico_usuario.BuscaUsuario(idusuario.ToString());
+
+                return tag;
+            }
         }
         #endregion
     }

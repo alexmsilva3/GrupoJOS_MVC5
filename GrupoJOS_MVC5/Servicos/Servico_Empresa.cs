@@ -64,7 +64,7 @@ namespace GrupoJOS_MVC5.Servicos
         public Model_Empresa BuscaEmpresa(string idempresa)
         {
             Model_Empresa BuscaEmpresa = new Model_Empresa();
-            Servico_Usuario servico_usuario = new Servico_Usuario();
+            //Servico_Usuario servico_usuario = new Servico_Usuario();
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
@@ -105,7 +105,34 @@ namespace GrupoJOS_MVC5.Servicos
         }
         #endregion
 
-        #region Busca Empresa
+        #region Busca Empresa Resumida
+        public ViewModelEmpresaResumida BuscaEmpresaResumida(string idempresa)
+        {
+            ViewModelEmpresaResumida BuscaEmpresa = new ViewModelEmpresaResumida();
+
+            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+            {
+                string SQL = "";
+                SQL = "SELECT * FROM empresas" +
+                    " WHERE empresas.idempresa = " + idempresa + "";
+
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(SQL, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    BuscaEmpresa.idempresa = TratarConversaoDeDados.TrataDouble(reader["idempresa"]);
+                    BuscaEmpresa.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return BuscaEmpresa;
+        }
+        #endregion
+
+        #region Busca Empresa Com Usuario
         public Model_Empresa BuscaEmpresaComUsuario(string idempresa)
         {
             Model_Empresa BuscaEmpresa = new Model_Empresa();
@@ -115,8 +142,8 @@ namespace GrupoJOS_MVC5.Servicos
             {
                 string SQL = "";
                 SQL = "SELECT * FROM empresas" +
-                    " LEFT JOIN usuarios_empresas" +
-                    " ON empresas.idempresa = usuarios_empresas.idempresa" +
+                    " LEFT JOIN usuarios" +
+                    " ON empresas.idempresa = usuarios.FKidempresa" +
                     " WHERE empresas.idempresa = " + idempresa + "";
 
                 connection.Open();
@@ -251,7 +278,7 @@ namespace GrupoJOS_MVC5.Servicos
             {
                 string SQL = "";
                 SQL = "DELETE FROM empresas WHERE idempresa = " + id + ";" +
-                    "UPDATE agenda_emp SET idempresa = 0 WHERE idempresa = "+ id +";" +
+                    "DELETE FROM agenda_emp WHERE idempresa = "+ id +";" +
                     "DELETE FROM usuarios WHERE idusuario IN (SELECT idusuario FROM usuarios_empresas WHERE idempresa = " + id + ");" +
                     "DELETE FROM usuarios_empresas WHERE idempresa = " + id + "; ";
 

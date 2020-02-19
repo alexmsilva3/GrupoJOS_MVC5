@@ -1,0 +1,263 @@
+﻿@{
+    ViewBag.Title = "Relatorio Gerencial";
+
+    DateTime defineMes = DateTime.Now;
+    var primeiroDiaMes = new DateTime(defineMes.Year, defineMes.Month, 1);
+    var ultimoDiaMes = primeiroDiaMes.AddMonths(1).AddDays(-1);
+}
+
+@model GrupoJOS_MVC5.Models.ViewModelCampos
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li class="active">
+                <a href="@Url.Action("Gerencial", "Relatorios")"><strong>@ViewBag.Title</strong></a>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    @using (Html.BeginForm("GerencialResultado", "Relatorios", FormMethod.Post))
+    {
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Modelo</h5>
+                </div>
+                <div class="ibox-content">
+                    <p>Selecione o modelo do Relatório:</p>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="radio i-checks"><label> <input type="radio" value="0" name="tipo" id="prop"> <i></i> Propagandista</label></div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="radio i-checks"><label> <input type="radio" value="1" name="tipo" id="com"> <i></i> Comercial </label></div>
+                        </div>
+                    </div>
+                    @*<div class="hr-line-dashed"></div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Campos</h5>
+                </div>
+                <div class="ibox-content">
+                    <p>Selecione os campos que deseja no Relatorio</p>
+                    <div class="row">
+                        <div class="col-sm-4" id="propagandista" style="display: none;">
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="profsaude" id="profsaude"> <i></i> Profissional de Saúde </label></div>
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="empresa" id="empresa"> <i></i> Empresa </label></div>
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="especialidade" id="especialidade"> <i></i> Especialidade </label></div>
+                        </div>
+                        <div class="col-sm-4" id="comercial" style="display: none;">
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="clienteComercial" id="clienteComercial"> <i></i> Cliente Comercial </label></div>
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="ramo" id="ramo"> <i></i> Ramo </label></div>
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="conveniado" id="conveniado"> <i></i> Conveniado </label></div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="status" id="status"> <i></i> Status da Agenda </label></div>
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="observacao" id="observacao"> <i></i> Observações </label></div>
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="usuario" id="usuario"> <i></i> Usuário </label></div>
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="dataVisita" id="dataVisita"> <i></i> Data de Visita </label></div>
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="dataFinalizada" id="dataFinalizada"> <i></i> Data de Finalização </label></div>
+                            <div class="checkbox i-checks"><label> <input type="checkbox" name="dataFinalizadaReal" id="dataFinalizadaReal"> <i></i> Data de Finalização Real</label></div>
+                        </div>
+                        <br>
+                    </div>
+                    <br>
+
+                    <div class="row" id="lista_profsaude" style="display: none;">
+                        <div class="hr-line-dashed"></div>
+                        <div class="col-md-4">
+                            <p> Deixe em branco caso queira de todos os profissionais de saúde</p>
+                        </div>
+                        <div class="col-md-8">
+                            <label>
+                                Selecione o Profissional de Saúde @*Cliente*@
+                            </label>
+                            <select class="select2_demo_2 form-control" name="idcliente" id="idcliente">
+                                <option value="">Selecione...</option>
+                                @foreach(var item in ViewBag.ListaCliente)
+                                {
+                                    <option value="@item.idcliente">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row" id="lista_empresa" style="display: none;">
+                        <div class="hr-line-dashed"></div>
+                        <div class="col-md-4">
+                            <p> Deixe em branco caso queira de todas as empresas</p>
+                        </div>
+                        <div class="col-md-8">
+                            <label>
+                                Selecione a Empresa
+                            </label>
+                            <select class="select2_demo_2 form-control" name="idempresa" id="idempresa">
+                                <option value="">Selecione...</option>
+                                @foreach (var item in ViewBag.ListaEmpresa)
+                                {
+                                    <option value="@item.idempresa">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row" id="lista_cliente_comercial" style="display: none;">
+                        <div class="hr-line-dashed"></div>
+                        <div class="col-md-4">
+                            <p> Deixe em branco caso queira de todos os clientes comerciais</p>
+                        </div>
+                        <div class="col-md-8">
+                            <label>
+                                Selecione o Cliente Comercial @*Cliente Comercial*@
+                            </label>
+                            <select class="select2_demo_2 form-control" name="idclientecomercial" id="idclientecomercial">
+                                <option value="">Selecione...</option>
+                                @foreach (var item in ViewBag.ListaClienteComercial)
+                                {
+                                    <option value="@item.idclientecomercial">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row" id="lista_usuario" style="display: none;">
+                        <div class="hr-line-dashed"></div>
+                        <div class="col-md-4">
+                            <p> Deixe em branco caso queira de todos os usuários</p>
+                        </div>
+                        <div class="col-md-8">
+                            <label>
+                                Selecione o Usuário
+                            </label>
+                            <select class="select2_demo_2 form-control" name="idusuario" if="idusuario">
+                                <option value="">Selecione...</option>
+                                @foreach (var item in ViewBag.ListaUsuario)
+                                {
+                                    <option value="@item.idusuario">@item.Nome</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="hr-line-dashed"></div>
+                    <button type="submit" class="btn btn-primary m-t-15">SALVAR</button>
+                    <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+</div>
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/wizardStepsStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/wizardSteps")
+    @Scripts.Render("~/plugins/iCheck")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+
+        var prop = document.getElementById("propagandista");
+        var com = document.getElementById("comercial");
+
+        var list_profsaude = document.getElementById("lista_profsaude");
+        var list_emp = document.getElementById("lista_empresa");
+        var list_clic = document.getElementById("lista_cliente_comercial");
+        var list_usu = document.getElementById("lista_usuario");
+
+        
+
+        $('#prop').on('ifChecked', function () {
+            prop.style.display = "block"
+            com.style.display = "none"
+            $('#clienteComercial').removeProp('checked');
+            $('#clienteComercial').iCheck('uncheck');
+            $('#ramo').removeProp('checked');
+            $('#ramo').iCheck('uncheck');
+            $('#conveniado').removeProp('checked');
+            $('#conveniado').iCheck('uncheck');
+        });
+
+        $('#prop').on('ifUnchecked', function () {
+            prop.style.display = "none"
+            com.style.display = "block"
+        });
+
+        $('#com').on('ifChecked', function () {
+            prop.style.display = "none"
+            com.style.display = "block"
+            $('#profsaude').removeProp('checked');
+            $('#profsaude').iCheck('uncheck');
+            $('#empresa').removeProp('checked');
+            $('#empresa').iCheck('uncheck');
+            $('#especialidade').removeProp('checked');
+            $('#especialidade').iCheck('uncheck');
+        });
+
+        $('#com').on('ifUnchecked', function () {
+            prop.style.display = "block"
+            com.style.display = "none"
+        });
+        //------------------------------------------------------
+        $('#profsaude').on('ifChecked', function () {
+            list_profsaude.style.display = "block"
+        });
+
+        $('#profsaude').on('ifUnchecked', function () {
+            list_profsaude.style.display = "none"
+        });
+        //------------------------------------------------------
+        $('#clienteComercial').on('ifChecked', function () {
+            list_clic.style.display = "block"
+        });
+
+        $('#clienteComercial').on('ifUnchecked', function () {
+            list_clic.style.display = "none"
+        });
+        //------------------------------------------------------
+        $('#empresa').on('ifChecked', function () {
+            list_emp.style.display = "block"
+        });
+
+        $('#empresa').on('ifUnchecked', function () {
+            list_emp.style.display = "none"
+        });
+        //------------------------------------------------------
+        $('#usuario').on('ifChecked', function () {
+            list_usu.style.display = "block"
+        });
+
+        $('#usuario').on('ifUnchecked', function () {
+            list_usu.style.display = "none"
+        });
+        
+    </script>
+}

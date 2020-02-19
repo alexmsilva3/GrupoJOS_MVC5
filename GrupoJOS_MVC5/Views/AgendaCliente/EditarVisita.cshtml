@@ -1,0 +1,206 @@
+﻿@{
+    ViewBag.Title = "Edição de Agenda";
+}
+
+@model GrupoJOS_MVC5.Models.ViewModelAgenda
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a>Agenda</a>
+            </li>
+            <li class="active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>@ViewBag.Title</h5>
+        </div>
+        <div class="ibox-content">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <h3>Data</h3>
+                                <p>
+                                    Selecione um data para visita:
+                                </p>
+
+                                <div class="form-group" id="data_1">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" name="DataVisita" value="@Model.agenda.DataVisita.Substring(0,10)">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <span class="field-validation-error text-danger" data-valmsg-for="DataVisita" data-valmsg-replace="true">@ViewBag.ErroData</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h3>Hora</h3>
+                                <p>
+                                    Selecione o horário da visita:
+                                </p>
+
+                                <div class="input-group clockpicker" data-autoclose="true">
+                                    <input type="text" class="form-control" autocomplete="off" name="HoraVisita" value="@Model.agenda.HoraVisita">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-clock-o"></span>
+                                    </span>
+                                </div>
+                                <span class="field-validation-error text-danger" data-valmsg-for="DataVisita" data-valmsg-replace="true">@ViewBag.ErroHora</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox-content">
+                            <p>
+                                Selecione o P. Saúde:
+                            </p>
+                            <div class="form-group">
+                                <label class="font-noraml">Profissionais:</label>
+                                <div>
+                                    <select data-placeholder="Selecione um profissional" class="chosen-select" tabindex="2" name="Cliente">
+                                        @foreach (var item in ViewBag.ListadeClientes)
+                                        {
+                                            if (item.idcliente == Model.cliente.idcliente)
+                                            {
+                                                <option value='@item.idcliente' selected> @item.Nome </option>}
+                                            else
+                                            {
+                                                <option value='@item.idcliente'> @item.Nome </option>}
+                                        }
+                                    </select>
+                                </div>
+                                <span class="field-validation-error text-danger" data-valmsg-for="Cliente" data-valmsg-replace="true">@ViewBag.ErroCliente</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="ibox-content">
+                            <p>
+                                Clinicas que podem ser apresentadas nessa visita.
+                            </p>
+                            <div class="form-group">
+                                <label class="font-noraml">Clínicas:</label>
+                                <div>
+                                    <select data-placeholder="Selecione uma ou mais clinicas" class="chosen-select" multiple tabindex="4" name="Empresas">
+                                        @foreach (var item in ViewBag.ListadeEmpresas)
+                                        {
+                                            <option value='@item.idempresa'>@item.Nome</option>
+                                        }
+                                        @foreach (var item in Model.empresa)
+                                        {
+                                            <option value='@item.idempresa' selected>@item.Nome</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="field-validation-error text-danger" data-valmsg-for="Empresas" data-valmsg-replace="true">@ViewBag.ErroEmpresa</span>
+                    </div>
+                </div>
+
+               
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox-content">
+                            <p for="observacoes">Observações dadas a essa visita:</p>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <textarea rows="4" class="form-control no-resize" id="Observacao" name="Observacao">@Model.agenda.Observacoes</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="ibox-content">
+                            <p>Data e  Hora em que foi finalizada:</p>
+                            <label>Data</label>
+                            <div class="form-group" id="data_2">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" name="DataFinalizada" id="DataFinalizada" value="@Model.agenda.DataFinalizada.Substring(0,10)">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <label>Hora</label>
+                            <div class="input-group clockpicker" data-autoclose="true">
+                                <input type="text" class="form-control" autocomplete="off" name="HoraFinalizada" id="HoraFinalizada" value="@Model.agenda.DataFinalizada.Substring(11,5)">
+                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary m-t-15 waves-effect">SALVAR</button>
+                <button type="button" onclick="window.history.back()" class="btn btn-danger m-t-15 waves-effect">CANCELAR</button>
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/clockpicker")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.chosen-select').chosen({ width: "100%" });
+
+            $('.clockpicker').clockpicker();
+
+            $('#data_1 .input-group.date').datepicker({
+                todayBtn: "linked",
+                format: 'dd/mm/yyyy',
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: false,
+                todayHighlight: true,
+                autoclose: true
+            });
+
+            $('#data_2 .input-group.date').datepicker({
+                todayBtn: "linked",
+                format: 'dd/mm/yyyy',
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: false,
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
+    </script>
+}

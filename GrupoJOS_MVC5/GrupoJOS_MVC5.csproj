@@ -15,7 +15,7 @@
     <AssemblyName>GrupoJOS_MVC5</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -133,6 +133,7 @@
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
     <Folder Include="Images\png\" />
+    <Folder Include="Views\Teste\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -140,8 +141,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AgendaComercialController.cs" />
     <Compile Include="Controllers\AgendaClienteController.cs" />
-    <Compile Include="Controllers\ClientesController .cs" />
+    <Compile Include="Controllers\CicloController.cs" />
     <Compile Include="Controllers\ClientesComercialController.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\RamosController.cs" />
@@ -157,6 +159,7 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\Model_ClienteComercial.cs" />
+    <Compile Include="Models\Model_Horario.cs" />
     <Compile Include="Models\Model_Ramos.cs" />
     <Compile Include="Models\Model_Home.cs" />
     <Compile Include="Models\Model_Agenda.cs" />
@@ -165,6 +168,8 @@
     <Compile Include="Models\Model_Especialidade.cs" />
     <Compile Include="Models\Model_Relatorios.cs" />
     <Compile Include="Models\Model_teste.cs" />
+    <Compile Include="Models\Model_Ciclo.cs" />
+    <Compile Include="Models\Model_Tag.cs" />
     <Compile Include="Models\Model_Texto.cs" />
     <Compile Include="Models\Model_Cookie.cs" />
     <Compile Include="Models\Model_Usuario.cs" />
@@ -177,11 +182,13 @@
     <Compile Include="Servicos\Servico_Cliente.cs" />
     <Compile Include="Servicos\Servico_ClienteComercial.cs" />
     <Compile Include="Servicos\Servico_Empresa.cs" />
+    <Compile Include="Servicos\Servico_Horario.cs" />
+    <Compile Include="Servicos\Servico_Login.cs" />
     <Compile Include="Servicos\Servico_Ramos.cs" />
     <Compile Include="Servicos\Servico_Relatorio.cs" />
+    <Compile Include="Servicos\Servico_Ciclo.cs" />
     <Compile Include="Servicos\Servico_Texto.cs" />
     <Compile Include="Servicos\Servico_Especialidade.cs" />
-    <Compile Include="Servicos\Servico_Login .cs" />
     <Compile Include="Servicos\Servico_Usuario.cs" />
     <Compile Include="Servicos\TratarConversaoDeDados.cs" />
   </ItemGroup>
@@ -377,10 +384,6 @@
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\PublishProfiles\RedeHost.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
-    <Content Include="Content\landing\avatar_all.png" />
-    <Content Include="Content\landing\header_one.jpg" />
-    <Content Include="Content\landing\header_two.jpg" />
-    <Content Include="Content\landing\word_map.png" />
     <Content Include="Scripts\app\inspinia.js" />
     <Content Include="Scripts\app\skin.config.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -866,8 +869,8 @@
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Relatorios\Index.cshtml" />
     <Content Include="Views\AgendaCliente\Index.cshtml" />
-    <Content Include="Views\Relatorios\Atendimentos.cshtml" />
-    <Content Include="Views\Relatorios\AtendimentosResultado.cshtml" />
+    <Content Include="Views\Relatorios\Visitas\Visitas.cshtml" />
+    <Content Include="Views\Relatorios\Visitas\VisitasResultado.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ClientesComercial\Cadastro.cshtml" />
     <Content Include="Views\ClientesComercial\Editar.cshtml" />
@@ -877,15 +880,12 @@
     <Content Include="Views\AgendaComercial\Editar.cshtml" />
     <Content Include="Views\AgendaComercial\Index.cshtml" />
     <Content Include="Views\AgendaComercial\Visualizar.cshtml" />
-    <Content Include="Views\Teste\Index.cshtml" />
-    <Content Include="Views\Teste\Index - Cópia .cshtml" />
     <Content Include="Views\AgendaCliente\VisitasDia.cshtml" />
     <Content Include="Views\AgendaCliente\VisitasSemana.cshtml" />
     <Content Include="Views\AgendaCliente\VisitasMes.cshtml" />
     <Content Include="Views\AgendaComercial\VisitasSemana.cshtml" />
     <Content Include="Views\AgendaComercial\VisitasDia.cshtml" />
     <Content Include="Views\AgendaComercial\VisitasMes.cshtml" />
-    <Content Include="Views\Teste\AtendimentosResultado.cshtml" />
     <Content Include="Views\Relatorios\MinhasVisitas\Index.cshtml" />
     <Content Include="Views\Relatorios\MinhasVisitasComercial\Index.cshtml" />
     <Content Include="Views\Relatorios\MinhasVisitas\Result.cshtml" />
@@ -893,8 +893,25 @@
     <Content Include="Views\Especialidades\Cadastro.cshtml" />
     <Content Include="Views\Especialidades\Editar.cshtml" />
     <Content Include="Views\Especialidades\Index.cshtml" />
-    <Content Include="Views\Usuarios\Cadastro-bkp.cshtml" />
     <Content Include="Views\Usuarios\Editar.cshtml" />
+    <Content Include="Views\Relatorios\Gerencial\Index.cshtml" />
+    <Content Include="Views\Relatorios\Agenda\Index.cshtml" />
+    <Content Include="Views\Relatorios\Gerencial\ResultadoP.cshtml" />
+    <Content Include="Views\Relatorios\Gerencial\ResultadoC.cshtml" />
+    <Content Include="Views\AgendaCliente\EditarVisita.cshtml" />
+    <Content Include="Views\AgendaComercial\EditarVisita.cshtml" />
+    <Content Include="Views\Ciclo\Cadastro.cshtml" />
+    <Content Include="Views\Ciclo\Index.cshtml" />
+    <Content Include="Views\Ciclo\Editar.cshtml" />
+    <Content Include="Views\Ciclo\EditarCiclo.cshtml" />
+    <Content Include="Views\Ciclo\Aplicar.cshtml" />
+    <Content Include="Views\Ciclo\Erro1.cshtml" />
+    <Content Include="Views\Ciclo\Erro2.cshtml" />
+    <Content Include="Views\Ciclo\Desfazer.cshtml" />
+    <Content Include="Views\Clientes\Tag.cshtml" />
+    <Content Include="Views\Clientes\_TagTabela1.cshtml" />
+    <Content Include="Views\Clientes\_TagTabela2.cshtml" />
+    <Content Include="Views\Clientes\ErroTag.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -918,7 +935,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59003</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58893/</IISUrl>
+          <IISUrl>http://localhost:8081</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

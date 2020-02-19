@@ -277,6 +277,133 @@
                                 </div>
                                 <br>
 
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <br>
+                                        <label>Entrada</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Segunda-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.segEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.segEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Terça-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.terEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.terEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Quarta-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.quaEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.quaEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Quinta-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.quiEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.quiEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Sexta-Feira</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-share"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.sexEntrada, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 10:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.sexEntrada, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label>Saída</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.segSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.segSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.terSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.terSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.quaSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.quaSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.quiSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.quiSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-reply"></i>
+                                            </span>
+                                            <div class="form-line">
+                                                @Html.EditorFor(model => model.horario.sexSaida, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: 18:00" } })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.horario.sexSaida, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <br>
                                 <div class="row clearfix">
                                     <div class="col-md-12">
                                         <div class="card">
@@ -381,6 +508,17 @@
             $("#UF").mask("aa");
             $("#Aniversario_m").mask("99/99/9999");
             $("#Aniversario_c").mask("99/99/9999");
+
+            $("#horario_segEntrada").mask("99:99");
+            $("#horario_terEntrada").mask("99:99");
+            $("#horario_quaEntrada").mask("99:99");
+            $("#horario_quiEntrada").mask("99:99");
+            $("#horario_sexEntrada").mask("99:99");
+            $("#horario_segSaida").mask("99:99");
+            $("#horario_terSaida").mask("99:99");
+            $("#horario_quaSaida").mask("99:99");
+            $("#horario_quiSaida").mask("99:99");
+            $("#horario_sexSaida").mask("99:99");
         });
 
     </script>

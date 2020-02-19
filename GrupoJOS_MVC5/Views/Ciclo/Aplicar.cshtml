@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Ciclo";
+    var perfil = Request.Cookies["UsuarioPerfil"].Value;
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index","AgendaCliente")">Agenda</a>
+            </li>
+            <li class="active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+
+                    <div class="panel panel-success">
+                        <div class="panel-heading text-center">
+                            <h2><i class="fa fa-thumbs-o-up"></i> Ciclo aplicado corretamente! <i class="fa fa-thumbs-o-up"></i></h2>
+                        </div>
+                        <div class="text-center">
+                            <div class="inmodal">
+                                <i class="fa fa-check modal-icon"></i>
+                            </div>
+                            <div class="panel-body">
+                                <p>
+                                    <font size="3">
+                                        Ciclo foi aplicado corretamente, verifique sua agenda.<br><br>
+                                    </font>
+                                    <font size="2">
+                                        Lembrando que não será possivel aplicar o ciclo no mesmo período, caso tenha realizado o processo incorreto ou tenha tido algum tipo de erro, desfaça a operação de ciclo no menu <b>"Agenda > Ciclo > Desfazer"</b> no final da página
+                                    </font>
+                                </p>
+                            </div>
+                            <div class="panel-footer">
+                                <a href="/Ciclo/Index"><button type="button" class="btn btn-w-m btn-default"><i class="fa fa-arrow-left"></i> VOLTAR</button></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

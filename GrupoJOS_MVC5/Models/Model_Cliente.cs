@@ -6,7 +6,6 @@ using System.Web.Mvc;
 namespace GrupoJOS_MVC5.Models
 {
     public class Model_Cliente
-
     {
         public double idcliente { get; set; }
 
@@ -48,7 +47,13 @@ namespace GrupoJOS_MVC5.Models
         public string NomeEspecialidade4 { get; set; }
         public string NomeEspecialidade5 { get; set; }
 
-        //public List<Model_Especialidade> Especialidade_Selecionada { get; set; }
-        //public List<Model_Especialidade> Especialidade_NSelecionada { get; set; }
+        public Model_Horario horario { get; set; }
+    }
+
+    public class ViewModelClienteTag
+    {
+        public List<Model_Usuario> ListaUsuarios { get; set; }
+        public List<Model_Cliente> ListaClienteSemTag { get; set; }
+        public List<Model_Cliente> ListaClienteComTag { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace GrupoJOS_MVC5.Controllers
     public class RelatoriosController : Controller
     {
         Servico_Usuario servico_usuario = new Servico_Usuario();
+        Servico_Cliente servico_cliente = new Servico_Cliente();
+        Servico_ClienteComercial servico_clienteComercial = new Servico_ClienteComercial();
         Servico_AgendaCliente servico_agenda = new Servico_AgendaCliente();
         Servico_Login servico_login = new Servico_Login();
         Servico_Empresa servico_empresa = new Servico_Empresa();
@@ -30,8 +32,8 @@ namespace GrupoJOS_MVC5.Controllers
         }
         #endregion
 
-        #region Relatorio de Atendimento
-        public ActionResult Atendimentos()
+        #region Relatorio de Visitas
+        public ActionResult Visitas()
         {
             var cookie = servico_login.CheckCookie();
             if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
@@ -43,26 +45,26 @@ namespace GrupoJOS_MVC5.Controllers
                     var idempresa = Convert.ToDouble(cookie.idempresa);
                     lista_empresa = servico_empresa.ListaEmpresa().FindAll(x => x.idempresa == idempresa);
 
-                    return View(lista_empresa);
+                    return View("~/Views/Relatorios/Visitas/Visitas.cshtml", lista_empresa);
                 }
 
                 lista_empresa = servico_empresa.ListaEmpresa();
-                return View(lista_empresa);
+                return View("~/Views/Relatorios/Visitas/Visitas.cshtml",lista_empresa);
             }
 
             return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
-        public ActionResult AtendimentosResultado(double idempresa, DateTime DataInicio, DateTime DataFim)
+        public ActionResult VisitasResultado(double idempresa, DateTime DataInicio, DateTime DataFim)
         {
-                ViewModelRelatorioAtendimentos relatorio = new ViewModelRelatorioAtendimentos();
+                ViewModelRelatorioVisitas relatorio = new ViewModelRelatorioVisitas();
 
                 relatorio = servico_relatorio.RelatorioDeAtendimentos(idempresa, DataInicio, DataFim);
                 relatorio.DataInicio = DataInicio;
                 relatorio.DataFim = DataFim;
 
-                return View(relatorio);
+            return View("~/Views/Relatorios/Visitas/VisitasResultado.cshtml", relatorio);
         }
         #endregion
 
@@ -126,13 +128,58 @@ namespace GrupoJOS_MVC5.Controllers
         }
         #endregion
 
+        #region Relatorio Agenda
+        public ActionResult Agenda(string idempresa)
+        {
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                ViewModelDashboard agenda = new ViewModelDashboard();
+                agenda.lista_agenda = new List<ViewModelAgenda>();
+                agenda.lista_agenda = servico_agenda.ListaAgendaEmpresa(idempresa);
+
+                return View("~/Views/Relatorios/Agenda/Index.cshtml",agenda);
+            }
+
+            return RedirectToAction("Index", "Login");
+        }
+        #endregion
+
         #region Relatorio Gerencial
         public ActionResult Gerencial()
         {
             var cookie = servico_login.CheckCookie();
             if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                return View();
+                ViewBag.ListaEmpresa = servico_empresa.ListaEmpresa();
+                ViewBag.ListaUsuario = servico_usuario.ListaUsuariosInterno();
+                ViewBag.ListaCliente = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
+                ViewBag.ListaClienteComercial = servico_clienteComercial.ListaClienteComercial();
+
+                return View("~/Views/Relatorios/Gerencial/Index.cshtml");
+            }
+
+            return RedirectToAction("Index", "Login");
+        }
+
+        public ActionResult GerencialResultado(ViewModelCampos campos)
+        {
+            var cookie = servico_login.CheckCookie();
+            if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            {
+                ViewModelRelatorioGerencial relatorio = new ViewModelRelatorioGerencial();
+                relatorio.campos = campos;
+
+                relatorio = servico_relatorio.RelatorioGerencial(relatorio);
+
+                if (relatorio.campos.tipo == "0")
+                {
+                    return View("~/Views/Relatorios/Gerencial/ResultadoP.cshtml", relatorio);
+                }
+                else if (relatorio.campos.tipo == "1")
+                {
+                    return View("~/Views/Relatorios/Gerencial/ResultadoC.cshtml", relatorio);
+                }
             }
 
             return RedirectToAction("Index", "Login");

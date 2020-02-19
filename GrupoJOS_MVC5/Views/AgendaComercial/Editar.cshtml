@@ -45,7 +45,7 @@
 
                                 <div class="form-group" id="data_1">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control" name="DataVisita" value="@ViewBag.Data.Substring(0,10)">
+                                        <input type="text" class="form-control" name="DataVisita" value="@Model.agenda.DataVisita.Substring(0,10)">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                 </p>
 
                                 <div class="input-group clockpicker" data-autoclose="true">
-                                    <input type="text" class="form-control" name="HoraVisita" value="@ViewBag.Hora">
+                                    <input type="text" class="form-control" autocomplete="off" name="HoraVisita" value="@Model.agenda.HoraVisita">
                                     <span class="input-group-addon">
                                         <span class="fa fa-clock-o"></span>
                                     </span>
@@ -85,7 +85,7 @@
                                     <select data-placeholder="Selecione um cliente" class="chosen-select" tabindex="2" name="idclientecomercial">
                                         @foreach (var item in ViewBag.ListaClienteComercial)
                                         {
-                                            if (item.idclientecomercial == ViewBag.ClienteComercial)
+                                            if (item.idclientecomercial == Model.agenda.Comercial)
                                             {
                                                 <option value='@item.idclientecomercial' selected> @item.Nome </option>}
                                             else
@@ -125,6 +125,16 @@
             $('.clockpicker').clockpicker();
 
             $('#data_1 .input-group.date').datepicker({
+                todayBtn: "linked",
+                format: 'dd/mm/yyyy',
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: false,
+                todayHighlight: true,
+                autoclose: true
+            });
+
+            $('#data_2 .input-group.date').datepicker({
                 todayBtn: "linked",
                 format: 'dd/mm/yyyy',
                 keyboardNavigation: false,

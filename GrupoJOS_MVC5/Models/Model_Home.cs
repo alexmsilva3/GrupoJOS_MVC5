@@ -21,17 +21,12 @@ namespace GrupoJOS_MVC5.Models
         public int VisitasRealizadasMes { get; set; }
         public int VisitasRealizadasMesP { get; set; }
 
-        public int TotalClientes { get; set; }
-        public int TotalEmpresas { get; set; }
+        //public int TotalClientes { get; set; }
+        //public int TotalEmpresas { get; set; }
     }
 
     public class ViewModelHome
     {
         public List<ViewModelAgenda> lista_agenda { get; set; }
-    }
-
-    public class ViewModelHomeComercial
-    {
-        public List<ViewModelAgendaComercial> lista_agenda { get; set; }
     }
 }

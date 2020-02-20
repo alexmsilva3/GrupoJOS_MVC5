@@ -107,20 +107,20 @@
                             <div class="form-group">
                                 <label class="font-noraml">Clínicas:</label>
                                 <div>
-                                    <select data-placeholder="Selecione uma ou mais clinicas" class="chosen-select" multiple tabindex="4" name="Empresas">
-                                        @foreach (var item in ViewBag.ListadeEmpresas)
+                                    <select data-placeholder="Selecione uma ou mais clinicas" class="chosen-select" multiple tabindex="4" name="Produtos">
+                                        @foreach (var item in ViewBag.ListadeProdutos)
                                         {
-                                            <option value='@item.idempresa'>@item.Nome</option>
+                                            <option value='@item.idproduto'>@item.Nome</option>
                                         }
-                                        @foreach (var item in Model.empresa)
+                                        @foreach (var item in Model.produto)
                                         {
-                                            <option value='@item.idempresa' selected>@item.Nome</option>
+                                            <option value='@item.idproduto' selected>@item.Nome</option>
                                         }
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <span class="field-validation-error text-danger" data-valmsg-for="Empresas" data-valmsg-replace="true">@ViewBag.ErroEmpresa</span>
+                        <span class="field-validation-error text-danger" data-valmsg-for="Produtos" data-valmsg-replace="true">@ViewBag.ErroProduto</span>
                     </div>
                 </div>
 

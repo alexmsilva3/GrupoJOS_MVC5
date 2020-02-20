@@ -20,11 +20,8 @@ namespace GrupoJOS_MVC5.Models
 
         public string PermissaoAgenda { get; set; }
         public string PermissaoCliente { get; set; }
-        public string PermissaoEmpresas { get; set; }
+        public string PermissaoProdutos { get; set; }
         public string PermissaoEspecialidades { get; set; }
-        public string PermissaoAgendaComercial { get; set; }
-        public string PermissaoClienteComercial { get; set; }
-        public string PermissaoRamos { get; set; }
         public string PermissaoUsuarios { get; set; }
         public string PermissaoTextos { get; set; }
         public string PermissaoRelatorios { get; set; }

@@ -123,53 +123,14 @@
                                                 @if (Model.Perfil == "0")
                                                 {
                                                     <option selected value="0">Propagandista</option>
-                                                    <option value="1">Comercial</option>
-                                                    <option value="2">Personalizado</option>
-                                                    <option value="3">Empresa</option>
+                                                    <option value="1">Personalizado</option>
                                                 }
                                                 @if (Model.Perfil == "1")
                                                 {
                                                     <option value="0">Propagandista</option>
-                                                    <option selected value="1">Comercial</option>
-                                                    <option value="2">Personalizado</option>
-                                                    <option value="3">Empresa</option>
-                                                }
-                                                @if (Model.Perfil == "2")
-                                                {
-                                                    <option value="0">Propagandista</option>
-                                                    <option value="1">Comercial</option>
-                                                    <option value="2" selected>Personalizado</option>
-                                                    <option value="3">Empresa</option>
-                                                }
-                                                @if (Model.Perfil == "3")
-                                                {
-                                                    <option value="0">Propagandista</option>
-                                                    <option value="1">Comercial</option>
-                                                    <option value="2">Personalizado</option>
-                                                    <option value="3" selected>Empresa</option>
+                                                    <option value="1" selected>Personalizado</option>
                                                 }
                                             </select>
-                                        </div>
-                                    </div>
-
-                                    <div id="Empresas" style="display: @style;">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Empresa</label>
-                                            <div class="col-sm-10">
-                                                <select class="form-control m-b" id="Empresa" name="Empresa">
-                                                    @foreach (var item in ViewBag.ListaEmpresas)
-                                                    {
-                                                        if (Model.FKidempresa == item.idempresa)
-                                                        {
-                                                            <option selected value='@item.idempresa'>@item.Nome</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value='@item.idempresa'>@item.Nome</option>
-                                                        }
-                                                    }
-                                                </select>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -177,13 +138,8 @@
                                         <div class="col-sm-4">
                                             <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoAgenda" name="PermissaoAgenda"> <i></i> Agenda </label></div>
                                             <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoCliente" name="PermissaoCliente"> <i></i> Profissional de Saúde </label></div>
-                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoEmpresas" name="PermissaoEmpresas"> <i></i> Empresas </label></div>
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoProdutos" name="PermissaoProdutos"> <i></i> Produtos </label></div>
                                             <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoEspecialidades" name="PermissaoEspecialidades"> <i></i> Especialidades </label></div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoAgendaComercial" name="PermissaoAgendaComercial"> <i></i> Agenda Comercial </label></div>
-                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoClienteComercial" name="PermissaoClienteComercial"> <i></i> Cliente Comercial </label></div>
-                                            <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoRamos" name="PermissaoRamos"> <i></i> Ramos </label></div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="checkbox i-checks"><label> <input type="checkbox" id="PermissaoUsuarios" name="PermissaoUsuarios"> <i></i> Usuários </label></div>
@@ -218,21 +174,12 @@
     @if (Model.PermissaoCliente == "1")
     {
         <script>$(document).ready(function () { $('#PermissaoCliente').prop('checked', true); $('#PermissaoCliente').iCheck('update'); });</script>}
-    @if (Model.PermissaoEmpresas == "1")
+    @if (Model.PermissaoProdutos == "1")
     {
-        <script>$(document).ready(function () { $('#PermissaoEmpresas').prop('checked', true); $('#PermissaoEmpresas').iCheck('update'); });</script>}
+        <script>$(document).ready(function () { $('#PermissaoProdutos').prop('checked', true); $('#PermissaoProdutos').iCheck('update'); });</script>}
     @if (Model.PermissaoEspecialidades == "1")
     {
         <script>$(document).ready(function () { $('#PermissaoEspecialidades').prop('checked', true); $('#PermissaoEspecialidades').iCheck('update'); });</script>}
-    @if (Model.PermissaoAgendaComercial == "1")
-    {
-        <script>$(document).ready(function () { $('#PermissaoAgendaComercial').prop('checked', true); $('#PermissaoAgendaComercial').iCheck('update'); });</script>}
-    @if (Model.PermissaoClienteComercial == "1")
-    {
-        <script>$(document).ready(function () { $('#PermissaoClienteComercial').prop('checked', true); $('#PermissaoClienteComercial').iCheck('update'); });</script>}
-    @if (Model.PermissaoRamos == "1")
-    {
-        <script>$(document).ready(function () { $('#PermissaoRamos').prop('checked', true); $('#PermissaoRamos').iCheck('update'); });</script>}
     @if (Model.PermissaoUsuarios == "1")
     {
         <script>$(document).ready(function () { $('#PermissaoUsuarios').prop('checked', true); $('#PermissaoUsuarios').iCheck('update'); });</script>}
@@ -247,7 +194,6 @@
     {
         <script>
             $(document).ready(function () {
-                var emp = document.getElementById("Empresas");
                 var adm = document.getElementById("adm");
                 var pro = document.getElementById("Permissoes");
 
@@ -259,25 +205,13 @@
                 $('#PermissaoCliente').iCheck('uncheck');
                 $('#PermissaoCliente').iCheck('disable');
 
-                $('#PermissaoEmpresas').removeProp('checked');
-                $('#PermissaoEmpresas').iCheck('uncheck');
-                $('#PermissaoEmpresas').iCheck('disable');
+                $('#PermissaoProdutos').removeProp('checked');
+                $('#PermissaoProdutos').iCheck('uncheck');
+                $('#PermissaoProdutos').iCheck('disable');
 
                 $('#PermissaoEspecialidades').removeProp('checked');
                 $('#PermissaoEspecialidades').iCheck('uncheck');
                 $('#PermissaoEspecialidades').iCheck('disable');
-
-                $('#PermissaoAgendaComercial').removeProp('checked');
-                $('#PermissaoAgendaComercial').iCheck('uncheck');
-                $('#PermissaoAgendaComercial').iCheck('disable');
-
-                $('#PermissaoClienteComercial').removeProp('checked');
-                $('#PermissaoClienteComercial').iCheck('uncheck');
-                $('#PermissaoClienteComercial').iCheck('disable');
-
-                $('#PermissaoRamos').removeProp('checked');
-                $('#PermissaoRamos').iCheck('uncheck');
-                $('#PermissaoRamos').iCheck('disable');
 
                 $('#PermissaoUsuarios').removeProp('checked');
                 $('#PermissaoUsuarios').iCheck('uncheck');
@@ -290,7 +224,6 @@
                 $('#PermissaoRelatorios').prop('checked', true);
                 $('#PermissaoRelatorios').iCheck('update');
                 pro.style.display = "block"
-                emp.style.display = "block"
 
                 adm.style.display = "none"
                 $('#admin').removeProp('checked');
@@ -311,7 +244,6 @@
         $("#Perfil").change(function () {
             var select = $("#Perfil option:selected").val();
 
-            var emp = document.getElementById("Empresas");
             var adm = document.getElementById("adm");
 
             var pro = document.getElementById("Permissoes");
@@ -325,26 +257,14 @@
                     $('#PermissaoCliente').iCheck('update');
                     $('#PermissaoCliente').iCheck('enable');
 
-                    $('#PermissaoEmpresas').prop('checked', true);
-                    $('#PermissaoEmpresas').iCheck('update');
-                    $('#PermissaoEmpresas').iCheck('enable');
+                    $('#PermissaoProdutos').prop('checked', true);
+                    $('#PermissaoProdutos').iCheck('update');
+                    $('#PermissaoProdutos').iCheck('enable');
 
                     $('#PermissaoEspecialidades').prop('checked', true);
                     $('#PermissaoEspecialidades').iCheck('update');
                     $('#PermissaoEspecialidades').iCheck('enable');
 
-                    $('#PermissaoAgendaComercial').removeProp('checked');
-                    $('#PermissaoAgendaComercial').iCheck('uncheck');
-                    $('#PermissaoAgendaComercial').iCheck('enable');
-
-                    $('#PermissaoClienteComercial').removeProp('checked');
-                    $('#PermissaoClienteComercial').iCheck('uncheck');
-                    $('#PermissaoClienteComercial').iCheck('enable');
-
-                    $('#PermissaoRamos').removeProp('checked');
-                    $('#PermissaoRamos').iCheck('uncheck');
-                    $('#PermissaoRamos').iCheck('enable');
-
                     $('#PermissaoUsuarios').removeProp('checked');
                     $('#PermissaoUsuarios').iCheck('uncheck');
                     $('#PermissaoUsuarios').iCheck('enable');
@@ -358,10 +278,9 @@
                     $('#PermissaoRelatorios').iCheck('enable');
 
                     pro.style.display = "block"
-                    emp.style.display = "none"
                     adm.style.display = "block"
                     break;
-                case "1": //comercial
+                case "1": //personalizado
                     $('#PermissaoAgenda').removeProp('checked');
                     $('#PermissaoAgenda').iCheck('uncheck');
                     $('#PermissaoAgenda').iCheck('enable');
@@ -370,70 +289,13 @@
                     $('#PermissaoCliente').iCheck('uncheck');
                     $('#PermissaoCliente').iCheck('enable');
 
-                    $('#PermissaoEmpresas').removeProp('checked');
-                    $('#PermissaoEmpresas').iCheck('uncheck');
-                    $('#PermissaoEmpresas').iCheck('enable');
+                    $('#PermissaoProdutos').removeProp('checked');
+                    $('#PermissaoProdutos').iCheck('uncheck');
+                    $('#PermissaoProdutos').iCheck('enable');
 
                     $('#PermissaoEspecialidades').removeProp('checked');
                     $('#PermissaoEspecialidades').iCheck('uncheck');
                     $('#PermissaoEspecialidades').iCheck('enable');
-
-                    $('#PermissaoAgendaComercial').prop('checked', true);
-                    $('#PermissaoAgendaComercial').iCheck('update');
-                    $('#PermissaoAgendaComercial').iCheck('enable');
-
-                    $('#PermissaoClienteComercial').prop('checked', true);
-                    $('#PermissaoClienteComercial').iCheck('update');
-                    $('#PermissaoClienteComercial').iCheck('enable');
-
-                    $('#PermissaoRamos').prop('checked', true);
-                    $('#PermissaoRamos').iCheck('update');
-                    $('#PermissaoRamos').iCheck('enable');
-
-                    $('#PermissaoUsuarios').removeProp('checked');
-                    $('#PermissaoUsuarios').iCheck('uncheck');
-                    $('#PermissaoUsuarios').iCheck('enable');
-
-                    $('#PermissaoTextos').prop('checked', true);
-                    $('#PermissaoTextos').iCheck('update');
-                    $('#PermissaoTextos').iCheck('enable');
-
-                    $('#PermissaoRelatorios').removeProp('checked');
-                    $('#PermissaoRelatorios').iCheck('uncheck');
-                    $('#PermissaoRelatorios').iCheck('enable');
-
-                    pro.style.display = "block"
-                    emp.style.display = "none"
-                    adm.style.display = "block"
-                    break;
-                case "2": //personalizado
-                    $('#PermissaoAgenda').removeProp('checked');
-                    $('#PermissaoAgenda').iCheck('uncheck');
-                    $('#PermissaoAgenda').iCheck('enable');
-
-                    $('#PermissaoCliente').removeProp('checked');
-                    $('#PermissaoCliente').iCheck('uncheck');
-                    $('#PermissaoCliente').iCheck('enable');
-
-                    $('#PermissaoEmpresas').removeProp('checked');
-                    $('#PermissaoEmpresas').iCheck('uncheck');
-                    $('#PermissaoEmpresas').iCheck('enable');
-
-                    $('#PermissaoEspecialidades').removeProp('checked');
-                    $('#PermissaoEspecialidades').iCheck('uncheck');
-                    $('#PermissaoEspecialidades').iCheck('enable');
-
-                    $('#PermissaoAgendaComercial').removeProp('checked');
-                    $('#PermissaoAgendaComercial').iCheck('uncheck');
-                    $('#PermissaoAgendaComercial').iCheck('enable');
-
-                    $('#PermissaoClienteComercial').removeProp('checked');
-                    $('#PermissaoClienteComercial').iCheck('uncheck');
-                    $('#PermissaoClienteComercial').iCheck('enable');
-
-                    $('#PermissaoRamos').removeProp('checked');
-                    $('#PermissaoRamos').iCheck('uncheck');
-                    $('#PermissaoRamos').iCheck('enable');
 
                     $('#PermissaoUsuarios').removeProp('checked');
                     $('#PermissaoUsuarios').iCheck('uncheck');
@@ -447,57 +309,9 @@
                     $('#PermissaoRelatorios').iCheck('uncheck');
                     $('#PermissaoRelatorios').iCheck('enable');
                     pro.style.display = "block"
-                    emp.style.display = "none"
                     adm.style.display = "block"
-                    break;
-                case "3": //empresa
-                    $('#PermissaoAgenda').removeProp('checked');
-                    $('#PermissaoAgenda').iCheck('uncheck');
-                    $('#PermissaoAgenda').iCheck('disable');
-
-                    $('#PermissaoCliente').removeProp('checked');
-                    $('#PermissaoCliente').iCheck('uncheck');
-                    $('#PermissaoCliente').iCheck('disable');
-
-                    $('#PermissaoEmpresas').removeProp('checked');
-                    $('#PermissaoEmpresas').iCheck('uncheck');
-                    $('#PermissaoEmpresas').iCheck('disable');
-
-                    $('#PermissaoEspecialidades').removeProp('checked');
-                    $('#PermissaoEspecialidades').iCheck('uncheck');
-                    $('#PermissaoEspecialidades').iCheck('disable');
-
-                    $('#PermissaoAgendaComercial').removeProp('checked');
-                    $('#PermissaoAgendaComercial').iCheck('uncheck');
-                    $('#PermissaoAgendaComercial').iCheck('disable');
-
-                    $('#PermissaoClienteComercial').removeProp('checked');
-                    $('#PermissaoClienteComercial').iCheck('uncheck');
-                    $('#PermissaoClienteComercial').iCheck('disable');
-
-                    $('#PermissaoRamos').removeProp('checked');
-                    $('#PermissaoRamos').iCheck('uncheck');
-                    $('#PermissaoRamos').iCheck('disable');
-
-                    $('#PermissaoUsuarios').removeProp('checked');
-                    $('#PermissaoUsuarios').iCheck('uncheck');
-                    $('#PermissaoUsuarios').iCheck('disable');
-
-                    $('#PermissaoTextos').removeProp('checked');
-                    $('#PermissaoTextos').iCheck('uncheck');
-                    $('#PermissaoTextos').iCheck('disable');
-
-                    $('#PermissaoRelatorios').prop('checked', true);
-                    $('#PermissaoRelatorios').iCheck('update');
-                    pro.style.display = "block"
-                    emp.style.display = "block"
-
-                    adm.style.display = "none"
-                    $('#admin').removeProp('checked');
-                    $('#admin').iCheck('uncheck');
                     break;
                 default:
-                    emp.style.display = "none"
                     pro.style.display = "none"
                     adm.style.display = "block"
                     break;

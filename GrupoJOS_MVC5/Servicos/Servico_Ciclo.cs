@@ -12,7 +12,7 @@ namespace GrupoJOS_MVC5.Servicos
     {
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
         Servico_Cliente servico_cliente = new Servico_Cliente();
-        Servico_Empresa servico_empresa = new Servico_Empresa();
+        Servico_Produto servico_produto = new Servico_Produto();
         Servico_AgendaCliente servico_agenda = new Servico_AgendaCliente();
 
         #region ListaCiclos
@@ -23,9 +23,9 @@ namespace GrupoJOS_MVC5.Servicos
             cliente_vazio.Nome = "Vazio";
             cliente_vazio.idcliente = 0;
 
-            ViewModelEmpresaResumida empresa_vazio = new ViewModelEmpresaResumida();
-            empresa_vazio.Nome = "Vazio";
-            empresa_vazio.idempresa = 0;
+            Model_Produto produto_vazio = new Model_Produto();
+            produto_vazio.Nome = "Vazio";
+            produto_vazio.idproduto = 0;
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
@@ -47,11 +47,11 @@ namespace GrupoJOS_MVC5.Servicos
                     ciclo.idusuario = TratarConversaoDeDados.TrataDouble(reader["idusuario"]);
 
                     //instancia as listas
-                    ciclo.segunda_list = new List<ViewModelEmpresaResumida>();
-                    ciclo.terca_list = new List<ViewModelEmpresaResumida>();
-                    ciclo.quarta_list = new List<ViewModelEmpresaResumida>();
-                    ciclo.quinta_list = new List<ViewModelEmpresaResumida>();
-                    ciclo.sexta_list = new List<ViewModelEmpresaResumida>();
+                    ciclo.segunda_list = new List<Model_Produto>();
+                    ciclo.terca_list = new List<Model_Produto>();
+                    ciclo.quarta_list = new List<Model_Produto>();
+                    ciclo.quinta_list = new List<Model_Produto>();
+                    ciclo.sexta_list = new List<Model_Produto>();
 
                     val = TratarConversaoDeDados.TrataString(reader["segunda"]);
                     if (val != "Vazio")
@@ -59,10 +59,10 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.segunda = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.segunda_emp = TratarConversaoDeDados.TrataString(reader["segunda_emp"]);
                         foreach (var item in ciclo.segunda_emp.Split(',').ToList())
-                        { ciclo.segunda_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
+                        { ciclo.segunda_list.Add(servico_produto.BuscaProduto(item)); }
 
                     }
-                    else { ciclo.segunda = cliente_vazio; ciclo.segunda_list.Add(empresa_vazio); }
+                    else { ciclo.segunda = cliente_vazio; ciclo.segunda_list.Add(produto_vazio); }
                     /****************************************************************************************/
                     val = TratarConversaoDeDados.TrataString(reader["terca"]);
                     if (val != "Vazio")
@@ -70,9 +70,9 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.terca = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.terca_emp = TratarConversaoDeDados.TrataString(reader["terca_emp"]);
                         foreach (var item in ciclo.terca_emp.Split(',').ToList())
-                        { ciclo.terca_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
+                        { ciclo.terca_list.Add(servico_produto.BuscaProduto(item)); }
                     }
-                    else { ciclo.terca = cliente_vazio; ciclo.terca_list.Add(empresa_vazio); }
+                    else { ciclo.terca = cliente_vazio; ciclo.terca_list.Add(produto_vazio); }
                     /****************************************************************************************/
                     val = TratarConversaoDeDados.TrataString(reader["quarta"]);
                     if (val != "Vazio")
@@ -80,9 +80,9 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.quarta = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.quarta_emp = TratarConversaoDeDados.TrataString(reader["quarta_emp"]);
                         foreach (var item in ciclo.quarta_emp.Split(',').ToList())
-                        { ciclo.quarta_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
+                        { ciclo.quarta_list.Add(servico_produto.BuscaProduto(item)); }
                     }
-                    else { ciclo.quarta = cliente_vazio; ciclo.quarta_list.Add(empresa_vazio); }
+                    else { ciclo.quarta = cliente_vazio; ciclo.quarta_list.Add(produto_vazio); }
                     /****************************************************************************************/
                     val = TratarConversaoDeDados.TrataString(reader["quinta"]);
                     if (val != "Vazio")
@@ -90,9 +90,9 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.quinta = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.quinta_emp = TratarConversaoDeDados.TrataString(reader["quinta_emp"]);
                         foreach (var item in ciclo.quinta_emp.Split(',').ToList())
-                        { ciclo.quinta_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
+                        { ciclo.quinta_list.Add(servico_produto.BuscaProduto(item)); }
                     }
-                    else { ciclo.quinta = cliente_vazio; ciclo.quinta_list.Add(empresa_vazio); }
+                    else { ciclo.quinta = cliente_vazio; ciclo.quinta_list.Add(produto_vazio); }
                     /****************************************************************************************/
                     val = TratarConversaoDeDados.TrataString(reader["sexta"]);
                     if (val != "Vazio")
@@ -100,9 +100,9 @@ namespace GrupoJOS_MVC5.Servicos
                         ciclo.sexta = servico_cliente.BuscaCliente(int.Parse(val));
                         ciclo.sexta_emp = TratarConversaoDeDados.TrataString(reader["sexta_emp"]);
                         foreach (var item in ciclo.sexta_emp.Split(',').ToList())
-                        { ciclo.sexta_list.Add(servico_empresa.BuscaEmpresaResumida(item)); }
+                        { ciclo.sexta_list.Add(servico_produto.BuscaProduto(item)); }
                     }
-                    else { ciclo.sexta = cliente_vazio; ciclo.sexta_list.Add(empresa_vazio); }
+                    else { ciclo.sexta = cliente_vazio; ciclo.sexta_list.Add(produto_vazio); }
                     /****************************************************************************************/
 
                     ListaCiclos.Add(ciclo);
@@ -116,18 +116,18 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Insere Ciclo
-        //Usuario, Semana , DiaVisita, HoraVisita, Cliente, Empresas
-        public void InsereCiclo(double Usuario, int Semana, String DiaVisita, string Hora, double Cliente, List<string> Empresas)
+        //Usuario, Semana , DiaVisita, HoraVisita, Cliente, Produtos
+        public void InsereCiclo(double Usuario, int Semana, String DiaVisita, string Hora, double Cliente, List<string> Produtos)
         {
             Hora.Substring(0, 5);
-            var ListaEmpresas = "";
+            var ListaProdutos = "";
 
-            foreach (var item in Empresas)
+            foreach (var item in Produtos)
             {
-                ListaEmpresas += item + ",";
+                ListaProdutos += item + ",";
             }
             //remove a ultima virgula
-            ListaEmpresas = ListaEmpresas.Remove(ListaEmpresas.Length -1);
+            ListaProdutos = ListaProdutos.Remove(ListaProdutos.Length -1);
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
@@ -153,7 +153,7 @@ namespace GrupoJOS_MVC5.Servicos
                         " idusuario = '" + Usuario + "', " +
                         " semana = '" + Semana + "', " +
                         " segunda = '" + Cliente + "', " +
-                        " segunda_emp = '" + ListaEmpresas + "' " +
+                        " segunda_emp = '" + ListaProdutos + "' " +
                         " WHERE idciclo = '"+idd+"'; ";
                     }
                     else if (DiaVisita == "Terça")
@@ -163,7 +163,7 @@ namespace GrupoJOS_MVC5.Servicos
                         " idusuario = '" + Usuario + "', " +
                         " semana = '" + Semana + "', " +
                         " terca = '" + Cliente + "', " +
-                        " terca_emp = '" + ListaEmpresas + "' " +
+                        " terca_emp = '" + ListaProdutos + "' " +
                         " WHERE idciclo = '" + idd + "'; "; 
                     }
                     else if (DiaVisita == "Quarta")
@@ -173,7 +173,7 @@ namespace GrupoJOS_MVC5.Servicos
                         " idusuario = '" + Usuario + "', " +
                         " semana = '" + Semana + "', " +
                         " quarta = '" + Cliente + "', " +
-                        " quarta_emp = '" + ListaEmpresas + "' " +
+                        " quarta_emp = '" + ListaProdutos + "' " +
                         " WHERE idciclo = '" + idd + "'; ";
                     }
                     else if (DiaVisita == "Quinta")
@@ -183,7 +183,7 @@ namespace GrupoJOS_MVC5.Servicos
                         " idusuario = '" + Usuario + "', " +
                         " semana = '" + Semana + "', " +
                         " quinta = '" + Cliente + "', " +
-                        " quinta_emp = '" + ListaEmpresas + "' " +
+                        " quinta_emp = '" + ListaProdutos + "' " +
                         " WHERE idciclo = '" + idd + "'; ";
                     }
                     else if (DiaVisita == "Sexta")
@@ -193,7 +193,7 @@ namespace GrupoJOS_MVC5.Servicos
                         " idusuario = '" + Usuario + "', " +
                         " semana = '" + Semana + "', " +
                         " sexta = '" + Cliente + "', " +
-                        " sexta_emp = '" + ListaEmpresas + "' " +
+                        " sexta_emp = '" + ListaProdutos + "' " +
                         " WHERE idciclo = '" + idd + "'; ";
                     }
 
@@ -205,35 +205,35 @@ namespace GrupoJOS_MVC5.Servicos
                         SQL = "INSERT INTO ciclos " +
                             "(hora, idusuario, semana, segunda, segunda_emp)" +
                             " VALUES" +
-                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaEmpresas + "')";
+                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaProdutos + "')";
                     }
                     else if (DiaVisita == "Terça")
                     {
                         SQL = "INSERT INTO ciclos " +
                             "(hora, idusuario, semana, terca, terca_emp)" +
                             " VALUES" +
-                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaEmpresas + "')";
+                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaProdutos + "')";
                     }
                     else if (DiaVisita == "Quarta")
                     {
                         SQL = "INSERT INTO ciclos " +
                             "(hora, idusuario, semana, quarta, quarta_emp)" +
                             " VALUES" +
-                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaEmpresas + "')";
+                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaProdutos + "')";
                     }
                     else if (DiaVisita == "Quinta")
                     {
                         SQL = "INSERT INTO ciclos " +
                             "(hora, idusuario, semana, quinta, quinta_emp)" +
                             " VALUES" +
-                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaEmpresas + "')";
+                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaProdutos + "')";
                     }
                     else if (DiaVisita == "Sexta")
                     {
                         SQL = "INSERT INTO ciclos " +
                             "(hora, idusuario, semana, sexta, sexta_emp)" +
                             " VALUES" +
-                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaEmpresas + "')";
+                            "('" + Hora + "','" + Usuario + "', '" + Semana + "', '" + Cliente + "','" + ListaProdutos + "')";
                     }
                 }
                 reader.Close();

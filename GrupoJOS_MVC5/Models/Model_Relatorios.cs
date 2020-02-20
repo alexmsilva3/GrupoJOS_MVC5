@@ -14,7 +14,7 @@ namespace GrupoJOS_MVC5.Models
 
     public class ViewModelRelatorioVisitas
     {
-        public ViewModelEmpresaAgenda relatorioAtendimento { get; set; }
+        public ViewModelProdutoAgenda relatorioAtendimento { get; set; }
         public List<Model_Especialidade> ContagemPorEspecialidade { get; set; }
         public int TotalAtendimento { get; set; }
         public DateTime DataInicio { get; set; }
@@ -53,8 +53,6 @@ namespace GrupoJOS_MVC5.Models
     {
         public ViewModelCampos campos { get; set; }
         public List<ViewModelAgenda> tipoPropagandista { get; set; }
-        public List<ViewModelAgendaComercial> tipoComercial { get; set; }
-
     }
 
 }

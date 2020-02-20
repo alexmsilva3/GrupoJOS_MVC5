@@ -13,10 +13,9 @@ namespace GrupoJOS_MVC5.Controllers
     {
         Servico_Usuario servico_usuario = new Servico_Usuario();
         Servico_Cliente servico_cliente = new Servico_Cliente();
-        Servico_ClienteComercial servico_clienteComercial = new Servico_ClienteComercial();
         Servico_AgendaCliente servico_agenda = new Servico_AgendaCliente();
         Servico_Login servico_login = new Servico_Login();
-        Servico_Empresa servico_empresa = new Servico_Empresa();
+        Servico_Produto servico_produto = new Servico_Produto();
         Servico_Relatorio servico_relatorio = new Servico_Relatorio();
 
         #region Index
@@ -38,29 +37,29 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                List<Model_Empresa> lista_empresa = new List<Model_Empresa>();
+                List<Model_Produto> lista_produto = new List<Model_Produto>();
 
                 if (cookie.idempresa != "0")
                 {
-                    var idempresa = Convert.ToDouble(cookie.idempresa);
-                    lista_empresa = servico_empresa.ListaEmpresa().FindAll(x => x.idempresa == idempresa);
+                    var idproduto = Convert.ToDouble(cookie.idempresa);
+                    lista_produto = servico_produto.ListaProduto().FindAll(x => x.idproduto == idproduto);
 
-                    return View("~/Views/Relatorios/Visitas/Visitas.cshtml", lista_empresa);
+                    return View("~/Views/Relatorios/Visitas/Visitas.cshtml", lista_produto);
                 }
 
-                lista_empresa = servico_empresa.ListaEmpresa();
-                return View("~/Views/Relatorios/Visitas/Visitas.cshtml",lista_empresa);
+                lista_produto = servico_produto.ListaProduto();
+                return View("~/Views/Relatorios/Visitas/Visitas.cshtml", lista_produto);
             }
 
             return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
-        public ActionResult VisitasResultado(double idempresa, DateTime DataInicio, DateTime DataFim)
+        public ActionResult VisitasResultado(double idproduto, DateTime DataInicio, DateTime DataFim)
         {
                 ViewModelRelatorioVisitas relatorio = new ViewModelRelatorioVisitas();
 
-                relatorio = servico_relatorio.RelatorioDeAtendimentos(idempresa, DataInicio, DataFim);
+                relatorio = servico_relatorio.RelatorioDeAtendimentos(idproduto, DataInicio, DataFim);
                 relatorio.DataInicio = DataInicio;
                 relatorio.DataFim = DataFim;
 
@@ -98,36 +97,6 @@ namespace GrupoJOS_MVC5.Controllers
         }
         #endregion
 
-        #region MinhasVisitasComercial
-        public ActionResult MinhasVisitasComercial()
-        {
-            var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.PermissaoAgendaComercial == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
-            {
-                return View("~/Views/Relatorios/MinhasVisitasComercial/Index.cshtml");
-            }
-            return RedirectToAction("Index", "Login");
-        }
-
-        [HttpPost]
-        public ActionResult MinhasVisitasComercial(DateTime DataInicio, DateTime DataFim)
-        {
-            var user = Request.Cookies["UsuarioID"].Value;
-            ViewModelAgendaComercialDashboard minhas_visitas = new ViewModelAgendaComercialDashboard();
-
-            minhas_visitas.visitas_arealizar = new List<ViewModelAgendaComercial>();
-            minhas_visitas.visitas_realizadas = new List<ViewModelAgendaComercial>();
-
-            ViewBag.DataInicio = DataInicio.ToShortDateString();
-            ViewBag.DataFim = DataFim.ToShortDateString();
-
-            minhas_visitas.visitas_arealizar = servico_agenda.ListaAgendaComercialData(DataInicio, DataFim, user, "0");
-            minhas_visitas.visitas_realizadas = servico_agenda.ListaAgendaComercialData(DataInicio, DataFim, user, "1");
-
-            return View("~/Views/Relatorios/MinhasVisitasComercial/Result.cshtml", minhas_visitas);
-        }
-        #endregion
-
         #region Relatorio Agenda
         public ActionResult Agenda(string idempresa)
         {
@@ -151,10 +120,9 @@ namespace GrupoJOS_MVC5.Controllers
             var cookie = servico_login.CheckCookie();
             if ((cookie.PermissaoRelatorios == "1" && cookie.UsuarioValidado) || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                ViewBag.ListaEmpresa = servico_empresa.ListaEmpresa();
+                ViewBag.ListaProduto = servico_produto.ListaProduto();
                 ViewBag.ListaUsuario = servico_usuario.ListaUsuariosInterno();
                 ViewBag.ListaCliente = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
-                ViewBag.ListaClienteComercial = servico_clienteComercial.ListaClienteComercial();
 
                 return View("~/Views/Relatorios/Gerencial/Index.cshtml");
             }

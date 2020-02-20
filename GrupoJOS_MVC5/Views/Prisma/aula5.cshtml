@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Prisma Didático";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Grupo JOS | @ViewBag.Title</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Add local styles, mostly for plugins css file -->
+    <!-- Add jQuery Style direct - used for jQGrid plugin -->
+    <link href="@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.css")" rel="stylesheet" type="text/css" />
+
+    <!-- Primary Inspinia style -->
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/font-awesome/css")
+
+</head>
+<body>
+
+    <!-- Skin configuration box -->
+    <!-- @Html.Partial("_SkinConfig") -->
+    <!-- Wrapper-->
+    <!-- PageClass give you ability to specify custom style for specific view based on action -->
+    <div id="wrapper" class="@Html.PageClass()">
+
+        <!-- Navigation -->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <span>
+                                <img alt="image" class="img-circle" src="~/Images/profile_small.jpg" />
+                            </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs">
+                                        <strong class="font-bold">Prisma</strong>
+                                    </span>
+                                    <span class="text-muted text-xs block">SENAI PONTA GROSSA/PR</span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="logo-element">
+                            JOS
+                        </div>
+                    </li>
+
+                    <li class="@Html.IsSelected(controller: "Prisma")">
+                        <a href="#"><i class="fa fa-bookmark-o"></i> <span class="nav-label" data-i18n="nav.ramos">Prima</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Prisma", cssClass: "in")">
+                            <li class="@Html.IsSelected(controller:"Prisma",action: "Index")"><a href="@Url.Action("Index", "Prisma")">Sobre</a></li>
+                            <li class="@Html.IsSelected(controller:"Prisma",action: "aula1")"><a href="@Url.Action("aula1", "Prisma")">Exercício 1</a></li>
+                            <li class="@Html.IsSelected(controller:"Prisma",action: "aula2")"><a href="@Url.Action("aula2", "Prisma")">Exercício 2</a></li>
+                            <li class="@Html.IsSelected(controller:"Prisma",action: "aula3")"><a href="@Url.Action("aula3", "Prisma")">Exercício 3</a></li>
+                            <li class="@Html.IsSelected(controller:"Prisma",action: "aula4")"><a href="@Url.Action("aula4", "Prisma")">Exercício 4</a></li>
+                            <li class="@Html.IsSelected(controller:"Prisma",action: "aula5")"><a href="@Url.Action("aula5", "Prisma")">Exercício 5</a></li>
+                            <li class="@Html.IsSelected(controller:"Prisma",action: "aula6")"><a href="@Url.Action("aula6", "Prisma")">Exercício 6</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
+
+            <!-- Top Navbar -->
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    </div>
+                </nav>
+            </div>
+            <!-- Main view  -->
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-12">
+                    <h2>@ViewBag.Title</h2>
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <a href="@Url.Action("Index", "Prisma")"><strong>@ViewBag.Title</strong></a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content">
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <a href="#" class="btn-link">
+                                        <h2>
+                                            Inserção e extração de rolamentos autocompensadores
+                                        </h2>
+                                    </a>
+                                    <p>
+                                        Nesse exercício o aluno devera inserir com facilidade a bucha no eixo. Em seguida deverá inserir o rolamento e o anel aranha e então encaixar a porca na rosca e, com a chave gancho, dar o torque necessário para o rolamento ficar bem fixado ao eixo. Para remoção do rolamento os mesmos procedimentos serão realizados.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <img class="img-responsive" src="~/Images/aula5_1.jpg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <img class="img-responsive" src="~/Images/aula5_2.jpg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End page wrapper-->
+            <!-- Right Sidebar -->
+            @*@Html.Partial("_RightSidebar")*@
+
+        </div>
+        <!-- End wrapper-->
+        <!-- Section for main scripts render -->
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/plugins/slimScroll")
+        @Scripts.Render("~/bundles/inspinia")
+
+        <!-- Skin config script - only for demo purpose-->
+        @Scripts.Render("~/bundles/skinConfig")
+
+        <!-- Handler for local scripts -->
+
+</body>
+</html>

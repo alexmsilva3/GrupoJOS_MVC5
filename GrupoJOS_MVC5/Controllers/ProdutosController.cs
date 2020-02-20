@@ -10,21 +10,21 @@ using System.Web.Optimization;
 
 namespace GrupoJOS_MVC5.Controllers
 {
-    public class RamosController : Controller
+    public class ProdutosController : Controller
     {
-        Servico_Ramos servico_ramo = new Servico_Ramos();
+        Servico_Produto servico_produto = new Servico_Produto();
         Servico_Login servico_login = new Servico_Login();
 
         #region Index
         public ActionResult Index()
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.PermissaoRamos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoProdutos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                return View(servico_ramo.ListaRamos());
+                return View(servico_produto.ListaProduto());
             }
             return RedirectToAction("Index", "Login");
-
+            
         }
         #endregion
 
@@ -33,12 +33,14 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Index(int Id)
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.PermissaoRamos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoProdutos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                servico_ramo.RemoveRamo(Id);
+                var id = Id.ToString();
+                servico_produto.RemoveProduto(id);
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index", "Login");
+
         }
         #endregion
 
@@ -46,48 +48,51 @@ namespace GrupoJOS_MVC5.Controllers
         public ActionResult Cadastro()
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.PermissaoRamos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoProdutos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 return View();
             }
             return RedirectToAction("Index", "Login");
+
         }
 
         [HttpPost]
-        public ActionResult Cadastro(Model_Ramos ramo)
+        public ActionResult Cadastro(Model_Produto prod)
         {
             if (ModelState.IsValid)
             {
-                servico_ramo.InsereRamo(ramo.Nome);
+                servico_produto.InsereProduto(prod.Nome);
                 return RedirectToAction("Index");
             }
             return View();
         }
         #endregion
 
-        #region Editar
+        #region Edição
         public ActionResult Editar(int Id)
         {
             var cookie = servico_login.CheckCookie();
-            if ((cookie.UsuarioValidado && cookie.PermissaoRamos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
+            if ((cookie.UsuarioValidado && cookie.PermissaoProdutos == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
-                var esp = servico_ramo.BuscaRamo(Id);
-                return View(esp);
+                var emp = servico_produto.BuscaProduto(Id.ToString());
+
+                return View(emp);
             }
             return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
-        public ActionResult Editar (Model_Ramos ramo)
+        public ActionResult Editar(Model_Produto prod, string AtivaConta)
         {
             if (ModelState.IsValid)
             {
-                servico_ramo.AtualizaRamo(ramo.idramo, ramo.Nome);
+                servico_produto.AtualizaProduto(prod.idproduto.ToString(), prod.Nome);
+
                 return RedirectToAction("Index");
             }
-            return View(ramo);
-
+            return View(prod);
         }
+
         #endregion
     }
 }

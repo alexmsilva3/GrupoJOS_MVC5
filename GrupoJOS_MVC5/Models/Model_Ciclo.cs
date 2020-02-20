@@ -14,24 +14,24 @@ namespace GrupoJOS_MVC5.Models
 
         public Model_Cliente segunda { get; set; }
         public string segunda_emp { get; set; }
-        public List<ViewModelEmpresaResumida> segunda_list { get; set; }
+        public List<Model_Produto> segunda_list { get; set; }
 
         public Model_Cliente terca { get; set; }
         public string terca_emp { get; set; }
-        public List<ViewModelEmpresaResumida> terca_list { get; set; }
+        public List<Model_Produto> terca_list { get; set; }
 
 
         public Model_Cliente quarta { get; set; }
         public string quarta_emp { get; set; }
-        public List<ViewModelEmpresaResumida> quarta_list { get; set; }
+        public List<Model_Produto> quarta_list { get; set; }
 
         public Model_Cliente quinta { get; set; }
         public string quinta_emp { get; set; }
-        public List<ViewModelEmpresaResumida> quinta_list { get; set; }
+        public List<Model_Produto> quinta_list { get; set; }
 
         public Model_Cliente sexta { get; set; }
         public string sexta_emp { get; set; }
-        public List<ViewModelEmpresaResumida> sexta_list { get; set; }
+        public List<Model_Produto> sexta_list { get; set; }
     }
 
     public class ViewModel_Ciclo

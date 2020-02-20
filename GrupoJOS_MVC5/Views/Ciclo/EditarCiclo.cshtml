@@ -122,21 +122,21 @@
                     <div class="col-lg-6">
                         <div class="ibox-content">
                             <p>
-                                Clínicas que podem ser apresentadas nessa visita.
+                                Produtos que podem ser apresentadas nessa visita.
                             </p>
                             <div class="form-group">
-                                <label class="font-noraml">Clínicas:</label>
+                                <label class="font-noraml">Produtos:</label>
                                 <div>
-                                    <select data-placeholder="Selecione uma ou mais clínicas" class="chosen-select" multiple tabindex="4" name="Empresas">
-                                        @foreach (var item in ViewBag.ListadeEmpresas)
+                                    <select data-placeholder="Selecione um ou mais Produtos" class="chosen-select" multiple tabindex="4" name="Produtos">
+                                        @foreach (var item in ViewBag.ListadeProdutos)
                                         {
-                                            <option value='@item.idempresa'>@item.Nome</option>
+                                            <option value='@item.idproduto'>@item.Nome</option>
                                         }
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <span class="field-validation-error text-danger" data-valmsg-for="Empresas" data-valmsg-replace="true">@ViewBag.ErroEmpresa</span>
+                        <span class="field-validation-error text-danger" data-valmsg-for="Produtos" data-valmsg-replace="true">@ViewBag.ErroProduto</span>
                     </div>
                 </div>
 

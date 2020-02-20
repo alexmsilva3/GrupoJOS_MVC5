@@ -12,7 +12,7 @@ namespace GrupoJOS_MVC5.Controllers
     {
         Servico_Login servico_login = new Servico_Login();
         Servico_Cliente servico_cliente = new Servico_Cliente();
-        Servico_Empresa servico_empresa = new Servico_Empresa();
+        Servico_Produto servico_produto = new Servico_Produto();
         Servico_Ciclo servico_ciclo = new Servico_Ciclo();
 
         List<string> diasSemana = new List<string>();
@@ -60,7 +60,7 @@ namespace GrupoJOS_MVC5.Controllers
             if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
-                ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
+                ViewBag.ListadeProdutos = servico_produto.ListaProduto();
                 ViewBag.Semana = id;
 
                 return View();
@@ -69,22 +69,22 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult Cadastro(string DiaVisita, string HoraVisita, double Cliente, List<string> Empresas, int Semana)
+        public ActionResult Cadastro(string DiaVisita, string HoraVisita, double Cliente, List<string> Produtos, int Semana)
         {
             var cookie = servico_login.CheckCookie();
             ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
-            ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
+            ViewBag.ListadeProdutos = servico_produto.ListaProduto();
             ViewBag.Semana = Semana;
 
             if (DiaVisita == null) { ViewBag.ErroData = "Dia inválido"; return View(); }
             if (string.IsNullOrEmpty(HoraVisita)) { ViewBag.ErroHora = "Hora inválida"; return View(); }
             if (double.IsNaN(Cliente)) { ViewBag.ErroCliente = "Cliente inválido"; return View(); }
-            if (Empresas == null) { ViewBag.ErroEmpresa = "Deve ser selecionado ao menos uma Clinica"; return View(); }
+            if (Produtos == null) { ViewBag.ErroProduto = "Deve ser selecionado ao menos um Produto"; return View(); }
 
             var user = Request.Cookies["UsuarioID"].Value;
             var Usuario = Convert.ToDouble(user);
 
-            servico_ciclo.InsereCiclo(Usuario, Semana , DiaVisita, HoraVisita, Cliente, Empresas);
+            servico_ciclo.InsereCiclo(Usuario, Semana , DiaVisita, HoraVisita, Cliente, Produtos);
 
             return RedirectToAction("Index", "Ciclo");
         }
@@ -118,7 +118,7 @@ namespace GrupoJOS_MVC5.Controllers
             if ((cookie.UsuarioValidado && cookie.PermissaoAgenda == "1") || (cookie.UsuarioValidado && cookie.UsuarioADM == "True"))
             {
                 ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
-                ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
+                ViewBag.ListadeProdutos = servico_produto.ListaProduto();
 
                 diasSemana.Add("Segunda");
                 diasSemana.Add("Terça");
@@ -137,11 +137,11 @@ namespace GrupoJOS_MVC5.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditarCiclo(int idciclo, int iddia, string DiaVisita, string HoraVisita, double Cliente, List<string> Empresas, int Semana)
+        public ActionResult EditarCiclo(int idciclo, int iddia, string DiaVisita, string HoraVisita, double Cliente, List<string> Produtos, int Semana)
         {
             var cookie = servico_login.CheckCookie();
             ViewBag.ListadeClientes = servico_cliente.ListaClientes(int.Parse(cookie.UsuarioID));
-            ViewBag.ListadeEmpresas = servico_empresa.ListaEmpresa();
+            ViewBag.ListadeProdutos = servico_produto.ListaProduto();
 
             diasSemana.Add("Segunda");
             diasSemana.Add("Terça");
@@ -156,7 +156,7 @@ namespace GrupoJOS_MVC5.Controllers
             if (DiaVisita == null) { ViewBag.ErroData = "Dia inválido"; verificador = false; }
             if (string.IsNullOrEmpty(HoraVisita)) { ViewBag.ErroHora = "Hora inválida"; verificador = false; }
             if (double.IsNaN(Cliente)) { ViewBag.ErroCliente = "Cliente inválido"; verificador = false;  }
-            if (Empresas == null) { ViewBag.ErroEmpresa = "Deve ser selecionado ao menos uma Clinica"; verificador = false; }
+            if (Produtos == null) { ViewBag.ErroProduto = "Deve ser selecionado ao menos um Produto"; verificador = false; }
 
             if (verificador == false)
             {
@@ -168,7 +168,7 @@ namespace GrupoJOS_MVC5.Controllers
             var user = Request.Cookies["UsuarioID"].Value;
             var Usuario = Convert.ToDouble(user);
 
-            servico_ciclo.InsereCiclo(Usuario, Semana, DiaVisita, HoraVisita, Cliente, Empresas);
+            servico_ciclo.InsereCiclo(Usuario, Semana, DiaVisita, HoraVisita, Cliente, Produtos);
 
             return RedirectToAction("Editar/"+Semana, "Ciclo");
         }

@@ -13,15 +13,15 @@ namespace GrupoJOS_MVC5.Servicos
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
 
         #region Lista Agenda Empresa
-        public List<Model_Empresa> ListaAgendaEmpresa(double idagenda)
+        public List<Model_Produto> ListaAgendaProduto(double idproduto)
         {
-            List<Model_Empresa> ListaAgendaEmpresa = new List<Model_Empresa>();
+            List<Model_Produto> ListaAgendaProduto = new List<Model_Produto>();
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
                 string SQL = "";
                 SQL = "SELECT * FROM agenda_emp" +
-                    " INNER JOIN empresas ON agenda_emp.idempresa = empresas.idempresa " +
-                    " WHERE idagenda = "+ idagenda +" ";
+                    " INNER JOIN produtos ON agenda_emp.idproduto = produtos.idproduto " +
+                    " WHERE idagenda = "+ idproduto + " ";
 
                 connection.Open();
                 MySqlCommand command = new MySqlCommand(SQL, connection);
@@ -29,31 +29,16 @@ namespace GrupoJOS_MVC5.Servicos
 
                 while (reader.Read())
                 {
-                    Model_Empresa emp = new Model_Empresa();
-                    emp.idempresa = TratarConversaoDeDados.TrataDouble(reader["idempresa"]);
+                    Model_Produto emp = new Model_Produto();
+                    emp.idproduto = TratarConversaoDeDados.TrataDouble(reader["idproduto"]);
                     emp.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
-                    emp.RazaoSocial = TratarConversaoDeDados.TrataString(reader["RazaoSocial"]);
-                    emp.CNPJ = TratarConversaoDeDados.TrataString(reader["CNPJ"]);
-                    emp.InscricaoEstadual = TratarConversaoDeDados.TrataString(reader["InscricaoEstadual"]);
-                    emp.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
-                    emp.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
-                    emp.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
-                    emp.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
-                    emp.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
-                    emp.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
-                    emp.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
-                    emp.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
-                    emp.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
-                    emp.Ativo = TratarConversaoDeDados.TrataBit(reader["Ativo"]);
-                    emp.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
-                    emp.DataCancelado = TratarConversaoDeDados.TrataDateTime(reader["DataCancelado"]);
 
-                    ListaAgendaEmpresa.Add(emp);
+                    ListaAgendaProduto.Add(emp);
                 }
                 reader.Close();
                 connection.Close();
             }
-            return ListaAgendaEmpresa;
+            return ListaAgendaProduto;
         }
         #endregion
 

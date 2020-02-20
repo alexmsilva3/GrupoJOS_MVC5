@@ -62,7 +62,7 @@
                                         <td>@item.cliente.Nome</td>
 
                                         <td>
-                                            @foreach (var item2 in @item.empresa)
+                                            @foreach (var item2 in @item.produto)
                                             {
                                                 <span class="label label-info">@item2.Nome</span>
                                             }
@@ -114,7 +114,7 @@
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                             <h4 class="modal-title">Reagendar Visita</h4>
-                                            <small class="font-bold">É possivel realizar a alteração para Data e Hora dessa visita, caso necessite alterar dados referente ao cliente ou empresa, necessário editar o agendamento.</small>
+                                            <small class="font-bold">É possivel realizar a alteração para Data e Hora dessa visita, caso necessite alterar dados referente ao cliente ou produto, necessário editar o agendamento.</small>
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
@@ -223,7 +223,7 @@
                                         <td>@item.cliente.Nome</td>
 
                                         <td>
-                                            @foreach (var item2 in @item.empresa)
+                                            @foreach (var item2 in @item.produto)
                                             {
                                                 <span class="label label-info">@item2.Nome</span>
                                             }

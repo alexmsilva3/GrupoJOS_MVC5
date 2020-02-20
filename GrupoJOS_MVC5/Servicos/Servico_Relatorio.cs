@@ -10,7 +10,7 @@ namespace GrupoJOS_MVC5.Servicos
     public class Servico_Relatorio
     {
         string MySQLServer = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlServer"].ConnectionString;
-        Servico_Empresa servico_empresa = new Servico_Empresa();
+        Servico_Produto servico_produto = new Servico_Produto();
         Servico_AgendaCliente servico_agenda = new Servico_AgendaCliente();
         Servico_Cliente servico_cliente = new Servico_Cliente();
         Servico_Especialidade servico_especialidade = new Servico_Especialidade();
@@ -21,8 +21,8 @@ namespace GrupoJOS_MVC5.Servicos
         {
             ViewModelRelatorioVisitas relatorio = new ViewModelRelatorioVisitas();
             relatorio.ContagemPorEspecialidade = servico_especialidade.ListaEspecialidade();
-            relatorio.relatorioAtendimento = new ViewModelEmpresaAgenda();
-            relatorio.relatorioAtendimento.empresa = servico_empresa.BuscaEmpresa(idempresa.ToString());
+            relatorio.relatorioAtendimento = new ViewModelProdutoAgenda();
+            relatorio.relatorioAtendimento.produto = servico_produto.BuscaProduto(idempresa.ToString());
 
             var tmpList = new List<ViewModelAgendaCliente>();
 
@@ -92,7 +92,7 @@ namespace GrupoJOS_MVC5.Servicos
 
 
             //substitui os "empresasagenda" por relatorioAtendimento.agenda_cliente
-            relatorio.relatorioAtendimento.agenda_cliente = new List<ViewModelEmpresasAgenda>();
+            relatorio.relatorioAtendimento.agenda_cliente = new List<ViewModelProdutosAgenda>();
 
             foreach (var item in tmpList)
             {
@@ -114,7 +114,7 @@ namespace GrupoJOS_MVC5.Servicos
 
                 if (!exists)
                 {
-                    var obj = new ViewModelEmpresasAgenda();
+                    var obj = new ViewModelProdutosAgenda();
                     obj.agenda = item.agenda;
                     obj.clientes = new List<Model_Cliente>();
                     obj.clientes.Add(item.cliente);
@@ -151,8 +151,6 @@ namespace GrupoJOS_MVC5.Servicos
         #region Relatorio Gerencial
         public ViewModelRelatorioGerencial RelatorioGerencial(ViewModelRelatorioGerencial relatorio)
         {
-            if (relatorio.campos.tipo == "0")
-            {
                 relatorio.tipoPropagandista = new List<ViewModelAgenda>();
 
                 using (MySqlConnection connection = new MySqlConnection(MySQLServer))
@@ -196,7 +194,7 @@ namespace GrupoJOS_MVC5.Servicos
                         tipoPropagandista.agenda = new Model_Agenda();
                         tipoPropagandista.cliente = new Model_Cliente();
                         tipoPropagandista.usuario = new Model_Usuario();
-                        tipoPropagandista.empresa = new List<Model_Empresa>();
+                        tipoPropagandista.produto = new List<Model_Produto>();
 
                         tipoPropagandista.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
                         tipoPropagandista.agenda.DataVisita = TratarConversaoDeDados.TrataString(reader["DataVisita"]);
@@ -215,12 +213,12 @@ namespace GrupoJOS_MVC5.Servicos
 
                         tipoPropagandista.usuario.Nome = TratarConversaoDeDados.TrataString(reader["NomeUsuario"]);
 
-                        var emp = servico_agemp.ListaAgendaEmpresa(tipoPropagandista.agenda.idagenda);
-                        for (int i = 0; i < emp.Count; i++)
+                        var prod = servico_agemp.ListaAgendaProduto(tipoPropagandista.agenda.idagenda);
+                        for (int i = 0; i < prod.Count; i++)
                         {
-                            tipoPropagandista.empresa.Add(new Model_Empresa()
+                            tipoPropagandista.produto.Add(new Model_Produto()
                             {
-                                Nome = emp[i].Nome
+                                Nome = prod[i].Nome
                             });
                         }
 
@@ -229,72 +227,8 @@ namespace GrupoJOS_MVC5.Servicos
                     reader.Close();
                     connection.Close();
                 }
-
                 return relatorio;
-            }
-            else
-            {
-                relatorio.tipoComercial = new List<ViewModelAgendaComercial>();
-
-                using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-                {
-                    string SQL = "";
-                    SQL = "SELECT agenda.*, " +
-                    " clientes_comercial.Nome AS NomeCliente," +
-                    " usuarios.Nome AS NomeUsuario," +
-                    " ramos.ramoNome AS RamoNome" +
-                    " FROM agenda " +
-                    " RIGHT JOIN clientes_comercial ON agenda.Comercial = clientes_comercial.idclientecomercial" +
-                    " LEFT JOIN ramos ON clientes_comercial.Ramo = ramos.idramo" +
-                    " LEFT JOIN usuarios ON agenda.Usuario = usuarios.idusuario" +
-                    " WHERE 1 = 1";
-
-                    if (!String.IsNullOrEmpty(relatorio.campos.idusuario))
-                    {
-                        SQL = SQL + " AND usuarios.idusuario = " + relatorio.campos.idusuario + " ";
-                    }
-                    if (!String.IsNullOrEmpty(relatorio.campos.idcliente))
-                    {
-                        SQL = SQL + " AND clientes_comercial.idclientecomercial = " + relatorio.campos.idclienteComercial + " ";
-                    }
-
-                    //" AND agenda.DataVisita = '' " +
-                    //" AND agenda.DataFinalizada = ''" +
-
-                    SQL = SQL + " ORDER BY agenda.idagenda;";
-
-                    connection.Open();
-                    MySqlCommand command = new MySqlCommand(SQL, connection);
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        ViewModelAgendaComercial tipoComercial = new ViewModelAgendaComercial();
-                        tipoComercial.agenda = new Model_Agenda();
-                        tipoComercial.clienteComercial = new Model_ClienteComercial();
-                        tipoComercial.usuario = new Model_Usuario();
-
-
-                        tipoComercial.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
-                        tipoComercial.agenda.DataVisita = TratarConversaoDeDados.TrataString(reader["DataVisita"]);
-                        tipoComercial.agenda.HoraVisita = TratarConversaoDeDados.TrataString(reader["HoraVisita"]);
-                        tipoComercial.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
-                        tipoComercial.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
-                        tipoComercial.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
-                        tipoComercial.agenda.DataFinalizadaReal = TratarConversaoDeDados.TrataString(reader["DataFinalizadaReal"]);
-
-                        tipoComercial.clienteComercial.Nome = TratarConversaoDeDados.TrataString(reader["NomeCliente"]);
-                        tipoComercial.clienteComercial.RamoNome = TratarConversaoDeDados.TrataString(reader["RamoNome"]);
-
-                        tipoComercial.usuario.Nome = TratarConversaoDeDados.TrataString(reader["NomeUsuario"]);
-
-                        relatorio.tipoComercial.Add(tipoComercial);
-                    }
-                    reader.Close();
-                    connection.Close();
-                }
-                return relatorio;
-            }
+            
         }
         #endregion
     }

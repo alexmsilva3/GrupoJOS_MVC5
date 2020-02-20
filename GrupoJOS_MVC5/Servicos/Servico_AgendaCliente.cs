@@ -21,7 +21,7 @@ namespace GrupoJOS_MVC5.Servicos
             ViewModelAgenda AgendaPorX = new ViewModelAgenda();
             AgendaPorX.agenda = new Model_Agenda();
             AgendaPorX.cliente = new Model_Cliente();
-            AgendaPorX.empresa = new List<Model_Empresa>();
+            AgendaPorX.produto = new List<Model_Produto>();
 
 
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
@@ -79,26 +79,14 @@ namespace GrupoJOS_MVC5.Servicos
                     AgendaPorX.cliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
 
 
-                    AgendaPorX.empresa = new List<Model_Empresa>();
-                    var emp = servico_agemp.ListaAgendaEmpresa(AgendaPorX.agenda.idagenda);
-                    for (int i = 0; i < emp.Count; i++)
+                    AgendaPorX.produto = new List<Model_Produto>();
+                    var prod = servico_agemp.ListaAgendaProduto(AgendaPorX.agenda.idagenda);
+                    for (int i = 0; i < prod.Count; i++)
                     {
-                        AgendaPorX.empresa.Add(new Model_Empresa()
+                        AgendaPorX.produto.Add(new Model_Produto()
                         {
-                            idempresa = emp[i].idempresa,
-                            Nome = emp[i].Nome,
-                            RazaoSocial = emp[i].RazaoSocial,
-                            CNPJ = emp[i].CNPJ,
-                            InscricaoEstadual = emp[i].InscricaoEstadual,
-                            Endereco = emp[i].Endereco,
-                            Num = emp[i].Num,
-                            Bairro = emp[i].Bairro,
-                            Cidade = emp[i].Cidade,
-                            UF = emp[i].UF,
-                            Contato = emp[i].Contato,
-                            Email = emp[i].Email,
-                            Fone1 = emp[i].Fone1,
-                            Fone2 = emp[i].Fone2
+                            idproduto = prod[i].idproduto,
+                            Nome = prod[i].Nome
                         });
                     }
 
@@ -143,7 +131,7 @@ namespace GrupoJOS_MVC5.Servicos
                     ViewModelAgenda ag = new ViewModelAgenda();
                     ag.agenda = new Model_Agenda();
                     ag.cliente = new Model_Cliente();
-                    ag.empresa = new List<Model_Empresa>();
+                    ag.produto = new List<Model_Produto>();
 
                     ag.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
                     ag.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
@@ -180,26 +168,14 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.cliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
 
 
-                    ag.empresa = new List<Model_Empresa>();
-                    var emp = servico_agemp.ListaAgendaEmpresa(ag.agenda.idagenda);
-                    for (int i = 0; i < emp.Count; i++)
+                    ag.produto = new List<Model_Produto>();
+                    var prod = servico_agemp.ListaAgendaProduto(ag.agenda.idagenda);
+                    for (int i = 0; i < prod.Count; i++)
                     {
-                        ag.empresa.Add( new Model_Empresa()
+                        ag.produto.Add( new Model_Produto()
                         {
-                            idempresa = emp[i].idempresa,
-                            Nome = emp[i].Nome,
-                            RazaoSocial = emp[i].RazaoSocial,
-                            CNPJ = emp[i].CNPJ,
-                            InscricaoEstadual = emp[i].InscricaoEstadual,
-                            Endereco = emp[i].Endereco,
-                            Num = emp[i].Num,
-                            Bairro = emp[i].Bairro,
-                            Cidade = emp[i].Cidade,
-                            UF = emp[i].UF,
-                            Contato = emp[i].Contato,
-                            Email = emp[i].Email,
-                            Fone1 = emp[i].Fone1,
-                            Fone2 = emp[i].Fone2
+                            idproduto = prod[i].idproduto,
+                            Nome = prod[i].Nome
                         });
                     }
 
@@ -236,7 +212,7 @@ namespace GrupoJOS_MVC5.Servicos
                     ViewModelAgenda ag = new ViewModelAgenda();
                     ag.agenda = new Model_Agenda();
                     ag.cliente = new Model_Cliente();
-                    ag.empresa = new List<Model_Empresa>();
+                    ag.produto = new List<Model_Produto>();
 
                     ag.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
                     ag.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
@@ -273,26 +249,14 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.cliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
 
 
-                    ag.empresa = new List<Model_Empresa>();
-                    var emp = servico_agemp.ListaAgendaEmpresa(ag.agenda.idagenda);
-                    for (int i = 0; i < emp.Count; i++)
+                    ag.produto = new List<Model_Produto>();
+                    var prod = servico_agemp.ListaAgendaProduto(ag.agenda.idagenda);
+                    for (int i = 0; i < prod.Count; i++)
                     {
-                        ag.empresa.Add(new Model_Empresa()
+                        ag.produto.Add(new Model_Produto()
                         {
-                            idempresa = emp[i].idempresa,
-                            Nome = emp[i].Nome,
-                            RazaoSocial = emp[i].RazaoSocial,
-                            CNPJ = emp[i].CNPJ,
-                            InscricaoEstadual = emp[i].InscricaoEstadual,
-                            Endereco = emp[i].Endereco,
-                            Num = emp[i].Num,
-                            Bairro = emp[i].Bairro,
-                            Cidade = emp[i].Cidade,
-                            UF = emp[i].UF,
-                            Contato = emp[i].Contato,
-                            Email = emp[i].Email,
-                            Fone1 = emp[i].Fone1,
-                            Fone2 = emp[i].Fone2
+                            idproduto = prod[i].idproduto,
+                            Nome = prod[i].Nome
                         });
                     }
 
@@ -330,7 +294,7 @@ namespace GrupoJOS_MVC5.Servicos
                     ViewModelAgenda ag = new ViewModelAgenda();
                     ag.agenda = new Model_Agenda();
                     ag.cliente = new Model_Cliente();
-                    ag.empresa = new List<Model_Empresa>();
+                    ag.produto = new List<Model_Produto>();
 
                     ag.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
                     ag.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
@@ -367,26 +331,14 @@ namespace GrupoJOS_MVC5.Servicos
                     ag.cliente.NomeEspecialidade5 = TratarConversaoDeDados.TrataString(reader["Especialidade5"]);
 
 
-                    ag.empresa = new List<Model_Empresa>();
-                    var emp = servico_agemp.ListaAgendaEmpresa(ag.agenda.idagenda);
-                    for (int i = 0; i < emp.Count; i++)
+                    ag.produto = new List<Model_Produto>();
+                    var prod = servico_agemp.ListaAgendaProduto(ag.agenda.idagenda);
+                    for (int i = 0; i < prod.Count; i++)
                     {
-                        ag.empresa.Add(new Model_Empresa()
+                        ag.produto.Add(new Model_Produto()
                         {
-                            idempresa = emp[i].idempresa,
-                            Nome = emp[i].Nome,
-                            RazaoSocial = emp[i].RazaoSocial,
-                            CNPJ = emp[i].CNPJ,
-                            InscricaoEstadual = emp[i].InscricaoEstadual,
-                            Endereco = emp[i].Endereco,
-                            Num = emp[i].Num,
-                            Bairro = emp[i].Bairro,
-                            Cidade = emp[i].Cidade,
-                            UF = emp[i].UF,
-                            Contato = emp[i].Contato,
-                            Email = emp[i].Email,
-                            Fone1 = emp[i].Fone1,
-                            Fone2 = emp[i].Fone2
+                            idproduto = prod[i].idproduto,
+                            Nome = prod[i].Nome
                         });
                     }
 
@@ -418,7 +370,7 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Insere Agenda
-        public void InsereAgenda(double Usuario, DateTime Data, string Hora, double Cliente, List<ViewModelEmpresaResumida> ListaEmpresas)
+        public void InsereAgenda(double Usuario, DateTime Data, string Hora, double Cliente, List<Model_Produto> ListaProdutos)
         {
             Hora.Substring(0,5);
 
@@ -436,9 +388,9 @@ namespace GrupoJOS_MVC5.Servicos
                 double id = command.LastInsertedId;
 
                 SQL = "";
-                foreach (var item in ListaEmpresas)
+                foreach (var item in ListaProdutos)
                 {
-                    SQL = "INSERT INTO agenda_emp VALUES ("+id+","+item.idempresa+"); ";
+                    SQL = "INSERT INTO agenda_emp VALUES ("+id+","+item.idproduto+"); ";
                     MySqlCommand command2 = new MySqlCommand(SQL, connection);
                     command2.ExecuteNonQuery();
                 }
@@ -488,7 +440,7 @@ namespace GrupoJOS_MVC5.Servicos
         #endregion
 
         #region Atualiza Agenda Completa
-        public void AtualizaAgendaCompleta(double idagenda, DateTime Data, string Hora, double Cliente, List<string> Empresas, string obs, DateTime DataFinalizada)
+        public void AtualizaAgendaCompleta(double idagenda, DateTime Data, string Hora, double Cliente, List<string> Produtos, string obs, DateTime DataFinalizada)
         {
             using (MySqlConnection connection = new MySqlConnection(MySQLServer))
             {
@@ -509,16 +461,16 @@ namespace GrupoJOS_MVC5.Servicos
 
                 //remover
                 SQL = "";
-                foreach (var item in Empresas)
+                foreach (var item in Produtos)
                 {
-                    SQL = "DELETE FROM agenda_emp WHERE idagenda = " + idagenda + " ";
+                    SQL = "DELETE FROM agenda_emp WHERE idproduto = " + idagenda + " ";
                     MySqlCommand command2 = new MySqlCommand(SQL, connection);
                     command2.ExecuteNonQuery();
                 }
 
                 //inserir
                 SQL = "";
-                foreach (var item in Empresas)
+                foreach (var item in Produtos)
                 {
                     SQL = "INSERT INTO agenda_emp VALUES (" + idagenda + "," + item + "); ";
                     MySqlCommand command3 = new MySqlCommand(SQL, connection);
@@ -694,328 +646,332 @@ namespace GrupoJOS_MVC5.Servicos
             return Total;
         }
         #endregion
-
-        //COMERCIAL
-
-        #region AgendaComercialPorX
-        public ViewModelAgendaComercial AgendaComercialPorX(string campo, string valor)
-        {
-            ViewModelAgendaComercial AgendaComercialPorX = new ViewModelAgendaComercial();
-            AgendaComercialPorX.agenda = new Model_Agenda();
-            AgendaComercialPorX.clienteComercial = new Model_ClienteComercial();
-
-            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-            {
-                string SQL = "";
-                SQL = "SELECT agenda.*, clientes_comercial.*, ramos.ramoNome" +
-                    " FROM ramos, agenda" +
-                    " INNER JOIN clientes_comercial ON agenda.Comercial = clientes_comercial.idclientecomercial" +
-                    " WHERE " + campo + " = " + valor + " " +
-                    " AND ramos.idramo = clientes_comercial.Ramo";
-
-                connection.Open();
-                MySqlCommand command = new MySqlCommand(SQL, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    AgendaComercialPorX.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
-                    AgendaComercialPorX.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
-                    AgendaComercialPorX.agenda.DataVisita = TratarConversaoDeDados.TrataString(reader["DataVisita"]);
-                    AgendaComercialPorX.agenda.HoraVisita = TratarConversaoDeDados.TrataString(reader["HoraVisita"]);
-                    AgendaComercialPorX.agenda.Cliente = TratarConversaoDeDados.TrataDouble(reader["Cliente"]);
-                    AgendaComercialPorX.agenda.Comercial = TratarConversaoDeDados.TrataDouble(reader["Comercial"]);
-                    AgendaComercialPorX.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
-                    AgendaComercialPorX.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
-                    AgendaComercialPorX.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
-                    AgendaComercialPorX.agenda.DataFinalizadaReal = TratarConversaoDeDados.TrataString(reader["DataFinalizadaReal"]);
-
-                    //AgendaComercialPorX.clienteComercial
-                    AgendaComercialPorX.clienteComercial.idclientecomercial = TratarConversaoDeDados.TrataDouble(reader["idclientecomercial"]);
-                    AgendaComercialPorX.clienteComercial.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
-                    AgendaComercialPorX.clienteComercial.RazaoSocial = TratarConversaoDeDados.TrataString(reader["RazaoSocial"]);
-                    AgendaComercialPorX.clienteComercial.CNPJ = TratarConversaoDeDados.TrataString(reader["CNPJ"]);
-                    AgendaComercialPorX.clienteComercial.InscricaoEstadual = TratarConversaoDeDados.TrataString(reader["InscricaoEstadual"]);
-                    AgendaComercialPorX.clienteComercial.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
-                    AgendaComercialPorX.clienteComercial.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
-                    AgendaComercialPorX.clienteComercial.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
-                    AgendaComercialPorX.clienteComercial.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
-                    AgendaComercialPorX.clienteComercial.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
-                    AgendaComercialPorX.clienteComercial.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
-                    AgendaComercialPorX.clienteComercial.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
-                    AgendaComercialPorX.clienteComercial.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
-                    AgendaComercialPorX.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
-                    AgendaComercialPorX.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
-                    AgendaComercialPorX.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
-                    AgendaComercialPorX.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
-                    AgendaComercialPorX.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
-                    AgendaComercialPorX.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
-
-                    AgendaComercialPorX.clienteComercial.RamoNome = TratarConversaoDeDados.TrataString(reader["ramoNome"]);
-                }
-                reader.Close();
-                connection.Close();
-            }
-            return AgendaComercialPorX;
-        }
-        #endregion
-
-        #region ListaAgendaComercialPorX
-        public List<ViewModelAgendaComercial> ListaAgendaComercialPorX(string campo, string valor, bool status)
-        {
-            List<ViewModelAgendaComercial> ListaAgendaComercialPorX = new List<ViewModelAgendaComercial>();
-
-            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-            {
-                string SQL = "";
-                SQL = "SELECT agenda.*, clientes_comercial.*, ramos.ramoNome" +
-                    " FROM ramos, agenda " +
-                    " INNER JOIN clientes_comercial ON agenda.Comercial = clientes_comercial.idclientecomercial" +
-                    " WHERE " + campo + " = " + valor + " AND agenda.Status = " + status + " " +
-                    " AND ramos.idramo = clientes_comercial.Ramo";
-
-                connection.Open();
-                MySqlCommand command = new MySqlCommand(SQL, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    ViewModelAgendaComercial ag = new ViewModelAgendaComercial();
-                    ag.agenda = new Model_Agenda();
-                    ag.clienteComercial = new Model_ClienteComercial();
-
-                    ag.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
-                    ag.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
-                    ag.agenda.DataVisita = TratarConversaoDeDados.TrataString(reader["DataVisita"]);
-                    ag.agenda.HoraVisita = TratarConversaoDeDados.TrataString(reader["HoraVisita"]);
-                    ag.agenda.Cliente = TratarConversaoDeDados.TrataDouble(reader["Cliente"]);
-                    ag.agenda.Comercial = TratarConversaoDeDados.TrataDouble(reader["Comercial"]);
-                    ag.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
-                    ag.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
-                    ag.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
-
-                    ag.clienteComercial.idclientecomercial = TratarConversaoDeDados.TrataDouble(reader["idclientecomercial"]);
-                    ag.clienteComercial.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
-                    ag.clienteComercial.RazaoSocial = TratarConversaoDeDados.TrataString(reader["RazaoSocial"]);
-                    ag.clienteComercial.CNPJ = TratarConversaoDeDados.TrataString(reader["CNPJ"]);
-                    ag.clienteComercial.InscricaoEstadual = TratarConversaoDeDados.TrataString(reader["InscricaoEstadual"]);
-                    ag.clienteComercial.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
-                    ag.clienteComercial.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
-                    ag.clienteComercial.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
-                    ag.clienteComercial.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
-                    ag.clienteComercial.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
-                    ag.clienteComercial.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
-                    ag.clienteComercial.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
-                    ag.clienteComercial.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
-                    ag.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
-                    ag.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
-                    ag.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
-                    ag.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
-                    ag.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
-                    ag.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
-
-                    ag.clienteComercial.RamoNome = TratarConversaoDeDados.TrataString(reader["ramoNome"]);
-
-                    ListaAgendaComercialPorX.Add(ag);
-                }
-                reader.Close();
-                connection.Close();
-            }
-            return ListaAgendaComercialPorX;
-        }
-        #endregion
-
-        #region ListaAgendaComercialData
-        public List<ViewModelAgendaComercial> ListaAgendaComercialData(DateTime DataInicio, DateTime DataFim, string usuario, string status)
-        {
-            List<ViewModelAgendaComercial> ListaAgendaComercialData = new List<ViewModelAgendaComercial>();
-
-            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-            {
-                string SQL = "";
-                SQL = "SELECT clientes_comercial.*, ramos.ramoNome, agenda.* "+
-                    " FROM  clientes_comercial " +
-                    " INNER JOIN ramos ON ramos.idramo = clientes_comercial.Ramo"+
-                    " INNER JOIN agenda ON clientes_comercial.idclientecomercial = agenda.Comercial"+
-                    " WHERE DataVisita >= '"+DataInicio.ToString("yyyy-MM-dd")+"' "+
-                    " AND DataVisita <= '"+DataFim.ToString("yyyy-MM-dd")+"' "+
-                    " AND agenda.Status = '"+status+"' " +
-                    " AND agenda.usuario = '"+usuario+"' ";
-
-                connection.Open();
-                MySqlCommand command = new MySqlCommand(SQL, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    ViewModelAgendaComercial ag = new ViewModelAgendaComercial();
-                    ag.agenda = new Model_Agenda();
-                    ag.clienteComercial = new Model_ClienteComercial();
-
-                    ag.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
-                    ag.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
-                    ag.agenda.DataVisita = TratarConversaoDeDados.TrataString(reader["DataVisita"]);
-                    ag.agenda.HoraVisita = TratarConversaoDeDados.TrataString(reader["HoraVisita"]);
-                    ag.agenda.Cliente = TratarConversaoDeDados.TrataDouble(reader["Cliente"]);
-                    ag.agenda.Comercial = TratarConversaoDeDados.TrataDouble(reader["Comercial"]);
-                    ag.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
-                    ag.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
-                    ag.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
-
-                    ag.clienteComercial.idclientecomercial = TratarConversaoDeDados.TrataDouble(reader["idclientecomercial"]);
-                    ag.clienteComercial.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
-                    ag.clienteComercial.RazaoSocial = TratarConversaoDeDados.TrataString(reader["RazaoSocial"]);
-                    ag.clienteComercial.CNPJ = TratarConversaoDeDados.TrataString(reader["CNPJ"]);
-                    ag.clienteComercial.InscricaoEstadual = TratarConversaoDeDados.TrataString(reader["InscricaoEstadual"]);
-                    ag.clienteComercial.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
-                    ag.clienteComercial.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
-                    ag.clienteComercial.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
-                    ag.clienteComercial.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
-                    ag.clienteComercial.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
-                    ag.clienteComercial.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
-                    ag.clienteComercial.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
-                    ag.clienteComercial.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
-                    ag.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
-                    ag.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
-                    ag.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
-                    ag.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
-                    ag.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
-                    ag.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
-
-                    ag.clienteComercial.RamoNome = TratarConversaoDeDados.TrataString(reader["ramoNome"]);
-
-                    ListaAgendaComercialData.Add(ag);
-                }
-                reader.Close();
-                connection.Close();
-            }
-            return ListaAgendaComercialData;
-        }
-        #endregion
-
-        #region InsereAgendaComercial
-        public void InsereAgendaComercial(double Usuario, DateTime Data, string Hora, double idClienteComercial)
-        {
-            Hora.Substring(0, 5);
-
-            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-            {
-                string SQL = "";
-                SQL = "INSERT INTO agenda " +
-                    "(Usuario,DataVisita,HoraVisita,Comercial,Status)" +
-                    "VALUES" +
-                    "(" + Usuario + ",'" + Data.ToString("yyyy-MM-dd") + "','" + Hora + "'," + idClienteComercial + ",0);";
-
-                connection.Open();
-                MySqlCommand command = new MySqlCommand(SQL, connection);
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-        }
-        #endregion
-
-        #region AtualizaAgendaComercial
-        public void AtualizaAgendaComercial(double idagenda, DateTime Data, string Hora, double idClienteComercial)
-        {
-            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-            {
-                Hora.Substring(0, 5);
-
-                string SQL = "";
-                SQL = "UPDATE agenda " +
-                    "SET DataVisita = '" + Data.ToString("yyyy-MM-dd") + "', " +
-                    " HoraVisita = '" + Hora + "', " +
-                    " Comercial = '" + idClienteComercial + "' " +
-                    " WHERE idagenda = " + idagenda + " ";
-
-                connection.Open();
-                MySqlCommand command = new MySqlCommand(SQL, connection);
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-        }
-        #endregion
-
-        #region AtualizaAgendaComercial Completa
-        public void AtualizaAgendaComercialCompleta(double idagenda, DateTime Data, string Hora, double idClienteComercial, string obs, DateTime DataFinalizada)
-        {
-            using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-            {
-                Hora.Substring(0, 5);
-
-                string SQL = "";
-                SQL = "UPDATE agenda " +
-                    "SET DataVisita = '" + Data.ToString("yyyy-MM-dd") + "', " +
-                    " HoraVisita = '" + Hora + "', " +
-                    " Comercial = '" + idClienteComercial + "', " +
-                    " DataFinalizada = '" + DataFinalizada.ToString("yyyy-MM-dd hh:mm") + "', " +
-                    " Observacoes = '" + obs + "' " +
-                    " WHERE idagenda = " + idagenda + " ";
-
-                connection.Open();
-                MySqlCommand command = new MySqlCommand(SQL, connection);
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-        }
-        #endregion
-
-        #region ConcluirAgendaComercial
-        public bool ConcluiAgendaComercial(double idagenda, string observacoes, DateTime DataFinalizada)
-        {
-            try
-            {
-                string DataFinalizadaReal = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
-
-                using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-                {
-                    string SQL = "";
-                    SQL = "UPDATE agenda " +
-                        "SET Observacoes = '" + observacoes + "', " +
-                        " Status = '1', " +
-                        " DataFinalizada = '" + DataFinalizadaReal + "', " +
-                        " DataFinalizada = '" + DataFinalizada.ToString("yyyy-MM-dd HH:mm") + "' " +
-                        " WHERE idagenda = " + idagenda + " ";
-
-                    connection.Open();
-                    MySqlCommand command = new MySqlCommand(SQL, connection);
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Falhou", ex);
-            }
-        }
-        #endregion
-
-        #region AtualizaUltimaVisitaComercial
-        public bool AtualizaUltimaVisitaComercial(double idclientecomercial, DateTime data)
-        {
-            try
-            {
-
-                using (MySqlConnection connection = new MySqlConnection(MySQLServer))
-                {
-                    string SQL = "";
-                    SQL = "UPDATE clientes_comercial " +
-                        "SET UltimaVisita = '" + data.ToString("yyyy-MM-dd") + "' " +
-                        "WHERE idclientecomercial = " + idclientecomercial + " ";
-
-                    connection.Open();
-                    MySqlCommand command = new MySqlCommand(SQL, connection);
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Falhou", ex);
-            }
-        }
-        #endregion
     }
 }
+//COMERCIAL
+
+/*
+
+#region AgendaComercialPorX
+public ViewModelAgendaComercial AgendaComercialPorX(string campo, string valor)
+{
+    ViewModelAgendaComercial AgendaComercialPorX = new ViewModelAgendaComercial();
+    AgendaComercialPorX.agenda = new Model_Agenda();
+    AgendaComercialPorX.clienteComercial = new Model_ClienteComercial();
+
+    using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+    {
+        string SQL = "";
+        SQL = "SELECT agenda.*, clientes_comercial.*, ramos.ramoNome" +
+            " FROM ramos, agenda" +
+            " INNER JOIN clientes_comercial ON agenda.Comercial = clientes_comercial.idclientecomercial" +
+            " WHERE " + campo + " = " + valor + " " +
+            " AND ramos.idramo = clientes_comercial.Ramo";
+
+        connection.Open();
+        MySqlCommand command = new MySqlCommand(SQL, connection);
+        MySqlDataReader reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            AgendaComercialPorX.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
+            AgendaComercialPorX.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
+            AgendaComercialPorX.agenda.DataVisita = TratarConversaoDeDados.TrataString(reader["DataVisita"]);
+            AgendaComercialPorX.agenda.HoraVisita = TratarConversaoDeDados.TrataString(reader["HoraVisita"]);
+            AgendaComercialPorX.agenda.Cliente = TratarConversaoDeDados.TrataDouble(reader["Cliente"]);
+            AgendaComercialPorX.agenda.Comercial = TratarConversaoDeDados.TrataDouble(reader["Comercial"]);
+            AgendaComercialPorX.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
+            AgendaComercialPorX.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
+            AgendaComercialPorX.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
+            AgendaComercialPorX.agenda.DataFinalizadaReal = TratarConversaoDeDados.TrataString(reader["DataFinalizadaReal"]);
+
+            //AgendaComercialPorX.clienteComercial
+            AgendaComercialPorX.clienteComercial.idclientecomercial = TratarConversaoDeDados.TrataDouble(reader["idclientecomercial"]);
+            AgendaComercialPorX.clienteComercial.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
+            AgendaComercialPorX.clienteComercial.RazaoSocial = TratarConversaoDeDados.TrataString(reader["RazaoSocial"]);
+            AgendaComercialPorX.clienteComercial.CNPJ = TratarConversaoDeDados.TrataString(reader["CNPJ"]);
+            AgendaComercialPorX.clienteComercial.InscricaoEstadual = TratarConversaoDeDados.TrataString(reader["InscricaoEstadual"]);
+            AgendaComercialPorX.clienteComercial.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
+            AgendaComercialPorX.clienteComercial.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
+            AgendaComercialPorX.clienteComercial.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
+            AgendaComercialPorX.clienteComercial.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
+            AgendaComercialPorX.clienteComercial.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
+            AgendaComercialPorX.clienteComercial.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
+            AgendaComercialPorX.clienteComercial.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
+            AgendaComercialPorX.clienteComercial.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
+            AgendaComercialPorX.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
+            AgendaComercialPorX.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
+            AgendaComercialPorX.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+            AgendaComercialPorX.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
+            AgendaComercialPorX.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
+            AgendaComercialPorX.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
+
+            AgendaComercialPorX.clienteComercial.RamoNome = TratarConversaoDeDados.TrataString(reader["ramoNome"]);
+        }
+        reader.Close();
+        connection.Close();
+    }
+    return AgendaComercialPorX;
+}
+#endregion
+
+
+#region ListaAgendaComercialPorX
+public List<ViewModelAgendaComercial> ListaAgendaComercialPorX(string campo, string valor, bool status)
+{
+    List<ViewModelAgendaComercial> ListaAgendaComercialPorX = new List<ViewModelAgendaComercial>();
+
+    using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+    {
+        string SQL = "";
+        SQL = "SELECT agenda.*, clientes_comercial.*, ramos.ramoNome" +
+            " FROM ramos, agenda " +
+            " INNER JOIN clientes_comercial ON agenda.Comercial = clientes_comercial.idclientecomercial" +
+            " WHERE " + campo + " = " + valor + " AND agenda.Status = " + status + " " +
+            " AND ramos.idramo = clientes_comercial.Ramo";
+
+        connection.Open();
+        MySqlCommand command = new MySqlCommand(SQL, connection);
+        MySqlDataReader reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            ViewModelAgendaComercial ag = new ViewModelAgendaComercial();
+            ag.agenda = new Model_Agenda();
+            ag.clienteComercial = new Model_ClienteComercial();
+
+            ag.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
+            ag.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
+            ag.agenda.DataVisita = TratarConversaoDeDados.TrataString(reader["DataVisita"]);
+            ag.agenda.HoraVisita = TratarConversaoDeDados.TrataString(reader["HoraVisita"]);
+            ag.agenda.Cliente = TratarConversaoDeDados.TrataDouble(reader["Cliente"]);
+            ag.agenda.Comercial = TratarConversaoDeDados.TrataDouble(reader["Comercial"]);
+            ag.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
+            ag.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
+            ag.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
+
+            ag.clienteComercial.idclientecomercial = TratarConversaoDeDados.TrataDouble(reader["idclientecomercial"]);
+            ag.clienteComercial.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
+            ag.clienteComercial.RazaoSocial = TratarConversaoDeDados.TrataString(reader["RazaoSocial"]);
+            ag.clienteComercial.CNPJ = TratarConversaoDeDados.TrataString(reader["CNPJ"]);
+            ag.clienteComercial.InscricaoEstadual = TratarConversaoDeDados.TrataString(reader["InscricaoEstadual"]);
+            ag.clienteComercial.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
+            ag.clienteComercial.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
+            ag.clienteComercial.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
+            ag.clienteComercial.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
+            ag.clienteComercial.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
+            ag.clienteComercial.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
+            ag.clienteComercial.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
+            ag.clienteComercial.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
+            ag.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
+            ag.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
+            ag.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+            ag.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
+            ag.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
+            ag.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
+
+            ag.clienteComercial.RamoNome = TratarConversaoDeDados.TrataString(reader["ramoNome"]);
+
+            ListaAgendaComercialPorX.Add(ag);
+        }
+        reader.Close();
+        connection.Close();
+    }
+    return ListaAgendaComercialPorX;
+}
+#endregion
+
+#region ListaAgendaComercialData
+public List<ViewModelAgendaComercial> ListaAgendaComercialData(DateTime DataInicio, DateTime DataFim, string usuario, string status)
+{
+    List<ViewModelAgendaComercial> ListaAgendaComercialData = new List<ViewModelAgendaComercial>();
+
+    using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+    {
+        string SQL = "";
+        SQL = "SELECT clientes_comercial.*, ramos.ramoNome, agenda.* "+
+            " FROM  clientes_comercial " +
+            " INNER JOIN ramos ON ramos.idramo = clientes_comercial.Ramo"+
+            " INNER JOIN agenda ON clientes_comercial.idclientecomercial = agenda.Comercial"+
+            " WHERE DataVisita >= '"+DataInicio.ToString("yyyy-MM-dd")+"' "+
+            " AND DataVisita <= '"+DataFim.ToString("yyyy-MM-dd")+"' "+
+            " AND agenda.Status = '"+status+"' " +
+            " AND agenda.usuario = '"+usuario+"' ";
+
+        connection.Open();
+        MySqlCommand command = new MySqlCommand(SQL, connection);
+        MySqlDataReader reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            ViewModelAgendaComercial ag = new ViewModelAgendaComercial();
+            ag.agenda = new Model_Agenda();
+            ag.clienteComercial = new Model_ClienteComercial();
+
+            ag.agenda.idagenda = TratarConversaoDeDados.TrataDouble(reader["idagenda"]);
+            ag.agenda.Usuario = TratarConversaoDeDados.TrataDouble(reader["Usuario"]);
+            ag.agenda.DataVisita = TratarConversaoDeDados.TrataString(reader["DataVisita"]);
+            ag.agenda.HoraVisita = TratarConversaoDeDados.TrataString(reader["HoraVisita"]);
+            ag.agenda.Cliente = TratarConversaoDeDados.TrataDouble(reader["Cliente"]);
+            ag.agenda.Comercial = TratarConversaoDeDados.TrataDouble(reader["Comercial"]);
+            ag.agenda.Observacoes = TratarConversaoDeDados.TrataString(reader["Observacoes"]);
+            ag.agenda.Status = TratarConversaoDeDados.TrataString(reader["Status"]);
+            ag.agenda.DataFinalizada = TratarConversaoDeDados.TrataString(reader["DataFinalizada"]);
+
+            ag.clienteComercial.idclientecomercial = TratarConversaoDeDados.TrataDouble(reader["idclientecomercial"]);
+            ag.clienteComercial.Nome = TratarConversaoDeDados.TrataString(reader["Nome"]);
+            ag.clienteComercial.RazaoSocial = TratarConversaoDeDados.TrataString(reader["RazaoSocial"]);
+            ag.clienteComercial.CNPJ = TratarConversaoDeDados.TrataString(reader["CNPJ"]);
+            ag.clienteComercial.InscricaoEstadual = TratarConversaoDeDados.TrataString(reader["InscricaoEstadual"]);
+            ag.clienteComercial.Endereco = TratarConversaoDeDados.TrataString(reader["Endereco"]);
+            ag.clienteComercial.Num = TratarConversaoDeDados.TrataString(reader["Num"]);
+            ag.clienteComercial.Cidade = TratarConversaoDeDados.TrataString(reader["Cidade"]);
+            ag.clienteComercial.Bairro = TratarConversaoDeDados.TrataString(reader["Bairro"]);
+            ag.clienteComercial.UF = TratarConversaoDeDados.TrataString(reader["UF"]);
+            ag.clienteComercial.CEP = TratarConversaoDeDados.TrataString(reader["CEP"]);
+            ag.clienteComercial.Contato = TratarConversaoDeDados.TrataString(reader["Contato"]);
+            ag.clienteComercial.Email = TratarConversaoDeDados.TrataString(reader["Email"]);
+            ag.clienteComercial.Fone1 = TratarConversaoDeDados.TrataString(reader["Fone1"]);
+            ag.clienteComercial.Fone2 = TratarConversaoDeDados.TrataString(reader["Fone2"]);
+            ag.clienteComercial.Ramo = TratarConversaoDeDados.TrataInt(reader["Ramo"]);
+            ag.clienteComercial.Conveniado = TratarConversaoDeDados.TrataInt(reader["Conveniado"]);
+            ag.clienteComercial.DataCadastro = TratarConversaoDeDados.TrataDateTime(reader["DataCadastro"]);
+            ag.clienteComercial.UltimaVisita = TratarConversaoDeDados.TrataString(reader["UltimaVisita"]);
+
+            ag.clienteComercial.RamoNome = TratarConversaoDeDados.TrataString(reader["ramoNome"]);
+
+            ListaAgendaComercialData.Add(ag);
+        }
+        reader.Close();
+        connection.Close();
+    }
+    return ListaAgendaComercialData;
+}
+#endregion
+
+#region InsereAgendaComercial
+public void InsereAgendaComercial(double Usuario, DateTime Data, string Hora, double idClienteComercial)
+{
+    Hora.Substring(0, 5);
+
+    using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+    {
+        string SQL = "";
+        SQL = "INSERT INTO agenda " +
+            "(Usuario,DataVisita,HoraVisita,Comercial,Status)" +
+            "VALUES" +
+            "(" + Usuario + ",'" + Data.ToString("yyyy-MM-dd") + "','" + Hora + "'," + idClienteComercial + ",0);";
+
+        connection.Open();
+        MySqlCommand command = new MySqlCommand(SQL, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+    }
+}
+#endregion
+
+#region AtualizaAgendaComercial
+public void AtualizaAgendaComercial(double idagenda, DateTime Data, string Hora, double idClienteComercial)
+{
+    using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+    {
+        Hora.Substring(0, 5);
+
+        string SQL = "";
+        SQL = "UPDATE agenda " +
+            "SET DataVisita = '" + Data.ToString("yyyy-MM-dd") + "', " +
+            " HoraVisita = '" + Hora + "', " +
+            " Comercial = '" + idClienteComercial + "' " +
+            " WHERE idagenda = " + idagenda + " ";
+
+        connection.Open();
+        MySqlCommand command = new MySqlCommand(SQL, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+    }
+}
+#endregion
+
+#region AtualizaAgendaComercial Completa
+public void AtualizaAgendaComercialCompleta(double idagenda, DateTime Data, string Hora, double idClienteComercial, string obs, DateTime DataFinalizada)
+{
+    using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+    {
+        Hora.Substring(0, 5);
+
+        string SQL = "";
+        SQL = "UPDATE agenda " +
+            "SET DataVisita = '" + Data.ToString("yyyy-MM-dd") + "', " +
+            " HoraVisita = '" + Hora + "', " +
+            " Comercial = '" + idClienteComercial + "', " +
+            " DataFinalizada = '" + DataFinalizada.ToString("yyyy-MM-dd hh:mm") + "', " +
+            " Observacoes = '" + obs + "' " +
+            " WHERE idagenda = " + idagenda + " ";
+
+        connection.Open();
+        MySqlCommand command = new MySqlCommand(SQL, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+    }
+}
+#endregion
+
+#region ConcluirAgendaComercial
+public bool ConcluiAgendaComercial(double idagenda, string observacoes, DateTime DataFinalizada)
+{
+    try
+    {
+        string DataFinalizadaReal = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+
+        using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+        {
+            string SQL = "";
+            SQL = "UPDATE agenda " +
+                "SET Observacoes = '" + observacoes + "', " +
+                " Status = '1', " +
+                " DataFinalizada = '" + DataFinalizadaReal + "', " +
+                " DataFinalizada = '" + DataFinalizada.ToString("yyyy-MM-dd HH:mm") + "' " +
+                " WHERE idagenda = " + idagenda + " ";
+
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(SQL, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+        return true;
+    }
+    catch (Exception ex)
+    {
+        throw new Exception("Falhou", ex);
+    }
+}
+#endregion
+
+#region AtualizaUltimaVisitaComercial
+public bool AtualizaUltimaVisitaComercial(double idclientecomercial, DateTime data)
+{
+    try
+    {
+
+        using (MySqlConnection connection = new MySqlConnection(MySQLServer))
+        {
+            string SQL = "";
+            SQL = "UPDATE clientes_comercial " +
+                "SET UltimaVisita = '" + data.ToString("yyyy-MM-dd") + "' " +
+                "WHERE idclientecomercial = " + idclientecomercial + " ";
+
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(SQL, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+        return true;
+    }
+    catch (Exception ex)
+    {
+        throw new Exception("Falhou", ex);
+    }
+}
+#endregion
+
+*/

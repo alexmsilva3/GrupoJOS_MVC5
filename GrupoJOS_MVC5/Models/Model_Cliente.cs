@@ -19,6 +19,15 @@ namespace GrupoJOS_MVC5.Models
 
         [Required(ErrorMessage = "E-mail é obrigatório")]
         [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Informe um email válido")]
+
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Razao Social deve conter pelo menos 4 digitos")]
+        public string RazaoSocial { get; set; }
+
+        [StringLength(50, MinimumLength = 10, ErrorMessage = "CNPJ deve conter pelo menos 10 digitos")]
+        public string CNPJ { get; set; }
+
+        public string InscricaoEstadual { get; set; }
+
         public string Email { get; set; }
 
         public string Aniversario_m { get; set; }

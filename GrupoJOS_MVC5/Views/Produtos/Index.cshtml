@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Lista de Clientes Comerciais";
+    ViewBag.Title = "Lista de Produtos";
     var adm = Request.Cookies["UsuarioADM"].Value;
 }
 
-@model List<GrupoJOS_MVC5.Models.Model_ClienteComercial>
+@model List<GrupoJOS_MVC5.Models.Model_Produto>
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -13,7 +13,7 @@
                 <a href="@Url.Action("Index", "Home")">Home</a>
             </li>
             <li>
-                <a>Clientes Comerciais</a>
+                <a>Empresas</a>
             </li>
             <li class="active">
                 <strong>@ViewBag.Title</strong>
@@ -29,13 +29,16 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>@ViewBag.Title</h5>
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <a href="/ClientesComercial/Cadastro">
-                                    <button type="button" class="btn btn-xs btn-success">Cadastrar</button>
-                                </a>
+                        @if (adm == "True")
+                        {
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <a href="/Produtos/Cadastro">
+                                        <button type="button" class="btn btn-xs btn-success">Cadastrar</button>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                     <div class="ibox-content">
 
@@ -43,50 +46,23 @@
                             <thead>
                                 <tr>
                                     <th>Nome</th>
-                                    <th>Razão Social</th>
-                                    <th>Cidade</th>
-                                    <th>Telefones</th>
-                                    <th>Ramo Comercial</th>
-                                    <th>Conveniado</th>
-                                    <th>Opções</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Nome</th>
-                                    <th>Razão Social</th>
-                                    <th>Cidade</th>
-                                    <th>Telefones</th>
-                                    <th>Ramo Comercial</th>
-                                    <th>Conveniado</th>
-                                    <th>Opções</th>
                                 </tr>
                             </tfoot>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>@item.Nome <br> <b>Ultima Visita:</b> @item.UltimaVisita</td>
-                                        <td>@item.RazaoSocial</td>
-                                        <td>@item.Cidade</td>
+                                        <td>@item.Nome</td>
                                         <td>
-                                            <span class="label label-default">@item.Fone1</span>
-                                            <span class="label label-default">@item.Fone2</span>
-                                        </td>
-
-
-
-                                        <td>@item.RamoNome</td>
-                                        <td width="5%" align="center">
-                                            @if(item.Conveniado == 1){<i class="fa fa-bookmark"></i><p>Conveniado</p>}
-                                            else{<i><p>Sem Convênio</p></i>}
-                                        </td>
-                                        <td width="15%">
                                             <div class="js-sweetalert">
-                                                <a href="/AgendaComercial/Cadastro/@item.idclientecomercial"><button type="button" title="Agendar Visita" class="btn btn-warning dim"><i class="fa fa-clock-o"></i></button></a>
-                                                <a href="/ClientesComercial/Editar/@item.idclientecomercial"><button type="button" class="btn btn-success dim"><i class="fa fa-edit"></i></button></a>
+                                                <a href="/Produtos/Editar/@item.idproduto"><button type="button" class="btn btn-success dim"><i class="fa fa-edit"></i></button></a>
                                                 @if (adm == "True")
-                                                {<button type="button" class="btn btn-danger dim" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idclientecomercial"><i class="fa fa-trash"></i></button>}
+                                                    {<button type="button" class="btn btn-danger dim" data-type="confirm" onclick="AssignButtonClicked(this)" data-assigned-id="@item.idproduto"><i class="fa fa-trash"></i></button>}
                                             </div>
                                         </td>
                                     </tr>
@@ -110,8 +86,8 @@
                                     if (willDelete) {
                                         swal("Removido!", "Registro foi removido com sucesso!", "success")
                                             .then((value) => {
-                                                $.post("/ClientesComercial/Index/" + id + "");
-                                                window.location = "/ClientesComercial/Index";
+                                                $.post("/Produtos/Index/" + id + "");
+                                                window.location = "/Produtos/Index";
                                             });
                                     } else {
                                         swal("Cancelado!", "O registro não foi removido", "error");

@@ -48,36 +48,12 @@ namespace GrupoJOS_MVC5.Models
         public List<ViewModelAgenda> lista_agenda { get; set; }
     }
 
-    public class ViewModelDashboardComercial
-    {
-        public int VisitasAgendadasDia { get; set; }
-        public int VisitasRealizadasDia { get; set; }
-        public int VisitasRealizadasDiaP { get; set; }
-
-        public int VisitasAgendadasSemana { get; set; }
-        public int VisitasRealizadasSemana { get; set; }
-        public int VisitasRealizadasSemanaP { get; set; }
-
-        public int VisitasAgendadasMes { get; set; }
-        public int VisitasRealizadasMes { get; set; }
-        public int VisitasRealizadasMesP { get; set; }
-
-        public List<ViewModelAgendaComercial> lista_agenda { get; set; }
-    }
-
     public class ViewModelAgenda
     {
         public Model_Agenda agenda { get; set; }
         public Model_Cliente cliente { get; set;}
         public Model_Usuario usuario { get; set; }
-        public List<Model_Empresa> empresa { get; set; }
-    }
-
-    public class ViewModelAgendaComercial
-    {
-        public Model_Agenda agenda { get; set; }
-        public Model_Usuario usuario {get;set;}
-        public Model_ClienteComercial clienteComercial { get; set; }
+        public List<Model_Produto> produto { get; set; }
     }
 
     public class ViewModelAgendaCliente
@@ -90,11 +66,5 @@ namespace GrupoJOS_MVC5.Models
     {
         public List<ViewModelAgenda> visitas_realizadas { get; set; }
         public List<ViewModelAgenda> visitas_arealizar { get; set; }
-    }
-
-    public class ViewModelAgendaComercialDashboard
-    {
-        public List<ViewModelAgendaComercial> visitas_realizadas { get; set; }
-        public List<ViewModelAgendaComercial> visitas_arealizar { get; set; }
     }
 }
